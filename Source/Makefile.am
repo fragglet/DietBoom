@@ -1,5 +1,5 @@
-bin_PROGRAMS = winmbf
-winmbf_SOURCES = \
+bin_PROGRAMS = dietboom
+dietboom_SOURCES = \
 	am_map.c   am_map.h \
 	d_deh.c    d_deh.h \
 	d_englsh.h \
@@ -81,5 +81,5 @@ winmbf_SOURCES = \
 	w_wad.c    w_wad.h \
 	wi_stuff.c wi_stuff.h \
 	z_zone.c   z_zone.h
-winmbf_CFLAGS = @SDL_CFLAGS@ @SDL_mixer_CFLAGS@ @SDL_net_CFLAGS@
-winmbf_LDADD = @SDL_LIBS@ @SDL_mixer_LIBS@ @SDL_net_LIBS@
+dietboom_CFLAGS = @SDL_CFLAGS@ @SDL_mixer_CFLAGS@ @SDL_net_CFLAGS@
+dietboom_LDADD = @SDL_LIBS@ @SDL_mixer_LIBS@ @SDL_net_LIBS@

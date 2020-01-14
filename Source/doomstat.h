@@ -302,14 +302,6 @@ extern int default_monsters_remember;
 extern int player_bobbing;  // whether player bobs or not   // phares 2/25/98
 extern int default_player_bobbing;  // killough 3/1/98: make local to each game
 
-#ifdef BETA
-// killough 7/19/98: Classic Pre-Beta BFG
-extern int classic_bfg, default_classic_bfg;
-
-// killough 7/24/98: Emulation of Press Release version of Doom
-extern int beta_emulation;
-#endif
-
 #ifdef DOGS
 extern int dogs, default_dogs;     // killough 7/19/98: Marine's best friend :)
 extern int dog_jumping, default_dog_jumping;   // killough 10/98

@@ -2488,11 +2488,6 @@ setup_menu_t weap_settings1[] =  // Weapons Settings screen
 {
   {"ENABLE BOBBING",S_YESNO,m_null,WP_X, WP_Y+weap_bobbing*8, {"player_bobbing"}},
 
-#ifdef BETA
-  {"CLASSIC BFG"      ,S_YESNO,m_null,WP_X,  // killough 8/8/98
-   WP_Y+ weap_bfg*8, {"classic_bfg"}},
-#endif
-
   {"1ST CHOICE WEAPON",S_WEAP,m_null,WP_X,WP_Y+weap_pref1*8, {"weapon_choice_1"}},
   {"2nd CHOICE WEAPON",S_WEAP,m_null,WP_X,WP_Y+weap_pref2*8, {"weapon_choice_2"}},
   {"3rd CHOICE WEAPON",S_WEAP,m_null,WP_X,WP_Y+weap_pref3*8, {"weapon_choice_3"}},

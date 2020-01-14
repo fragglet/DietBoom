@@ -1203,10 +1203,6 @@ mobj_t* P_SpawnMissile(mobj_t* source,mobj_t* dest,mobjtype_t type)
   return th;
 }
 
-#ifdef BETA
-int autoaim = 0;  // killough 7/19/98: autoaiming was not in original beta
-#endif
-
 //
 // P_SpawnPlayerMissile
 // Tries to aim at a nearby monster
@@ -1221,25 +1217,21 @@ void P_SpawnPlayerMissile(mobj_t* source,mobjtype_t type)
 
   angle_t an = source->angle;
 
-  // killough 7/19/98: autoaiming was not in original beta
-#ifdef BETA
-  if (!beta_emulation || autoaim)
-#endif
-    {
-      // killough 8/2/98: prefer autoaiming at enemies
-      int mask = demo_version < 203 ? 0 : MF_FRIEND;
-      do
-	{
-	  slope = P_AimLineAttack(source, an, 16*64*FRACUNIT, mask);
-	  if (!linetarget)
-	    slope = P_AimLineAttack(source, an += 1<<26, 16*64*FRACUNIT, mask);
-	  if (!linetarget)
-	    slope = P_AimLineAttack(source, an -= 2<<26, 16*64*FRACUNIT, mask);
-	  if (!linetarget)
-	    an = source->angle, slope = 0;
-	}
-      while (mask && (mask=0, !linetarget));  // killough 8/2/98
-    }
+  {
+    // killough 8/2/98: prefer autoaiming at enemies
+    int mask = demo_version < 203 ? 0 : MF_FRIEND;
+    do
+      {
+        slope = P_AimLineAttack(source, an, 16*64*FRACUNIT, mask);
+        if (!linetarget)
+          slope = P_AimLineAttack(source, an += 1<<26, 16*64*FRACUNIT, mask);
+        if (!linetarget)
+          slope = P_AimLineAttack(source, an -= 2<<26, 16*64*FRACUNIT, mask);
+        if (!linetarget)
+          an = source->angle, slope = 0;
+      }
+    while (mask && (mask=0, !linetarget));  // killough 8/2/98
+  }
 
   x = source->x;
   y = source->y;

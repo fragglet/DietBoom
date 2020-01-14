@@ -70,14 +70,6 @@ int default_monster_infighting=1;
 int monster_friction=1;       // killough 10/98: monsters affected by friction 
 int default_monster_friction=1;
 
-#ifdef BETA
-// killough 7/19/98: classic Doom BFG
-int classic_bfg, default_classic_bfg;
-
-// killough 7/24/98: Emulation of Press Release version of Doom
-int beta_emulation;
-#endif
-
 #ifdef DOGS
 int dogs, default_dogs;         // killough 7/19/98: Marine's best friend :)
 int dog_jumping, default_dog_jumping;   // killough 10/98

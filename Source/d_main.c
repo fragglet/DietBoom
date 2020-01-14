@@ -1395,23 +1395,6 @@ void D_DoomMain(void)
   // killough 10/98: process all command-line DEH's first
   D_ProcessDehCommandLine();
 
-#ifdef BETA
-  // killough 7/19/98: beta emulation option
-  beta_emulation = !!M_CheckParm("-beta");
-
-  if (beta_emulation)
-    { // killough 10/98: beta lost soul has different behavior frames
-      mobjinfo[MT_SKULL].spawnstate   = S_BSKUL_STND;
-      mobjinfo[MT_SKULL].seestate     = S_BSKUL_RUN1;
-      mobjinfo[MT_SKULL].painstate    = S_BSKUL_PAIN1;
-      mobjinfo[MT_SKULL].missilestate = S_BSKUL_ATK1;
-      mobjinfo[MT_SKULL].deathstate   = S_BSKUL_DIE1;
-      mobjinfo[MT_SKULL].damage       = 1;
-    }
-  else
-    mobjinfo[MT_SCEPTRE].doomednum = mobjinfo[MT_BIBLE].doomednum = -1;
-#endif
-
   // jff 1/24/98 set both working and command line value of play parms
   nomonsters = clnomonsters = M_CheckParm ("-nomonsters");
   respawnparm = clrespawnparm = M_CheckParm ("-respawn");
@@ -1528,15 +1511,6 @@ void D_DoomMain(void)
       sidemove[0] = sidemove[0]*scale/100;
       sidemove[1] = sidemove[1]*scale/100;
     }
-
-#ifdef BETA
-  if (beta_emulation)
-    {
-      char s[PATH_MAX+1];
-      sprintf(s, "%s/betagrph.wad", D_DoomExeDir());  // killough 7/11/98
-      D_AddFile(s);
-    }
-#endif
 
   // add any files specified on the command line with -file wadfile
   // to the wad list

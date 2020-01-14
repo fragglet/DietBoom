@@ -218,15 +218,6 @@ default_t defaults[] = {
     "1=take special steps ensuring demo sync, 2=only during recordings"
   },
 
-#ifdef BETA
-  { // killough 7/19/98
-    "classic_bfg",
-    &default_classic_bfg, &classic_bfg,
-    {0}, {0,1}, number, ss_weap, wad_yes,
-    "1 to enable pre-beta BFG2704"
-  },
-#endif
-
   { // killough 10/98
     "doom_weapon_toggles",
     &doom_weapon_toggles, NULL,

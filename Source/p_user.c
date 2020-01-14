@@ -433,18 +433,6 @@ void P_PlayerThink (player_t* player)
   // But white flashes occurred when invulnerability wore off.
 
   player->fixedcolormap = 
-
-#ifdef BETA
-    beta_emulation ?    /* Beta Emulation */
-    player->powers[pw_infrared] > 4*32 ||
-    player->powers[pw_infrared] & 8 ? 32 :
-    player->powers[pw_invisibility] > 4*32 ||
-    player->powers[pw_invisibility] & 8 ||
-    (player->powers[pw_invulnerability] < 4*32 &&
-     player->powers[pw_invulnerability] > 0 &&
-     player->powers[pw_invulnerability] & 8) ? 33 : 0 :
-#endif
-
     player->powers[pw_invulnerability] > 4*32 ||    /* Regular Doom */
     player->powers[pw_invulnerability] & 8 ? INVERSECOLORMAP :
     player->powers[pw_infrared] > 4*32 || player->powers[pw_infrared] & 8;

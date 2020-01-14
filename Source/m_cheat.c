@@ -81,11 +81,6 @@ static void cheat_nuke();
 static void cheat_printstats();   // killough 8/23/98
 #endif
 
-#ifdef BETA
-static void cheat_autoaim();      // killough 7/19/98
-static void cheat_tst();
-#endif
-
 //-----------------------------------------------------------------------------
 //
 // List of cheat codes, functions, and special argument indicators.
@@ -238,23 +233,6 @@ struct cheat_s cheat[] = {
   {"nuke",    NULL,                   not_net | not_demo,
    cheat_nuke       },   // killough 12/98: disable nukage damage
 
-#ifdef BETA
-  {"aim",        NULL,                not_net | not_demo | beta_only,
-   cheat_autoaim},
-
-  {"eek",        NULL,                not_dm  | not_demo | beta_only,
-   cheat_ddt      },     // killough 2/07/98: moved from am_map.c
-
-  {"amo",        NULL,                not_net | not_demo | beta_only,
-   cheat_kfa },
-
-  {"tst",        NULL,                not_net | not_demo | beta_only,
-   cheat_tst    },
-
-  {"nc",         NULL,                not_net | not_demo | beta_only,
-   cheat_noclip },
-#endif
-
 #ifdef INSTRUMENTED
   {"stat",       NULL,                always,
    cheat_printstats},
@@ -270,17 +248,6 @@ static void cheat_printstats()    // killough 8/23/98
 {
   if (!(printstats=!printstats))
     plyr->message = "Memory stats off";
-}
-#endif
-
-#ifdef BETA
-// killough 7/19/98: Autoaiming optional in beta emulation mode
-static void cheat_autoaim()
-{
-  extern int autoaim;
-  plyr->message = (autoaim=!autoaim) ?
-    "Projectile autoaiming on" : 
-    "Projectile autoaiming off";
 }
 #endif
 
@@ -347,14 +314,6 @@ static void cheat_god()
   else 
     plyr->message = s_STSTR_DQDOFF; // Ty 03/27/98 - externalized
 }
-
-#ifdef BETA
-static void cheat_tst()
-{ // killough 10/98: same as iddqd except for message
-  cheat_god();
-  plyr->message = plyr->cheats & CF_GODMODE ? "God Mode On" : "God Mode Off";
-}
-#endif
 
 static void cheat_fa()
 {
@@ -739,9 +698,6 @@ boolean M_FindCheats(int key)
         !(cheat[i].when & not_coop && netgame && !deathmatch) &&
         !(cheat[i].when & not_demo && (demorecording || demoplayback)) &&
         !(cheat[i].when & not_menu && menuactive) &&
-#ifdef BETA
-        !(cheat[i].when & beta_only && !beta_emulation) &&
-#endif
         !(cheat[i].when & not_deh  && cheat[i].deh_modified))
     {
       if (cheat[i].arg < 0)               // if additional args are required

@@ -1149,8 +1149,6 @@ static void G_DoPlayDemo(void)
 
       variable_friction = 0;
 
-      weapon_recoil = 0;
-
       allow_pushers = 0;
 
       monster_infighting = 1;           // killough 7/19/98
@@ -2019,8 +2017,6 @@ void G_ReloadDefaults(void)
   // (allows functions above to load different values for demos
   // and savegames without messing up defaults).
 
-  weapon_recoil = default_weapon_recoil;    // weapon recoil
-
   player_bobbing = default_player_bobbing;  // whether player bobs or not
 
   variable_friction = allow_pushers = true;
@@ -2230,7 +2226,7 @@ byte *G_WriteOptions(byte *demo_p)
 
   *demo_p++ = variable_friction;  // ice & mud
 
-  *demo_p++ = weapon_recoil;      // weapon recoil
+  *demo_p++ = 0;      // weapon recoil
 
   *demo_p++ = allow_pushers;      // MT_PUSH Things
 
@@ -2317,7 +2313,7 @@ byte *G_ReadOptions(byte *demo_p)
   variable_friction = *demo_p;  // ice & mud
   demo_p++;
 
-  weapon_recoil = *demo_p;       // weapon recoil
+  // skip weapon recoil
   demo_p++;
 
   allow_pushers = *demo_p;      // MT_PUSH Things

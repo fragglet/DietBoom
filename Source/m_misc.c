@@ -218,13 +218,6 @@ default_t defaults[] = {
     "1=take special steps ensuring demo sync, 2=only during recordings"
   },
 
-  { // phares
-    "weapon_recoil",
-    &default_weapon_recoil, &weapon_recoil,
-    {0}, {0,1}, number, ss_weap, wad_yes,
-    "1 to enable recoil from weapon fire"
-  },
-
 #ifdef BETA
   { // killough 7/19/98
     "classic_bfg",

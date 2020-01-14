@@ -46,23 +46,6 @@
 
 #define BFGCELLS bfgcells        /* Ty 03/09/98 externalized in p_inter.c */
 
-extern void P_Thrust(player_t *, angle_t, fixed_t);
-int weapon_recoil;      // weapon recoil
-
-// The following array holds the recoil values         // phares
-
-static const int recoil_values[] = {    // phares
-  10, // wp_fist
-  10, // wp_pistol
-  30, // wp_shotgun
-  10, // wp_chaingun
-  100,// wp_missile
-  20, // wp_plasma
-  100,// wp_bfg
-  0,  // wp_chainsaw
-  80  // wp_supershotgun
-};
-
 //
 // P_SetPsprite
 //
@@ -458,12 +441,6 @@ static void A_FireSomething(player_t* player,int adder)
 {
   P_SetPsprite(player, ps_flash,
                weaponinfo[player->readyweapon].flashstate+adder);
-
-  // killough 3/27/98: prevent recoil in no-clipping mode
-  if (!(player->mo->flags & MF_NOCLIP))
-    if (weapon_recoil && (demo_version >= 203 || !compatibility))
-      P_Thrust(player, ANG180 + player->mo->angle,
-               2048*recoil_values[player->readyweapon]);          // phares
 }
 
 //
@@ -601,10 +578,6 @@ void A_FireOldBFG(player_t *player, pspdef_t *psp)
 {
 #ifdef BETA
   int type = MT_PLASMA1;
-
-  if (weapon_recoil && !(player->mo->flags & MF_NOCLIP))
-    P_Thrust(player, ANG180 + player->mo->angle,
-	     512*recoil_values[wp_plasma]);
 
   player->ammo[weaponinfo[player->readyweapon].ammo]--;
 

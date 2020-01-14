@@ -58,9 +58,6 @@ int  default_allow_pushers;  // killough 3/1/98: make local to each game
 int  variable_friction = 1;      // ice & mud               // phares 3/10/98
 int  default_variable_friction;  // killough 3/1/98: make local to each game
 
-int  weapon_recoil;              // weapon recoil                   // phares
-int  default_weapon_recoil;      // killough 3/1/98: make local to each game
-
 int player_bobbing;  // whether player bobs or not          // phares 2/25/98
 int default_player_bobbing;      // killough 3/1/98: make local to each game
 

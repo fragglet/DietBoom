@@ -47,9 +47,6 @@ AC_CHECK_FUNCS([atexit memmove memset mkdir pow putenv strcasecmp strchr strdup 
 AC_ARG_ENABLE([dogs], AS_HELP_STRING([--disable-dogs], [Disable support for helper dogs]))
 AS_IF([test "x$enable_dogs" != "xno"], [AC_DEFINE([DOGS], [1], [Support for helper dogs])])
 
-AC_ARG_ENABLE([beta], AS_HELP_STRING([--disable-beta], [Disable support for beta emulation]))
-AS_IF([test "x$enable_beta" != "xno"], [AC_DEFINE([BETA], [1], [Support for beta emulation])])
-
 # Treat warnings as errors
 AC_ARG_ENABLE([werror], AS_HELP_STRING([--enable-werror], [Treat warnings as errors]))
 AS_IF([test "x$enable_werror" = "xyes"], [CFLAGS="$CFLAGS -Werror"])

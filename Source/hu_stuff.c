@@ -201,7 +201,6 @@ int hudcolor_chat;  // color range of chat lines
 int hud_msg_lines;  // number of message lines in window
 //jff 2/26/98 hud text colors, controls added
 int hudcolor_list;  // list of messages color
-int hud_list_bgon;  // enable for solid window background for message list
 
 int hud_msg_scrollup;  // killough 11/98: allow messages to scroll upwards
 int hud_msg_timed;     // killough 11/98: allow > 1 messages to time out
@@ -1212,8 +1211,6 @@ void HU_Ticker(void)
   if (message_list_counter && !--message_list_counter)
     {
       reviewing_message = message_list_on = false;
-      if (hud_list_bgon && scaledviewheight<200)  // killough 11/98
-	R_FillBackScreen();
     }
 
   // tick down message counter if message is up
@@ -1412,9 +1409,6 @@ boolean HU_Responder(event_t *ev)
 		      HU_Erase(); //jff 4/28/98 erase behind messages
 
 		    message_list_on = false;
-		    // killough 11/98: fix background for smaller screens:
-		    if (hud_list_bgon && scaledviewheight<200)
-		      setsizeneeded = true;
 		  }
 
 	      // killough 11/98: Support timed or continuous message lists

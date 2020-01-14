@@ -3366,9 +3366,6 @@ setup_menu_t mess_settings1[] =  // Messages screen
   {"Message Listing Scrolls Upwards",  S_YESNO,  m_null,  M_X,
    M_Y + mess_scrollup*8, {"hud_msg_scrollup"}},
 
-  {"Message Background",  S_YESNO,  m_null,  M_X,  
-   M_Y + mess_background*8, {"hud_list_bgon"}},
-
   // Button for resetting to defaults
   {0,S_RESET,m_null,X_BUTTON,Y_BUTTON},
 

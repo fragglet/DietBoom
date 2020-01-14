@@ -1521,13 +1521,6 @@ default_t defaults[] = {
     "Duration of normal Doom messages (ms)"
   },
 
-  { // solid window bg ena //jff 2/26/98
-    "hud_list_bgon",
-    &hud_list_bgon, NULL,
-    {0}, {0,1}, number, ss_mess, wad_yes,
-    "1 enables background window behind message review"
-  },
-
   { // hud broken up into 3 displays //jff 3/4/98
     "hud_distributed",
     &hud_distributed, NULL,

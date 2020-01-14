@@ -321,20 +321,6 @@ default_t defaults[] = {
   },
 #endif
 
-  { // no color changes on status bar
-    "sts_always_red",
-    &sts_always_red, NULL,
-    {1}, {0,1}, number, ss_stat, wad_yes,
-    "1 to disable use of color on status bar"
-  },
-
-  {
-    "sts_pct_always_gray",
-    &sts_pct_always_gray, NULL,
-    {0}, {0,1}, number, ss_stat, wad_yes,
-    "1 to make percent signs on status bar always gray"
-  },
-
   { // killough 2/28/98
     "sts_traditional_keys",
     &sts_traditional_keys, NULL,

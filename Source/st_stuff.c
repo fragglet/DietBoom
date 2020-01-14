@@ -699,41 +699,19 @@ void ST_drawWidgets(boolean refresh)
   // used by w_frags widget
   st_fragson = deathmatch && st_statusbaron;
 
-  //jff 2/16/98 make color of ammo depend on amount
-  if (*w_ready.num*100 < ammo_red*plyr->maxammo[weaponinfo[w_ready.data].ammo])
-    STlib_updateNum(&w_ready, cr_red, refresh);
-  else
-    if (*w_ready.num*100 <
-        ammo_yellow*plyr->maxammo[weaponinfo[w_ready.data].ammo])
-      STlib_updateNum(&w_ready, cr_gold, refresh);
-    else
-      STlib_updateNum(&w_ready, cr_green, refresh);
+  STlib_updateNum(&w_ready, refresh);
 
   for (i=0;i<4;i++)
     {
-      STlib_updateNum(&w_ammo[i], NULL, refresh);   //jff 2/16/98 no xlation
-      STlib_updateNum(&w_maxammo[i], NULL, refresh);
+      STlib_updateNum(&w_ammo[i], refresh);
+      STlib_updateNum(&w_maxammo[i], refresh);
     }
 
   //jff 2/16/98 make color of health depend on amount
-  if (*w_health.n.num<health_red)
-    STlib_updatePercent(&w_health, cr_red, refresh);
-  else if (*w_health.n.num<health_yellow)
-    STlib_updatePercent(&w_health, cr_gold, refresh);
-  else if (*w_health.n.num<=health_green)
-    STlib_updatePercent(&w_health, cr_green, refresh);
-  else
-    STlib_updatePercent(&w_health, cr_blue_status, refresh); //killough 2/28/98
+  STlib_updatePercent(&w_health, refresh);
 
   //jff 2/16/98 make color of armor depend on amount
-  if (*w_armor.n.num<armor_red)
-    STlib_updatePercent(&w_armor, cr_red, refresh);
-  else if (*w_armor.n.num<armor_yellow)
-    STlib_updatePercent(&w_armor, cr_gold, refresh);
-  else if (*w_armor.n.num<=armor_green)
-    STlib_updatePercent(&w_armor, cr_green, refresh);
-  else
-    STlib_updatePercent(&w_armor, cr_blue_status, refresh); //killough 2/28/98
+  STlib_updatePercent(&w_armor, refresh); //killough 2/28/98
 
   STlib_updateBinIcon(&w_armsbg, refresh);
 
@@ -745,7 +723,7 @@ void ST_drawWidgets(boolean refresh)
   for (i=0;i<3;i++)
     STlib_updateMultIcon(&w_keyboxes[i], refresh);
 
-  STlib_updateNum(&w_frags, NULL, refresh);
+  STlib_updateNum(&w_frags, refresh);
 
 }
 

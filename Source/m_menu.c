@@ -183,8 +183,6 @@ extern int armor_yellow;  // armor amount less than which status is yellow
 extern int armor_green;   // armor amount above is blue, below is green
 extern int ammo_red;      // ammo percent less than which status is red
 extern int ammo_yellow;   // ammo percent less is yellow more green
-extern int sts_always_red;// status numbers do not change colors
-extern int sts_pct_always_gray;// status percents do not change colors
 extern int sts_traditional_keys;  // display keys the traditional way
 extern int mapcolor_back; // map background
 extern int mapcolor_grid; // grid lines color
@@ -2579,7 +2577,6 @@ setup_menu_t stat_settings1[] =  // Status Bar and HUD Settings screen
 {
   {"STATUS BAR"        ,S_SKIP|S_TITLE,m_null,ST_X,ST_Y+ 1*8 },
 
-  {"USE RED NUMBERS"   ,S_YESNO, m_null,ST_X,ST_Y+ 2*8, {"sts_always_red"}},
   {"GRAY %"            ,S_YESNO, m_null,ST_X,ST_Y+ 3*8, {"sts_pct_always_gray"}},
   {"SINGLE KEY DISPLAY",S_YESNO, m_null,ST_X,ST_Y+ 4*8, {"sts_traditional_keys"}},
 

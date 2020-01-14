@@ -35,9 +35,6 @@
 #include "st_lib.h"
 #include "r_main.h"
 
-int sts_always_red;      //jff 2/18/98 control to disable status color changes
-int sts_pct_always_gray; // killough 2/21/98: always gray %'s? bug or feature?
-
 patch_t*    sttminus;
 
 //
@@ -91,7 +88,6 @@ void STlib_initNum
 //
 void STlib_drawNum
 ( st_number_t*  n,
-  char *outrng,        //jff 2/16/98 add color translation to digit output
   boolean refresh )
 {
 
@@ -136,10 +132,7 @@ void STlib_drawNum
   // in the special case of 0, you draw 0
   if (!num)
   {
-    if (outrng && !sts_always_red)
-      V_DrawPatchTranslated(x - w, n->y, FG, n->p[ 0 ],outrng,0);
-    else //jff 2/18/98 allow use of faster draw routine from config
-      V_DrawPatch(x - w, n->y, FG, n->p[ 0 ]);
+    V_DrawPatch(x - w, n->y, FG, n->p[ 0 ]);
   }
 
   // draw the new number
@@ -147,10 +140,7 @@ void STlib_drawNum
   while (num && numdigits--)
   {
     x -= w;
-    if (outrng && !sts_always_red)
-      V_DrawPatchTranslated(x, n->y, FG, n->p[ num % 10 ],outrng,0);
-    else //jff 2/18/98 allow use of faster draw routine from config
-      V_DrawPatch(x, n->y, FG, n->p[ num % 10 ]);
+    V_DrawPatch(x, n->y, FG, n->p[ num % 10 ]);
     num /= 10;
   }
 
@@ -158,10 +148,7 @@ void STlib_drawNum
   //jff 2/16/98 add color translation to digit output
   if (neg)
   {
-    if (outrng && !sts_always_red)
-      V_DrawPatchTranslated(x - 8, n->y, FG, sttminus,outrng,0);
-    else //jff 2/18/98 allow use of faster draw routine from config
-      V_DrawPatch(x - 8, n->y, FG, sttminus);
+    V_DrawPatch(x - 8, n->y, FG, sttminus);
   }
 }
 
@@ -175,10 +162,9 @@ void STlib_drawNum
 //
 void STlib_updateNum
 ( st_number_t*    n,
-  char *outrng, //jff 2/16/98 add color translation to digit output
   boolean   refresh )
 {
-  if (*n->on) STlib_drawNum(n, outrng, refresh);
+  if (*n->on) STlib_drawNum(n, refresh);
 }
 
 //
@@ -214,26 +200,14 @@ void STlib_initPercent
 //
 void STlib_updatePercent
 ( st_percent_t*   per,
-  char *outrng,             //jff 2/16/98 add color translation to digit output
   int refresh )
 {
   if (refresh || *per->n.on) // killough 2/21/98: fix percents not updated;
   {
-    if (!sts_always_red)     // also support gray-only percents
-      V_DrawPatchTranslated
-      (
-        per->n.x,
-        per->n.y,
-        FG,
-        per->p,
-        sts_pct_always_gray ? cr_gray : outrng,
-        0
-      );
-    else   //jff 2/18/98 allow use of faster draw routine from config
-      V_DrawPatch(per->n.x, per->n.y, FG, per->p);
+    V_DrawPatch(per->n.x, per->n.y, FG, per->p);
   }
   
-  STlib_updateNum(&per->n, outrng, refresh);
+  STlib_updateNum(&per->n, refresh);
 }
 
 //

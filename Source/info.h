@@ -183,10 +183,6 @@ typedef enum
   SPR_TLP2,
   SPR_TNT1,
 
-#ifdef DOGS
-  SPR_DOGS, // killough 7/19/98: Marine's best friend :)
-#endif
-
   NUMSPRITES  // counter of how many there are
 } spritenum_t;
 
@@ -1169,36 +1165,6 @@ typedef enum
   S_DETONATE2,
   S_DETONATE3, 
 
-#ifdef DOGS
-  S_DOGS_STND,      // killough 7/19/98: Marine's best friend :)
-  S_DOGS_STND2,
-  S_DOGS_RUN1,
-  S_DOGS_RUN2,
-  S_DOGS_RUN3,
-  S_DOGS_RUN4,
-  S_DOGS_RUN5,
-  S_DOGS_RUN6,
-  S_DOGS_RUN7,
-  S_DOGS_RUN8,
-  S_DOGS_ATK1,
-  S_DOGS_ATK2,
-  S_DOGS_ATK3,
-  S_DOGS_PAIN,
-  S_DOGS_PAIN2,
-  S_DOGS_DIE1,
-  S_DOGS_DIE2,
-  S_DOGS_DIE3,
-  S_DOGS_DIE4,
-  S_DOGS_DIE5,
-  S_DOGS_DIE6,
-  S_DOGS_RAISE1,
-  S_DOGS_RAISE2,
-  S_DOGS_RAISE3,
-  S_DOGS_RAISE4,
-  S_DOGS_RAISE5,
-  S_DOGS_RAISE6,
-#endif
-
   S_MUSHROOM,  // killough 10/98: mushroom explosion effect
 
   NUMSTATES  // Counter of how many there are
@@ -1366,10 +1332,6 @@ typedef enum {
   MT_MISC86,
   MT_PUSH,    // controls push source                     // phares
   MT_PULL,    // controls pull source                     // phares 3/20/98
-
-#ifdef DOGS
-  MT_DOGS,    // killough 7/19/98: Marine's best friend
-#endif
 
   NUMMOBJTYPES  // Counter of how many there are
 

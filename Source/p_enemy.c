@@ -440,19 +440,6 @@ static boolean P_SmartMove(mobj_t *actor)
 
   under_damage = monster_avoid_hazards && P_IsUnderDamage(actor);
 
-  // killough 10/98: allow dogs to drop off of taller ledges sometimes.
-  // dropoff==1 means always allow it, dropoff==2 means only up to 128 high,
-  // and only if the target is immediately on the other side of the line.
-
-#ifdef DOGS
-  if (actor->type == MT_DOGS && target && dog_jumping &&
-      !((target->flags ^ actor->flags) & MF_FRIEND) &&
-      P_AproxDistance(actor->x - target->x,
-		      actor->y - target->y) < FRACUNIT*144 &&
-      P_Random(pr_dropoff) < 235)
-    dropoff = 2;
-#endif
-
   if (!P_Move(actor, dropoff))
     return false;
 

@@ -281,30 +281,6 @@ default_t defaults[] = {
     "1 to enable monsters to help dying friends"
   },
 
-#ifdef DOGS
-
-  { // killough 7/19/98
-    "player_helpers",
-    &default_dogs, &dogs,
-    {0}, {0,3}, number, ss_enem, wad_yes,
-    "number of single-player helpers"
-  },
-
-  { // killough 8/8/98
-    "friend_distance",
-    &default_distfriend, &distfriend,
-    {128}, {0,999}, number, ss_enem, wad_yes,
-    "distance friends stay away"
-  },
-
-  { // killough 10/98
-    "dog_jumping",
-    &default_dog_jumping, &dog_jumping,
-    {1}, {0,1}, number, ss_enem, wad_yes,
-    "1 to enable dogs to jump"
-  },
-#endif
-
   { // killough 2/28/98
     "sts_traditional_keys",
     &sts_traditional_keys, NULL,

@@ -155,7 +155,6 @@ static player_t*  plr;
 patch_t* hu_font[HU_FONTSIZE];
 patch_t* hu_font2[HU_FONTSIZE];
 patch_t* hu_fontk[HU_FONTSIZE];//jff 3/7/98 added for graphic key indicators
-patch_t* hu_msgbg[9];          //jff 2/26/98 add patches for message background
 
 // widgets
 static hu_textline_t  w_title;
@@ -362,17 +361,6 @@ void HU_Init(void)
                         hu_font[i] = hu_font[0]; //jff 2/16/98 account for gap
     }
 
-  //jff 2/26/98 load patches for message background
-  hu_msgbg[0] = (patch_t *) W_CacheLumpName("BOXUL", PU_STATIC);
-  hu_msgbg[1] = (patch_t *) W_CacheLumpName("BOXUC", PU_STATIC);
-  hu_msgbg[2] = (patch_t *) W_CacheLumpName("BOXUR", PU_STATIC);
-  hu_msgbg[3] = (patch_t *) W_CacheLumpName("BOXCL", PU_STATIC);
-  hu_msgbg[4] = (patch_t *) W_CacheLumpName("BOXCC", PU_STATIC);
-  hu_msgbg[5] = (patch_t *) W_CacheLumpName("BOXCR", PU_STATIC);
-  hu_msgbg[6] = (patch_t *) W_CacheLumpName("BOXLL", PU_STATIC);
-  hu_msgbg[7] = (patch_t *) W_CacheLumpName("BOXLC", PU_STATIC);
-  hu_msgbg[8] = (patch_t *) W_CacheLumpName("BOXLR", PU_STATIC);
-
   //jff 2/26/98 load patches for keys and double keys
   hu_fontk[0] = (patch_t *) W_CacheLumpName("STKEYS0", PU_STATIC);
   hu_fontk[1] = (patch_t *) W_CacheLumpName("STKEYS1", PU_STATIC);
@@ -495,7 +483,7 @@ void HU_Start(void)
   HUlib_initMText(&w_rtext, 0, 0, SCREENWIDTH,
 		  (hud_msg_lines+2)*HU_REFRESHSPACING, hu_font,
 		  HU_FONTSTART, colrngs[hudcolor_list],
-		  hu_msgbg, &message_list_on);      // killough 11/98
+		  &message_list_on);      // killough 11/98
 
   // initialize the automap's level title widget
 

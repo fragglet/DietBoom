@@ -357,7 +357,7 @@ void HUlib_eraseSText(hu_stext_t* s)
 //
 
 void HUlib_initMText(hu_mtext_t *m, int x, int y, int w, int h, patch_t **font,
-                     int startchar, char *cr, patch_t** bgfont, boolean *on)
+                     int startchar, char *cr, boolean *on)
 {
   int i;
 
@@ -368,7 +368,6 @@ void HUlib_initMText(hu_mtext_t *m, int x, int y, int w, int h, patch_t **font,
   m->y = y;
   m->w = w;
   m->h = h;
-  m->bg = bgfont;
   m->on = on;
 
   // killough 11/98: simplify

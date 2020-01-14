@@ -101,7 +101,6 @@ typedef struct
   int     cl;                          // current line number
 
   int x,y,w,h;                         // window position and size
-  patch_t **bg;                        // patches for background
 
   // pointer to boolean stating whether to update window
   boolean*    on;
@@ -205,7 +204,6 @@ void HUlib_initMText
   patch_t** font,
   int startchar,
   char *cr, 
-  patch_t** bgfont,
   boolean *on
 );
 

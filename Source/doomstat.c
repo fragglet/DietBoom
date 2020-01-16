@@ -45,9 +45,6 @@ int comp[COMP_TOTAL], default_comp[COMP_TOTAL];    // killough 10/98
 
 int demo_version;           // killough 7/19/98: Boom version of demo
 
-// v1.1-like pitched sounds
-int pitched_sounds;  // killough 10/98
-
 int general_translucency;    // killough 10/98
 
 int demo_insurance, default_demo_insurance;        // killough 1/16/98

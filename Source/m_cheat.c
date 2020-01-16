@@ -74,7 +74,6 @@ static void cheat_weapx();
 static void cheat_ammo();
 static void cheat_ammox();
 static void cheat_smart();
-static void cheat_pitch();
 static void cheat_nuke();
 
 #ifdef INSTRUMENTED
@@ -213,9 +212,6 @@ struct cheat_s cheat[] = {
 
   {"smart",   NULL,                   not_net | not_demo,
    cheat_smart},         // killough 2/21/98: smart monster toggle
-
-  {"pitch",   NULL,                   always,
-   cheat_pitch},         // killough 2/21/98: pitched sound toggle
 
   // killough 2/21/98: reduce RSI injury by adding simpler alias sequences:
   {"mbfran",     NULL,                always, 
@@ -621,12 +617,6 @@ static void cheat_smart()
 {
   plyr->message = (monsters_remember = !monsters_remember) ? 
     "Smart Monsters Enabled" : "Smart Monsters Disabled";
-}
-
-static void cheat_pitch()
-{
-  plyr->message=(pitched_sounds = !pitched_sounds) ? "Pitch Effects Enabled" :
-    "Pitch Effects Disabled";
 }
 
 static void cheat_nuke()

@@ -342,21 +342,6 @@ void S_StartSound(const mobj_t *origin, int sfx_id)
          sep = NORM_SEP;
   }
 
-   if(pitched_sounds)
-   {
-      // hacks to vary the sfx pitches
-      if(sfx_id >= sfx_sawup && sfx_id <= sfx_sawhit)
-         pitch += 8 - (M_Random()&15);
-      else if(sfx_id != sfx_itemup && sfx_id != sfx_tink)
-         pitch += 16 - (M_Random()&31);
-      
-      if(pitch < 0)
-         pitch = 0;
-      
-      if(pitch > 255)
-         pitch = 255;
-   }
-
    // try to find a channel
    if((cnum = S_getChannel(origin, sfx, priority, singularity)) < 0)
       return;

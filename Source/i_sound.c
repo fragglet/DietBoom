@@ -313,10 +313,7 @@ static void updateSoundParams(int handle, int volume, int separation, int pitch)
    // to global samplerate for mixing purposes.
    // Patched to shift left *then* divide, to minimize roundoff errors
    // as well as to use SAMPLERATE as defined above, not to assume 11025 Hz
-   if(pitched_sounds)
-      channelinfo[slot].step = step;
-   else
-      channelinfo[slot].step = 1 << 16;
+   channelinfo[slot].step = 1 << 16;
    
    // Separation, that is, orientation/stereo.
    //  range is: 1 - 256

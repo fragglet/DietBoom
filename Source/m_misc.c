@@ -176,13 +176,6 @@ default_t defaults[] = {
     "1 to enable flashing icon during disk IO"
   },
 
-  { // killough 2/21/98
-    "pitched_sounds",
-    &pitched_sounds, NULL,
-    {0}, {0,1}, number, ss_gen, wad_yes,
-    "1 to enable variable pitch in sound effects (from id's original code)"
-  },
-
   { // phares
     "translucency",
     &general_translucency, NULL,

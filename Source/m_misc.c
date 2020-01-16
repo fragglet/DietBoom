@@ -197,13 +197,6 @@ default_t defaults[] = {
     "set percentage of foreground/background translucency mix"
   },
 
-  { // killough 10/98
-    "flashing_hom",
-    &flashing_hom, NULL,
-    {1}, {0,1}, number, ss_gen, wad_yes,
-    "1 to enable flashing HOM indicator"
-  },
-
   { // killough 3/31/98
     "demo_insurance",
     &default_demo_insurance, NULL,

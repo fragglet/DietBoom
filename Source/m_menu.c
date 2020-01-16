@@ -2969,9 +2969,6 @@ setup_menu_t gen_settings1[] = { // General Settings screen1
   {"Flash Icon During Disk IO", S_YESNO, m_null, G_X,
    G_Y + general_diskicon*8, {"disk_icon"}},
 
-  {"Flashing HOM indicator", S_YESNO, m_null, G_X,
-   G_Y + general_hom*8, {"flashing_hom"}},
-
   {"Fullscreen Mode", S_YESNO, m_null, G_X, G_Y + general_fullscreen*8,
    {"fullscreen"}, 0, 0, I_ToggleToggleFullScreen},
 

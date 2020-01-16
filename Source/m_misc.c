@@ -274,13 +274,6 @@ default_t defaults[] = {
     "1 to disable doubled card and skull key display on status bar"
   },
 
-  { // killough 4/17/98
-    "traditional_menu",
-    &traditional_menu, NULL,
-    {1}, {0,1}, number, ss_none, wad_yes,
-    "1 to use Doom's main menu ordering"
-  },
-
   { // killough 3/6/98
     "leds_always_off",
     &leds_always_off, NULL,
@@ -1944,8 +1937,6 @@ void M_LoadOptions(void)
       free(buf);
       Z_ChangeTag(options, PU_CACHE);
     }
-
-  M_ResetMenu();       // reset menu in case of change
 }
 
 //

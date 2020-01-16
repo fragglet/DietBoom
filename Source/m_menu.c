@@ -2456,9 +2456,7 @@ void M_DrawKeybnd(void)
 // neighboring screens.
 
 enum {           // killough 10/98: enum for y-offset info
-  weap_recoil,
   weap_bobbing,
-  weap_bfg,
   weap_stub1,
   weap_pref1,
   weap_pref2,
@@ -2569,19 +2567,19 @@ setup_menu_t stat_settings1[] =  // Status Bar and HUD Settings screen
 {
   {"STATUS BAR"        ,S_SKIP|S_TITLE,m_null,ST_X,ST_Y+ 1*8 },
 
-  {"SINGLE KEY DISPLAY",S_YESNO, m_null,ST_X,ST_Y+ 4*8, {"sts_traditional_keys"}},
+  {"SINGLE KEY DISPLAY",S_YESNO, m_null,ST_X,ST_Y+ 2*8, {"sts_traditional_keys"}},
 
-  {"HEADS-UP DISPLAY"  ,S_SKIP|S_TITLE,m_null,ST_X,ST_Y+ 6*8},
+  {"HEADS-UP DISPLAY"  ,S_SKIP|S_TITLE,m_null,ST_X,ST_Y+ 4*8},
 
-  {"HIDE SECRETS"      ,S_YESNO     ,m_null,ST_X,ST_Y+ 7*8, {"hud_nosecrets"}},
-  {"HEALTH LOW/OK"     ,S_NUM       ,m_null,ST_X,ST_Y+ 8*8, {"health_red"}},
-  {"HEALTH OK/GOOD"    ,S_NUM       ,m_null,ST_X,ST_Y+ 9*8, {"health_yellow"}},
-  {"HEALTH GOOD/EXTRA" ,S_NUM       ,m_null,ST_X,ST_Y+10*8, {"health_green"}},
-  {"ARMOR LOW/OK"      ,S_NUM       ,m_null,ST_X,ST_Y+11*8, {"armor_red"}},
-  {"ARMOR OK/GOOD"     ,S_NUM       ,m_null,ST_X,ST_Y+12*8, {"armor_yellow"}},
-  {"ARMOR GOOD/EXTRA"  ,S_NUM       ,m_null,ST_X,ST_Y+13*8, {"armor_green"}},
-  {"AMMO LOW/OK"       ,S_NUM       ,m_null,ST_X,ST_Y+14*8, {"ammo_red"}},
-  {"AMMO OK/GOOD"      ,S_NUM       ,m_null,ST_X,ST_Y+15*8, {"ammo_yellow"}},
+  {"HIDE SECRETS"      ,S_YESNO     ,m_null,ST_X,ST_Y+ 5*8, {"hud_nosecrets"}},
+  {"HEALTH LOW/OK"     ,S_NUM       ,m_null,ST_X,ST_Y+ 6*8, {"health_red"}},
+  {"HEALTH OK/GOOD"    ,S_NUM       ,m_null,ST_X,ST_Y+ 7*8, {"health_yellow"}},
+  {"HEALTH GOOD/EXTRA" ,S_NUM       ,m_null,ST_X,ST_Y+ 8*8, {"health_green"}},
+  {"ARMOR LOW/OK"      ,S_NUM       ,m_null,ST_X,ST_Y+ 9*8, {"armor_red"}},
+  {"ARMOR OK/GOOD"     ,S_NUM       ,m_null,ST_X,ST_Y+10*8, {"armor_yellow"}},
+  {"ARMOR GOOD/EXTRA"  ,S_NUM       ,m_null,ST_X,ST_Y+11*8, {"armor_green"}},
+  {"AMMO LOW/OK"       ,S_NUM       ,m_null,ST_X,ST_Y+12*8, {"ammo_red"}},
+  {"AMMO OK/GOOD"      ,S_NUM       ,m_null,ST_X,ST_Y+13*8, {"ammo_yellow"}},
 
   // Button for resetting to defaults
   {0,S_RESET,m_null,X_BUTTON,Y_BUTTON},
@@ -2919,12 +2917,9 @@ enum {
   general_hires,  
   general_pageflip,
   general_vsync,
-  general_trans,
-  general_transpct,
   general_pcx,
   general_diskicon,
-  general_hom
-, general_fullscreen
+  general_fullscreen
 };
 
 enum {
@@ -3012,7 +3007,6 @@ enum {
 };
 
 enum {
-  general_corpse,
   general_realtic,
   general_end
 };
@@ -3275,7 +3269,6 @@ enum {
   mess_hud_timer,
   mess_lines,
   mess_scrollup,
-  mess_background,
 };
 
 setup_menu_t mess_settings1[];

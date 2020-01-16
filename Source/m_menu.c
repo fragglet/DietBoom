@@ -3050,9 +3050,6 @@ setup_menu_t gen_settings2[] = { // General Settings screen2
 
   {"Miscellaneous"  ,S_SKIP|S_TITLE, m_null, G_X, G_Y4 - 12},
 
-  {"Maximum number of player corpses", S_NUM|S_PRGWARN, m_null, G_X,
-   G_Y4 + general_corpse*8, {"max_player_corpse"}},
-
   {"Game speed, percentage of normal", S_NUM|S_PRGWARN, m_null, G_X,
    G_Y4 + general_realtic*8, {"realtic_clock_rate"}},
 

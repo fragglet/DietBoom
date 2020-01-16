@@ -234,7 +234,7 @@ char  savedescription[32];
 int defaultskill;               //note 1-based
 
 // killough 2/8/98: make corpse queue variable in size
-int    bodyqueslot, bodyquesize, default_bodyquesize; // killough 2/8/98, 10/98
+int    bodyqueslot; // killough 2/8/98, 10/98
 
 void   *statcopy;       // for statistics driver
 
@@ -1815,24 +1815,13 @@ static boolean G_CheckSpot(int playernum, mapthing_t *mthing)
   // killough 2/8/98: make corpse queue have an adjustable limit
   // killough 8/1/98: Fix bugs causing strange crashes
 
-  if (bodyquesize > 0)
-    {
-      static mobj_t **bodyque;
-      static size_t queuesize;
-      if (queuesize < bodyquesize)
-	{
-	  bodyque = realloc(bodyque, bodyquesize*sizeof*bodyque);
-	  memset(bodyque+queuesize, 0, 
-		 (bodyquesize-queuesize)*sizeof*bodyque);
-	  queuesize = bodyquesize;
-	}
-      if (bodyqueslot >= bodyquesize) 
-	P_RemoveMobj(bodyque[bodyqueslot % bodyquesize]); 
-      bodyque[bodyqueslot++ % bodyquesize] = players[playernum].mo; 
-    }
-  else
-    if (!bodyquesize)
-      P_RemoveMobj(players[playernum].mo);
+#define BODYQUESIZE 32
+  {
+    static mobj_t *bodyque[BODYQUESIZE];
+    if (bodyqueslot >= BODYQUESIZE) 
+      P_RemoveMobj(bodyque[bodyqueslot % BODYQUESIZE]); 
+    bodyque[bodyqueslot++ % BODYQUESIZE] = players[playernum].mo; 
+  }
 
   // spawn a teleport fog
   ss = R_PointInSubsector (x,y);

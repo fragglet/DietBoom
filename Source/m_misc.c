@@ -197,13 +197,6 @@ default_t defaults[] = {
     "set percentage of foreground/background translucency mix"
   },
 
-  { // killough 2/8/98
-    "max_player_corpse",
-    &default_bodyquesize, NULL,
-    {32}, {UL,UL},number, ss_gen, wad_no,
-    "number of dead bodies in view supported (negative value = no limit)"
-  },
-
   { // killough 10/98
     "flashing_hom",
     &flashing_hom, NULL,

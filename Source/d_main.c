@@ -1609,7 +1609,6 @@ void D_DoomMain(void)
   puts("M_LoadDefaults: Load system defaults.");
   M_LoadDefaults();              // load before initing other systems
 
-  bodyquesize = default_bodyquesize; // killough 10/98
   snd_card = default_snd_card;
   mus_card = default_mus_card;
 

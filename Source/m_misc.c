@@ -1959,7 +1959,6 @@ void M_LoadOptions(void)
       Z_ChangeTag(options, PU_CACHE);
     }
 
-  M_Trans();           // reset translucency in case of change
   M_ResetMenu();       // reset menu in case of change
 }
 

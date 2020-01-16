@@ -2963,12 +2963,6 @@ setup_menu_t gen_settings1[] = { // General Settings screen1
   {"Wait for Vertical Retrace", S_YESNO, m_null, G_X,
    G_Y + general_vsync*8, {"use_vsync"}, 0, 0, I_ResetScreen},
 
-  {"Enable Translucency", S_YESNO, m_null, G_X,
-   G_Y + general_trans*8, {"translucency"}, 0, 0, M_Trans},
-
-  {"Translucency filter percentage", S_NUM, m_null, G_X,
-   G_Y + general_transpct*8, {"tran_filter_pct"}, 0, 0, M_Trans},
-
   {"PCX instead of BMP for screenshots", S_YESNO, m_null, G_X,
    G_Y + general_pcx*8, {"screenshot_pcx"}},
 
@@ -3068,12 +3062,6 @@ setup_menu_t gen_settings2[] = { // General Settings screen2
 
   {0,S_SKIP|S_END,m_null}
 };
-
-void M_Trans(void) // To reset translucency after setting it in menu
-{
-  if (general_translucency)
-    R_InitTranMap(0);
-}
 
 // Setting up for the General screen. Turn on flags, set pointers,
 // locate the first item on the screen where the cursor is allowed to

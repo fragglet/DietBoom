@@ -66,6 +66,7 @@
 #include "d_main.h"
 #include "d_iwad.h" // [FG] BuildIWADDirList()
 #include "d_deh.h"  // Ty 04/08/98 - Externalizations
+#include "statdump.h" // [FG] StatDump()
 
 // DEHacked support - Ty 03/09/97
 // killough 10/98:
@@ -985,6 +986,77 @@ void IdentifyVersion (void)
     I_Error("IWAD not found\n");
 }
 
+// [FG] emulate a specific version of Doom
+
+static struct
+{
+    const char *description;
+    const char *cmdline;
+    GameVersion_t version;
+} gameversions[] = {
+    {"Doom 1.9",      "1.9",      exe_doom_1_9},
+    {"Ultimate Doom", "ultimate", exe_ultimate},
+    {"Final Doom",    "final",    exe_final},
+    { NULL,           NULL,       0},
+};
+
+static void InitGameVersion(void)
+{
+    int i, p;
+
+    p = M_CheckParm("-gameversion");
+
+    if (p && p < myargc-1)
+    {
+        for (i=0; gameversions[i].description != NULL; ++i)
+        {
+            if (!strcmp(myargv[p+1], gameversions[i].cmdline))
+            {
+                gameversion = gameversions[i].version;
+                break;
+            }
+        }
+
+        if (gameversions[i].description == NULL)
+        {
+            printf("Supported game versions:\n");
+
+            for (i=0; gameversions[i].description != NULL; ++i)
+            {
+                printf("\t%s (%s)\n", gameversions[i].cmdline,
+                        gameversions[i].description);
+            }
+
+            I_Error("Unknown game version '%s'", myargv[p+1]);
+        }
+    }
+    else
+    {
+        // Determine automatically
+
+        if (gamemode == shareware || gamemode == registered ||
+            (gamemode == commercial && gamemission == doom2))
+        {
+            // original
+            gameversion = exe_doom_1_9;
+        }
+        else if (gamemode == retail)
+        {
+            gameversion = exe_ultimate;
+        }
+        else if (gamemode == commercial)
+        {
+            // Final Doom: tnt or plutonia
+            // Defaults to emulating the first Final Doom executable,
+            // which has the crash in the demo loop; however, having
+            // this as the default should mean that it plays back
+            // most demos correctly.
+
+            gameversion = exe_final;
+        }
+    }
+}
+
 // killough 5/3/98: old code removed
 
 //
@@ -1347,6 +1419,12 @@ static void D_ProcessDehPreincludes(void)
 
 static void D_ProcessDehInWad(int i)
 {
+  // [FG] avoid loading DEHACKED lumps embedded into WAD files
+  if (M_CheckParm("-nodehlump"))
+  {
+    return;
+  }
+
   if (i >= 0)
     {
       D_ProcessDehInWad(lumpinfo[i].next);
@@ -1385,6 +1463,9 @@ void D_DoomMain(void)
   sprintf(savegamename = malloc(16), "%.4ssav", D_DoomExeName());
 
   IdentifyVersion();
+
+  // [FG] emulate a specific version of Doom
+  InitGameVersion();
 
   modifiedgame = false;
 
@@ -1697,15 +1778,9 @@ void D_DoomMain(void)
   idmusnum = -1; //jff 3/17/98 insure idmus number is blank
 
   // check for a driver that wants intermission stats
-  if ((p = M_CheckParm ("-statcopy")) && p<myargc-1)
+  if ((p = M_CheckParm ("-statdump")) && p<myargc-1)
     {
-      // for statistics driver
-      extern  void* statcopy;
-
-      // killough 5/2/98: this takes a memory
-      // address as an integer on the command line!
-
-      statcopy = (void*)(intptr_t) atoi(myargv[p+1]);
+      atexit(StatDump);
       puts("External statistics registered.");
     }
 

@@ -80,7 +80,7 @@ static int GetButtonsState(void)
 
     result = 0;
 
-    for (i = 0; i < 8; ++i)
+    for (i = 0; i < MAX_JSB; ++i)
     {
         if (SDL_JoystickGetButton(sdlJoystick, i))
         {
@@ -303,7 +303,7 @@ static void UpdateMouseButtonState(unsigned int button, boolean on)
 {
     static event_t event;
 
-    if (button < SDL_BUTTON_LEFT || button > 5)
+    if (button < SDL_BUTTON_LEFT || button > MAX_MB)
     {
         return;
     }
@@ -677,7 +677,7 @@ static int in_graphics_mode;
 static int in_page_flip, in_hires;
 
 static void I_DrawDiskIcon(), I_RestoreDiskBackground();
-static boolean disk_to_draw;
+static unsigned int disk_to_draw, disk_to_restore;
 
 void I_FinishUpdate(void)
 {
@@ -780,9 +780,9 @@ static void I_InitDiskFlash(void)
 // killough 10/98: draw disk icon
 //
 
-void I_BeginRead(void)
+void I_BeginRead(unsigned int bytes)
 {
-  disk_to_draw = true;
+  disk_to_draw += bytes;
 }
 
 static void I_DrawDiskIcon(void)
@@ -790,10 +790,12 @@ static void I_DrawDiskIcon(void)
   if (!disk_icon || !in_graphics_mode)
     return;
 
-  if (disk_to_draw)
+  if (disk_to_draw >= DISK_ICON_THRESHOLD)
   {
     V_GetBlock(SCREENWIDTH-16, SCREENHEIGHT-16, 0, 16, 16, old_data);
     V_PutBlock(SCREENWIDTH-16, SCREENHEIGHT-16, 0, 16, 16, diskflash);
+
+    disk_to_restore = 1;
   }
 }
 
@@ -811,12 +813,14 @@ static void I_RestoreDiskBackground(void)
   if (!disk_icon || !in_graphics_mode)
     return;
 
-  if (disk_to_draw)
+  if (disk_to_restore)
   {
     V_PutBlock(SCREENWIDTH-16, SCREENHEIGHT-16, 0, 16, 16, old_data);
 
-    disk_to_draw = false;
+    disk_to_restore = 0;
   }
+
+  disk_to_draw = 0;
 }
 
 void I_SetPalette(byte *palette)
@@ -985,7 +989,7 @@ static void I_InitGraphicsMode(void)
               video_display, SDL_GetError());
    }
 
-   if (page_flip && use_vsync && !singletics && mode.refresh_rate > 0)
+   if (page_flip && use_vsync && !timingdemo && mode.refresh_rate > 0)
    {
       flags |= SDL_RENDERER_PRESENTVSYNC;
    }

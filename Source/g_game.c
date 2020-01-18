@@ -57,6 +57,8 @@
 #include "d_deh.h"              // Ty 3/27/98 deh declarations
 #include "p_inter.h"
 #include "g_game.h"
+#include "i_video.h" // [FG] MAX_JSB, MAX_MB
+#include "statdump.h" // [FG] StatCopy()
 
 #define SAVEGAMESIZE  0x20000
 #define SAVESTRINGSIZE  24
@@ -194,6 +196,10 @@ int     joybspeed;
 // [FG] prev/next weapon joystick buttons
 int     joybprevweapon;
 int     joybnextweapon;
+// [FG] automap joystick button
+int     joybautomap;
+// [FG] main menu joystick button
+int     joybmainmenu;
 
 #define MAXPLMOVE   (forwardmove[1])
 #define TURBOTHRESHOLD  0x32
@@ -208,7 +214,7 @@ fixed_t angleturn[3]   = {640, 1280, 320};  // + slow turn
 boolean gamekeydown[NUMKEYS];
 int     turnheld;       // for accelerative turning
 
-boolean mousearray[6];
+boolean mousearray[MAX_MB+1]; // [FG] support more mouse buttons
 boolean *mousebuttons = &mousearray[1];    // allow [-1]
 
 // mouse values are used once
@@ -224,7 +230,7 @@ int   dclicks2;
 // joystick values are repeated
 int   joyxmove;
 int   joyymove;
-boolean joyarray[9];
+boolean joyarray[MAX_JSB+1]; // [FG] support more joystick buttons
 boolean *joybuttons = &joyarray[1];    // allow [-1]
 
 int   savegameslot;
@@ -235,8 +241,6 @@ int defaultskill;               //note 1-based
 
 // killough 2/8/98: make corpse queue variable in size
 int    bodyqueslot; // killough 2/8/98, 10/98
-
-void   *statcopy;       // for statistics driver
 
 // Set to -1 or +1 to switch to the previous or next weapon.
 
@@ -1078,8 +1082,10 @@ static void G_DoCompleted(void)
   viewactive = false;
   automapactive = false;
 
-  if (statcopy)
-    memcpy (statcopy, &wminfo, sizeof(wminfo));
+  if (gamemode == commercial || gamemap != 8)
+  {
+    StatCopy(&wminfo);
+  }
 
   WI_Start (&wminfo);
 }

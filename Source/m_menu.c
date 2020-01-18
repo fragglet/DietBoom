@@ -35,8 +35,10 @@
 
 #include "doomdef.h"
 #include "doomstat.h"
+#include "doomtype.h" // [FG] inline
 #include "dstrings.h"
 #include "d_main.h"
+#include "i_savepng.h" // [FG] SavePNG()
 #include "i_system.h"
 #include "i_video.h"
 #include "v_video.h"
@@ -50,7 +52,6 @@
 #include "d_deh.h"
 #include "m_misc.h"
 #include "m_misc2.h" // [FG] M_StringDuplicate()
-#include "i_savepng.h" // [FG] SavePNG()
 
 extern patch_t* hu_font[HU_FONTSIZE];
 extern boolean  message_dontfuckwithme;
@@ -167,11 +168,15 @@ extern int joybstrafe;
 // [FG] strafe left/right joystick buttons
 extern int joybstrafeleft;
 extern int joybstraferight;
+extern int joybuse;                                   
+extern int joybspeed;                                     
 // [FG] prev/next weapon joystick buttons
 extern int joybprevweapon;
 extern int joybnextweapon;
-extern int joybuse;                                   
-extern int joybspeed;                                     
+// [FG] automap joystick button
+extern int joybautomap;
+// [FG] main menu joystick button
+extern int joybmainmenu;
 extern int health_red;    // health amount less than which status is red
 extern int health_yellow; // health amount less than which status is yellow
 extern int health_green;  // health amount above is blue, below is green
@@ -842,6 +847,7 @@ void M_ReadSaveStrings(void)
 	  LoadMenu[i].status = 0;
 	  continue;
 	}
+      // [FG] check return value
       if (!fread(&savegamestrings[i], SAVESTRINGSIZE, 1, fp))
 	{
 	  strcpy(&savegamestrings[i][0],s_EMPTYSTRING);
@@ -1894,10 +1900,8 @@ void M_DrawSetting(setup_menu_t* s)
 	  else
 	    if (key == &key_up   || key == &key_speed ||
 		key == &key_fire || key == &key_strafe ||
-		// [FG] strafe left/right joystick buttons
-		key == &key_strafeleft || key == &key_straferight ||
-		// [FG] prev/next weapon keys and buttons
-		key == &key_prevweapon || key == &key_nextweapon)
+		// [FG] support more joystick and mouse buttons
+		s->m_mouse || s->m_joy)
 	      {
 		if (s->m_mouse)
 		  sprintf(menu_buffer+strlen(menu_buffer), "/MB%d",
@@ -2269,11 +2273,7 @@ setup_menu_t keys_settings1[] =  // Key Binding screen strings
   {"RIGHT"       ,S_KEY       ,m_menu,KB_X,KB_Y+16*8,{&key_menu_right}},
   {"BACKSPACE"   ,S_KEY       ,m_menu,KB_X,KB_Y+17*8,{&key_menu_backspace}},
   {"SELECT ITEM" ,S_KEY       ,m_menu,KB_X,KB_Y+18*8,{&key_menu_enter}},
-  {"EXIT"        ,S_KEY       ,m_menu,KB_X,KB_Y+19*8,{&key_menu_escape}},
-/*
-  // [FG] clear key bindings with the DEL key
-  {"CLEAR"       ,S_KEY       ,m_menu,KB_X,KB_Y+20*8,{&key_menu_clear}},
-*/
+  {"EXIT"        ,S_KEY       ,m_menu,KB_X,KB_Y+19*8,{&key_menu_escape},0,&joybmainmenu},
 
   // Button for resetting to defaults
   {0,S_RESET,m_null,X_BUTTON,Y_BUTTON},
@@ -2300,11 +2300,11 @@ setup_menu_t keys_settings2[] =  // Key Binding screen strings
   // key with other keys in the same 'group'. (m_scrn, etc.)
 
   {"HELP"        ,S_SKIP|S_KEEP ,m_scrn,0   ,0    ,{&key_help}},
-  {"MENU"        ,S_SKIP|S_KEEP ,m_scrn,0   ,0    ,{&key_escape}},
+  {"MENU"        ,S_SKIP|S_KEEP ,m_scrn,0   ,0    ,{&key_escape},0,&joybmainmenu},
   // killough 10/98: hotkey for entering setup menu:
   {"SETUP"       ,S_KEY       ,m_scrn,KB_X,KB_Y+ 1*8,{&key_setup}},
   {"PAUSE"       ,S_KEY       ,m_scrn,KB_X,KB_Y+ 2*8,{&key_pause}},
-  {"AUTOMAP"     ,S_KEY       ,m_scrn,KB_X,KB_Y+ 3*8,{&key_map}},
+  {"AUTOMAP"     ,S_KEY       ,m_scrn,KB_X,KB_Y+ 3*8,{&key_map},0,&joybautomap},
   {"VOLUME"      ,S_KEY       ,m_scrn,KB_X,KB_Y+ 4*8,{&key_soundvolume}},
   {"HUD"         ,S_KEY       ,m_scrn,KB_X,KB_Y+ 5*8,{&key_hud}},
   {"MESSAGES"    ,S_KEY       ,m_scrn,KB_X,KB_Y+ 6*8,{&key_messages}},
@@ -2343,8 +2343,8 @@ setup_menu_t keys_settings3[] =  // Key Binding screen strings
   {"BEST"    ,S_KEY       ,m_scrn,KB_X,KB_Y+10*8,{&key_weapontoggle}},
   {"FIRE"    ,S_KEY       ,m_scrn,KB_X,KB_Y+11*8,{&key_fire},&mousebfire,&joybfire},
   // [FG] prev/next weapon keys and buttons
-  {"PREV"    ,S_KEY       ,m_scrn,KB_X,KB_Y+11*8,{&key_prevweapon},&mousebprevweapon,&joybprevweapon},
-  {"NEXT"    ,S_KEY       ,m_scrn,KB_X,KB_Y+12*8,{&key_nextweapon},&mousebnextweapon,&joybnextweapon},
+  {"PREV"    ,S_KEY       ,m_scrn,KB_X,KB_Y+12*8,{&key_prevweapon},&mousebprevweapon,&joybprevweapon},
+  {"NEXT"    ,S_KEY       ,m_scrn,KB_X,KB_Y+13*8,{&key_nextweapon},&mousebnextweapon,&joybnextweapon},
 
   {"<- PREV",S_SKIP|S_PREV,m_null,KB_PREV,KB_Y+20*8, {keys_settings2}},
   {"NEXT ->",S_SKIP|S_NEXT,m_null,KB_NEXT,KB_Y+20*8, {keys_settings4}},
@@ -2898,10 +2898,12 @@ enum {
   general_vsync,
   general_pcx,
   general_diskicon,
+  // [FG] fullscreen mode menu toggle
   general_fullscreen
 };
 
 enum {
+// [FG] remove sound and music card items
 /*
   general_sndcard,
   general_muscard,
@@ -2912,7 +2914,7 @@ enum {
 
 #define G_X 250
 #define G_Y  44
-#define G_Y2 (G_Y+82+16)
+#define G_Y2 (G_Y+82+16) // [FG] remove sound and music card items
 #define G_Y3 (G_Y+44)
 #define G_Y4 (G_Y3+52)
 #define GF_X 76
@@ -2924,11 +2926,8 @@ setup_menu_t gen_settings1[] = { // General Settings screen1
   {"High Resolution", S_YESNO, m_null, G_X, G_Y + general_hires*8,
    {"hires"}, 0, 0, I_ResetScreen},
 
-#if 0 // SDL2
-  {"Use Page-Flipping", S_YESNO, m_null, G_X, G_Y + general_pageflip*8,
-#else
+  // [FG] page_flip = !force_software_renderer
   {"Use Hardware Acceleration", S_YESNO, m_null, G_X, G_Y + general_pageflip*8,
-#endif
    {"page_flip"}, 0, 0, I_ResetScreen},
 
   {"Wait for Vertical Retrace", S_YESNO, m_null, G_X,
@@ -2940,11 +2939,13 @@ setup_menu_t gen_settings1[] = { // General Settings screen1
   {"Flash Icon During Disk IO", S_YESNO, m_null, G_X,
    G_Y + general_diskicon*8, {"disk_icon"}},
 
+  // [FG] fullscreen mode menu toggle
   {"Fullscreen Mode", S_YESNO, m_null, G_X, G_Y + general_fullscreen*8,
    {"fullscreen"}, 0, 0, I_ToggleToggleFullScreen},
 
   {"Sound & Music", S_SKIP|S_TITLE, m_null, G_X, G_Y2 - 12},
 
+// [FG] remove sound and music card items
 /*
   {"Sound Card", S_NUM|S_PRGWARN, m_null, G_X,
    G_Y2 + general_sndcard*8, {"sound_card"}},
@@ -3475,7 +3476,7 @@ void M_ResetDefaults()
 		  free(dp->location->s),
 		    dp->location->s = strdup(dp->defaultvalue.s);
 		else
-		  *dp->location = dp->defaultvalue;
+		  dp->location->i = dp->defaultvalue.i;
 	
 		if (p->m_flags & (S_LEVWARN | S_PRGWARN))
 		  warn |= p->m_flags & (S_LEVWARN | S_PRGWARN);
@@ -4022,6 +4023,23 @@ void M_DrawCredits(void)     // killough 10/98: credit screen
   M_DrawScreenItems(cred_settings);
 }
 
+// [FG] support more joystick and mouse buttons
+
+static inline int GetButtons(const unsigned int max, int data)
+{
+	int i;
+
+	for (i = 0; i < max; ++i)
+	{
+		if (data & (1 << i))
+		{
+			return i;
+		}
+	}
+
+	return -1;
+}
+
 /////////////////////////////////////////////////////////////////////////////
 //
 // M_Responder
@@ -4081,13 +4099,21 @@ boolean M_Responder (event_t* ev)
 	  joywait = I_GetTime() + 5;
 	}
 
+      // [FG] Menu joystick button
+      if (joybmainmenu > -1 && (ev->data1 & (1 << joybmainmenu)))
+	{
+	  ch = menuactive ? key_menu_escape : key_escape;
+	  joywait = I_GetTime() + 5;
+	}
+
 // phares 4/4/98:
       // Handle joystick buttons 3 and 4, and allow them to pass down
       // to where key binding can eat them.
 
       if (setup_active && set_keybnd_active)
 	{
-	  if (ev->data1&4 || ev->data1&8 || ev->data1&16 || ev->data1&32 || ev->data1&64 || ev->data1&128)
+	  // [FG] support more joystick and mouse buttons
+	  if (ev->data1 >> 2)
 	    {
 	      ch = 0; // meaningless, just to get you past the check for -1
 	      joywait = I_GetTime() + 5;
@@ -4147,7 +4173,8 @@ boolean M_Responder (event_t* ev)
 	  // to where key binding can eat it.
 
 	  if (setup_active && set_keybnd_active)
-	    if (ev->data1&4 || ev->data1&8 || ev->data1&16)
+	    // [FG] support more joystick and mouse buttons
+	    if (ev->data1 >> 2)
 	      {
 		ch = 0; // meaningless, just to get you past the check for -1
 		mousewait = I_GetTime() + 15;
@@ -4561,23 +4588,8 @@ boolean M_Responder (event_t* ev)
       
 		oldbutton = *ptr1->m_joy;
 		group  = ptr1->m_group;
-		if (ev->data1 & 1)
-		  ch = 0;
-		else if (ev->data1 & 2)
-		  ch = 1;
-		else if (ev->data1 & 4)
-		  ch = 2;
-		else if (ev->data1 & 8)
-		  ch = 3;
-		else if (ev->data1 & 16)
-		  ch = 4;
-		else if (ev->data1 & 32)
-		  ch = 5;
-		else if (ev->data1 & 64)
-		  ch = 6;
-		else if (ev->data1 & 128)
-		  ch = 7;
-		else
+		// [FG] support more joystick and mouse buttons
+		if ((ch = GetButtons(MAX_JSB, ev->data1)) == -1)
 		  return true;
 		for (i = 0 ; keys_settings[i] && search ; i++)
 		  for (ptr2 = keys_settings[i] ; !(ptr2->m_flags & S_END) ; ptr2++)
@@ -4608,17 +4620,8 @@ boolean M_Responder (event_t* ev)
 
 		oldbutton = *ptr1->m_mouse;
 		group  = ptr1->m_group;
-		if (ev->data1 & 1)
-		  ch = 0;
-		else if (ev->data1 & 2)
-		  ch = 1;
-		else if (ev->data1 & 4)
-		  ch = 2;
-		else if (ev->data1 & 8)
-		  ch = 3;
-		else if (ev->data1 & 16)
-		  ch = 4;
-		else
+		// [FG] support more joystick and mouse buttons
+		if ((ch = GetButtons(MAX_MB, ev->data1)) == -1)
 		  return true;
 		for (i = 0 ; keys_settings[i] && search ; i++)
 		  for (ptr2 = keys_settings[i] ; !(ptr2->m_flags & S_END) ; ptr2++)

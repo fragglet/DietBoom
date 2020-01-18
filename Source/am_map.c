@@ -51,7 +51,6 @@ int mapcolor_ykey;    // yellow key color
 int mapcolor_rdor;    // red door color  (diff from keys to allow option)
 int mapcolor_bdor;    // blue door color (of enabling one but not other )
 int mapcolor_ydor;    // yellow door color
-int mapcolor_secr;    // secret sector boundary color
 int mapcolor_unsn;    // computer map unseen line color
 int mapcolor_flat;    // line with no floor/ceiling changes
 int mapcolor_sprt;    // general sprite color
@@ -1279,24 +1278,7 @@ void AM_drawWalls(void)
         continue;
       if (!lines[i].backsector)
       {
-        // jff 1/10/98 add new color for 1S secret sector boundary
-        if (mapcolor_secr && //jff 4/3/98 0 is disable
-            (
-             (
-              map_secret_after &&
-              P_WasSecret(lines[i].frontsector) &&
-              !P_IsSecret(lines[i].frontsector)
-             )
-             ||
-             (
-              !map_secret_after &&
-              P_WasSecret(lines[i].frontsector)
-             )
-            )
-          )
-          AM_drawMline(&l, mapcolor_secr); // line bounding secret sector
-        else                               //jff 2/16/98 fixed bug
-          AM_drawMline(&l, mapcolor_wall); // special was cleared
+        AM_drawMline(&l, mapcolor_wall); // special was cleared
       }
       else
       {
@@ -1352,30 +1334,7 @@ void AM_drawWalls(void)
         )
         {
           AM_drawMline(&l, mapcolor_clsd);      // non-secret closed door
-        } //jff 1/6/98 show secret sector 2S lines
-        else if
-        (
-            mapcolor_secr && //jff 2/16/98 fixed bug
-            (                    // special was cleared after getting it
-              (map_secret_after &&
-               (
-                (P_WasSecret(lines[i].frontsector)
-                 && !P_IsSecret(lines[i].frontsector)) || 
-                (P_WasSecret(lines[i].backsector)
-                 && !P_IsSecret(lines[i].backsector))
-               )
-              )
-              ||  //jff 3/9/98 add logic to not show secret til after entered
-              (   // if map_secret_after is true
-                !map_secret_after &&
-                 (P_WasSecret(lines[i].frontsector) ||
-                  P_WasSecret(lines[i].backsector))
-              )
-            )
-        )
-        {
-          AM_drawMline(&l, mapcolor_secr); // line bounding secret sector
-        } //jff 1/6/98 end secret sector line change
+        }
         else if (lines[i].backsector->floorheight !=
                   lines[i].frontsector->floorheight)
         {

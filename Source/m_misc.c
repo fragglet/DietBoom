@@ -1244,13 +1244,6 @@ default_t defaults[] = {
     "color used for closed yellow doors"
   },
 
-  { // purple
-    "mapcolor_secr",
-    &mapcolor_secr, NULL,
-    {252}, {0,255}, number, ss_auto, wad_yes,
-    "color used for lines around secret sectors"
-  },
-
   { // dk gray
     "mapcolor_unsn",
     &mapcolor_unsn, NULL,

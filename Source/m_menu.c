@@ -276,7 +276,6 @@ void M_ClearMenus (void);
 int  M_GetKeyString(int,int);
 void M_Setup(int choice);                               
 void M_KeyBindings(int choice);                        
-void M_Weapons(int);
 void M_StatusBar(int);
 void M_Automap(int);
 void M_Enemy(int);
@@ -287,7 +286,6 @@ void M_ExtHelpNextScreen(int);
 void M_ExtHelp(int);
 int  M_GetPixelWidth(char*);
 void M_DrawKeybnd(void);
-void M_DrawWeapons(void);
 void M_DrawMenuString(int,int,int);                    
 void M_DrawStatusHUD(void);
 void M_DrawExtHelp(void);
@@ -1513,7 +1511,6 @@ menuitem_t SetupMenu[]=
 {
   {1,"M_COMPAT",M_Compat,     'p'},
   {1,"M_KEYBND",M_KeyBindings,'k'},
-  {1,"M_WEAP"  ,M_Weapons,    'w'},
   {1,"M_STAT"  ,M_StatusBar,  's'},               
   {1,"M_AUTO"  ,M_Automap,    'a'},                    
   {1,"M_ENEM"  ,M_Enemy,      'e'},                     
@@ -1580,16 +1577,6 @@ menu_t KeybndDef =
   &SetupDef,
   Generic_Setup,
   M_DrawKeybnd,
-  34,5,      // skull drawn here
-  0
-};
-
-menu_t WeaponDef =
-{
-  generic_setup_end,
-  &SetupDef,
-  Generic_Setup,
-  M_DrawWeapons,
   34,5,      // skull drawn here
   0
 };
@@ -2423,104 +2410,6 @@ void M_DrawKeybnd(void)
 
   M_DrawBackground("FLOOR4_6", screens[0]); // Draw background
   V_DrawPatchDirect (84,2,0,W_CacheLumpName("M_KEYBND",PU_CACHE));
-  M_DrawInstructions();
-  M_DrawScreenItems(current_setup_menu);
-
-  // If the Reset Button has been selected, an "Are you sure?" message
-  // is overlayed across everything else.
-
-  if (default_verify)
-    M_DrawDefVerify();
-}
-
-/////////////////////////////
-//
-// The Weapon Screen tables.
-
-#define WP_X 203
-#define WP_Y  33
-
-// There's only one weapon settings screen (for now). But since we're
-// trying to fit a common description for screens, it gets a setup_menu_t,
-// which only has one screen definition in it.
-//
-// Note that this screen has no PREV or NEXT items, since there are no
-// neighboring screens.
-
-enum {           // killough 10/98: enum for y-offset info
-  weap_pref1,
-  weap_pref2,
-  weap_pref3,
-  weap_pref4,
-  weap_pref5,
-  weap_pref6,
-  weap_pref7,
-  weap_pref8,
-  weap_pref9,
-  weap_stub2,
-  weap_toggle,
-  weap_toggle2,
-};
-
-setup_menu_t weap_settings1[];
-
-setup_menu_t* weap_settings[] =
-{
-  weap_settings1,
-  NULL
-};
-
-setup_menu_t weap_settings1[] =  // Weapons Settings screen       
-{
-  {"1ST CHOICE WEAPON",S_WEAP,m_null,WP_X,WP_Y+weap_pref1*8, {"weapon_choice_1"}},
-  {"2nd CHOICE WEAPON",S_WEAP,m_null,WP_X,WP_Y+weap_pref2*8, {"weapon_choice_2"}},
-  {"3rd CHOICE WEAPON",S_WEAP,m_null,WP_X,WP_Y+weap_pref3*8, {"weapon_choice_3"}},
-  {"4th CHOICE WEAPON",S_WEAP,m_null,WP_X,WP_Y+weap_pref4*8, {"weapon_choice_4"}},
-  {"5th CHOICE WEAPON",S_WEAP,m_null,WP_X,WP_Y+weap_pref5*8, {"weapon_choice_5"}},
-  {"6th CHOICE WEAPON",S_WEAP,m_null,WP_X,WP_Y+weap_pref6*8, {"weapon_choice_6"}},
-  {"7th CHOICE WEAPON",S_WEAP,m_null,WP_X,WP_Y+weap_pref7*8, {"weapon_choice_7"}},
-  {"8th CHOICE WEAPON",S_WEAP,m_null,WP_X,WP_Y+weap_pref8*8, {"weapon_choice_8"}},
-  {"9th CHOICE WEAPON",S_WEAP,m_null,WP_X,WP_Y+weap_pref9*8, {"weapon_choice_9"}},
-
-  // Button for resetting to defaults
-  {0,S_RESET,m_null,X_BUTTON,Y_BUTTON},
-
-  // Final entry
-  {0,S_SKIP|S_END,m_null}
-
-};
-
-// Setting up for the Weapons screen. Turn on flags, set pointers,
-// locate the first item on the screen where the cursor is allowed to
-// land.
-
-void M_Weapons(int choice)
-{
-  M_SetupNextMenu(&WeaponDef);
-
-  setup_active = true;
-  setup_screen = ss_weap;
-  set_weapon_active = true;
-  setup_select = false;
-  default_verify = false;
-  setup_gather = false;
-  mult_screens_index = 0;
-  current_setup_menu = weap_settings[0];
-  set_menu_itemon = 0;
-  while (current_setup_menu[set_menu_itemon++].m_flags & S_SKIP);
-  current_setup_menu[--set_menu_itemon].m_flags |= S_HILITE;
-}
-
-
-// The drawing part of the Weapons Setup initialization. Draw the
-// background, title, instruction line, and items.
-
-void M_DrawWeapons(void)
-{
-  inhelpscreens = true;    // killough 4/6/98: Force status bar redraw
-
-  M_DrawBackground("FLOOR4_6", screens[0]); // Draw background
-  V_DrawPatchDirect (109,2,0,W_CacheLumpName("M_WEAP",PU_CACHE));
   M_DrawInstructions();
   M_DrawScreenItems(current_setup_menu);
 
@@ -3430,7 +3319,6 @@ void M_SelectDone(setup_menu_t* ptr)
 static setup_menu_t **setup_screens[] =
 {
   keys_settings,
-  weap_settings,
   stat_settings,
   auto_settings,
   enem_settings,
@@ -4664,42 +4552,6 @@ boolean M_Responder (event_t* ev)
 			  break;
 			}
 		*ptr1->var.m_key = ch;
-	      }
-
-	    M_SelectDone(ptr1);       // phares 4/17/98
-	    return true;
-	  }
-
-      // Weapons
-
-      if (set_weapon_active) // on the weapons setup screen
-	if (setup_select) // changing an entry
-	  {
-	    if (ch != key_menu_enter)
-	      {
-		ch -= '0'; // out of ascii
-		if (ch < 1 || ch > 9)
-		  return true; // ignore
-
-		// Plasma and BFG don't exist in shareware
-		// killough 10/98: allow it anyway, since this
-		// isn't the game itself, just setting preferences
-            
-		// see if 'ch' is already assigned elsewhere. if so,
-		// you have to swap assignments.
-
-		// killough 11/98: simplified
-
-		for (i = 0; (ptr2 = weap_settings[i]); i++)
-		  for (; !(ptr2->m_flags & S_END); ptr2++)
-		    if (ptr2->m_flags & S_WEAP && 
-			ptr2->var.def->location->i == ch && ptr1 != ptr2)
-		      {
-			*ptr2->var.def->location = *ptr1->var.def->location;
-			goto end;
-		      }
-	      end:
-		ptr1->var.def->location->i = ch;
 	      }
 
 	    M_SelectDone(ptr1);       // phares 4/17/98

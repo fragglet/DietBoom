@@ -197,7 +197,7 @@ default_t defaults[] = {
   { // killough 10/98
     "doom_weapon_toggles",
     (config_t *) &doom_weapon_toggles, NULL,
-    {1}, {0,1}, number, ss_weap, wad_no,
+    {1}, {0,1}, number, ss_keys, wad_no,
     "1 to toggle between SG/SSG and Fist/Chainsaw"
   },
 
@@ -1446,63 +1446,63 @@ default_t defaults[] = {
   {  // killough 2/8/98: weapon preferences set by user:
     "weapon_choice_1",
     (config_t *) &weapon_preferences[0][0], NULL,
-    {6}, {1,9}, number, ss_weap, wad_yes,
+    {6}, {1,9}, number, ss_none, wad_yes,
     "first choice for weapon (best)"
   },
 
   {
     "weapon_choice_2",
     (config_t *) &weapon_preferences[0][1], NULL,
-    {9}, {1,9}, number, ss_weap, wad_yes,
+    {9}, {1,9}, number, ss_none, wad_yes,
     "second choice for weapon"
   },
 
   {
     "weapon_choice_3",
     (config_t *) &weapon_preferences[0][2], NULL,
-    {4}, {1,9}, number, ss_weap, wad_yes,
+    {4}, {1,9}, number, ss_none, wad_yes,
     "third choice for weapon"
   },
 
   {
     "weapon_choice_4",
     (config_t *) &weapon_preferences[0][3], NULL,
-    {3}, {1,9}, number, ss_weap, wad_yes,
+    {3}, {1,9}, number, ss_none, wad_yes,
     "fourth choice for weapon"
   },
 
   {
     "weapon_choice_5",
     (config_t *) &weapon_preferences[0][4], NULL,
-    {2}, {1,9}, number, ss_weap, wad_yes,
+    {2}, {1,9}, number, ss_none, wad_yes,
     "fifth choice for weapon"
   },
 
   {
     "weapon_choice_6",
     (config_t *) &weapon_preferences[0][5], NULL,
-    {8}, {1,9}, number, ss_weap, wad_yes,
+    {8}, {1,9}, number, ss_none, wad_yes,
     "sixth choice for weapon"
   },
 
   {
     "weapon_choice_7",
     (config_t *) &weapon_preferences[0][6], NULL,
-    {5}, {1,9}, number, ss_weap, wad_yes,
+    {5}, {1,9}, number, ss_none, wad_yes,
     "seventh choice for weapon "
   },
 
   {
     "weapon_choice_8",
     (config_t *) &weapon_preferences[0][7], NULL,
-    {7}, {1,9}, number, ss_weap, wad_yes,
+    {7}, {1,9}, number, ss_none, wad_yes,
     "eighth choice for weapon"
   },
 
   {
     "weapon_choice_9",
     (config_t *) &weapon_preferences[0][8], NULL,
-    {1}, {1,9}, number, ss_weap, wad_yes,
+    {1}, {1,9}, number, ss_none, wad_yes,
     "ninth choice for weapon (worst)"
   },
 

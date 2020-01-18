@@ -781,8 +781,6 @@ boolean HU_Responder(event_t *ev)
 		  message_on && reviewing_message)
 		if (!(message_list = !message_list))
 		  {
-		    extern boolean setsizeneeded;
-
 		    // killough 12/98:
 		    // fix crash at startup if key_enter held down
 		    if (gametic && gamestate == GS_LEVEL)

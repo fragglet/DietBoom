@@ -44,9 +44,6 @@ int mapcolor_grid;    // grid lines color
 int mapcolor_wall;    // normal 1s wall color
 int mapcolor_fchg;    // line at floor height change color
 int mapcolor_cchg;    // line at ceiling height change color
-int mapcolor_rkey;    // red key color
-int mapcolor_bkey;    // blue key color
-int mapcolor_ykey;    // yellow key color
 int mapcolor_unsn;    // computer map unseen line color
 int mapcolor_flat;    // line with no floor/ceiling changes
 int mapcolor_sprt;    // general sprite color
@@ -1498,55 +1495,6 @@ void AM_drawThings
     t = sectors[i].thinglist;
     while (t) // for all things in that sector
     {
-      //jff 1/5/98 case over doomednum of thing being drawn
-      if (mapcolor_rkey || mapcolor_ykey || mapcolor_bkey)
-      {
-        switch(t->info->doomednum)
-        {
-          //jff 1/5/98 treat keys special
-          case 38: case 13: //jff  red key
-            AM_drawLineCharacter
-            (
-              cross_mark,
-              NUMCROSSMARKLINES,
-              16<<FRACBITS,
-              t->angle,
-              mapcolor_rkey!=-1? mapcolor_rkey : mapcolor_sprt,
-              t->x,
-              t->y
-            );
-            t = t->snext;
-            continue;
-          case 39: case 6: //jff yellow key
-            AM_drawLineCharacter
-            (
-              cross_mark,
-              NUMCROSSMARKLINES,
-              16<<FRACBITS,
-              t->angle,
-              mapcolor_ykey!=-1? mapcolor_ykey : mapcolor_sprt,
-              t->x,
-              t->y
-            );
-            t = t->snext;
-            continue;
-          case 40: case 5: //jff blue key
-            AM_drawLineCharacter
-            (
-              cross_mark,
-              NUMCROSSMARKLINES,
-              16<<FRACBITS,
-              t->angle,
-              mapcolor_bkey!=-1? mapcolor_bkey : mapcolor_sprt,
-              t->x,
-              t->y
-            );
-            t = t->snext;
-            continue;
-          default:
-            break;
-        }
-      }
       //jff 1/5/98 end added code for keys
       //jff previously entire code
       AM_drawLineCharacter

@@ -1195,27 +1195,6 @@ default_t defaults[] = {
     "color used for lines ceiling height changes across"
   },
 
-  { // red
-    "mapcolor_rkey",
-    &mapcolor_rkey, NULL,
-    {175}, {0,255}, number, ss_auto, wad_yes,
-    "color used for red key sprites"
-  },
-
-  { // blue
-    "mapcolor_bkey",
-    &mapcolor_bkey, NULL,
-    {204}, {0,255}, number, ss_auto, wad_yes,
-    "color used for blue key sprites"
-  },
-
-  { // yellow
-    "mapcolor_ykey",
-    &mapcolor_ykey, NULL,
-    {231}, {0,255}, number, ss_auto, wad_yes,
-    "color used for yellow key sprites"
-  },
-
   { // dk gray
     "mapcolor_unsn",
     &mapcolor_unsn, NULL,

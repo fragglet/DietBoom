@@ -1432,13 +1432,6 @@ default_t defaults[] = {
     "percent of ammo for yellow to green transition"
   },
 
-  { // 0=off, 1=small, 2=full //jff 2/16/98 HUD and status feature controls
-    "hud_active",
-    &hud_active, NULL,
-    {2}, {0,2}, number, ss_none, wad_yes,
-    "0 for HUD off, 1 for HUD small, 2 for full HUD"
-  },
-
   {  // whether hud is displayed //jff 2/23/98
     "hud_displayed",
     &hud_displayed, NULL,

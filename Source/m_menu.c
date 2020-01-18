@@ -4359,26 +4359,6 @@ boolean M_Responder (event_t* ev)
 	  return true;                                            // phares
 	}
                                   
-      if (ch == key_hud)   // heads-up mode       
-	{                    
-	  if (automapactive || chat_on)    // jff 2/22/98
-	    return false;                  // HUD mode control
-	  if (screenSize<8)                // function on default F5
-	    while (screenSize<8 || !hud_displayed) // make hud visible
-	      M_SizeDisplay(1);            // when configuring it
-	  else
-	    {
-	      hud_displayed = 1;               //jff 3/3/98 turn hud on
-	      hud_active = (hud_active+1)%3;   // cycle hud_active
-	      if (!hud_active)                 //jff 3/4/98 add distributed
-		{
-		  hud_distributed = !hud_distributed; // to cycle
-		  HU_MoveHud(); //jff 3/9/98 move it now to avoid glitch
-		}
-	    }
-	  return true;
-	}
-
       // killough 10/98: allow key shortcut into Setup menu
       if (ch == key_setup)
 	{

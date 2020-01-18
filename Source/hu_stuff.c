@@ -42,7 +42,6 @@
 
 int hud_displayed;    //jff 2/23/98 turns heads-up display on/off
 int hud_nosecrets;    //jff 2/18/98 allows secrets line to be disabled in HUD
-int hud_distributed;  //jff 3/4/98 display HUD in different places on screen
 int hud_graph_keys=1; //jff 3/7/98 display HUD keys as graphics
 
 //
@@ -163,13 +162,6 @@ static hu_itext_t     w_inputbuffer[MAXPLAYERS];
 static hu_textline_t  w_coordx; //jff 2/16/98 new coord widget for automap
 static hu_textline_t  w_coordy; //jff 3/3/98 split coord widgets automap
 static hu_textline_t  w_coordz; //jff 3/3/98 split coord widgets automap
-static hu_textline_t  w_ammo;   //jff 2/16/98 new ammo widget for hud
-static hu_textline_t  w_health; //jff 2/16/98 new health widget for hud
-static hu_textline_t  w_armor;  //jff 2/16/98 new armor widget for hud
-static hu_textline_t  w_weapon; //jff 2/16/98 new weapon widget for hud
-static hu_textline_t  w_keys;   //jff 2/16/98 new keys widget for hud
-static hu_textline_t  w_gkeys;  //jff 3/7/98 graphic keys widget for hud
-static hu_textline_t  w_monsec; //jff 2/16/98 new kill/secret widget for hud
 static hu_mtext_t     w_rtext;  //jff 2/26/98 text message refresh widget
 
 static boolean    always_off = false;
@@ -212,13 +204,6 @@ int chat_msg_timer = HU_MSGTIMEOUT * (1000/TICRATE);     // killough 11/98
 static char hud_coordstrx[32];
 static char hud_coordstry[32];
 static char hud_coordstrz[32];
-static char hud_ammostr[80];
-static char hud_healthstr[80];
-static char hud_armorstr[80];
-static char hud_weapstr[80];
-static char hud_keysstr[80];
-static char hud_gkeysstr[80]; //jff 3/7/98 add support for graphic key display
-static char hud_monsecstr[80];
 
 //
 // Builtin map names.
@@ -423,55 +408,6 @@ void HU_Start(void)
   HUlib_initTextLine(&w_title, HU_TITLEX, HU_TITLEY, hu_font,
 		     HU_FONTSTART, colrngs[hudcolor_titl]);
 
-  // create the hud health widget
-  // bargraph and number for amount of health, 
-  // lower left or upper right of screen
-  HUlib_initTextLine(&w_health, hud_distributed ? HU_HEALTHX_D : HU_HEALTHX,
-		     hud_distributed ? HU_HEALTHY_D : HU_HEALTHY, hu_font2,
-		     HU_FONTSTART, colrngs[CR_GREEN]);
-
-  // create the hud armor widget
-  // bargraph and number for amount of armor, 
-  // lower left or upper right of screen
-  HUlib_initTextLine(&w_armor, hud_distributed? HU_ARMORX_D : HU_ARMORX,
-		     hud_distributed ? HU_ARMORY_D : HU_ARMORY, hu_font2,
-		     HU_FONTSTART, colrngs[CR_GREEN]);
-
-  // create the hud ammo widget
-  // bargraph and number for amount of ammo for current weapon, 
-  // lower left or lower right of screen
-  HUlib_initTextLine(&w_ammo, hud_distributed ? HU_AMMOX_D : HU_AMMOX,
-		     hud_distributed ? HU_AMMOY_D : HU_AMMOY, hu_font2,
-		     HU_FONTSTART, colrngs[CR_GOLD]);
-
-  // create the hud weapons widget
-  // list of numbers of weapons possessed
-  // lower left or lower right of screen
-  HUlib_initTextLine(&w_weapon, hud_distributed ? HU_WEAPX_D : HU_WEAPX,
-		     hud_distributed ? HU_WEAPY_D : HU_WEAPY, hu_font2, 
-		     HU_FONTSTART, colrngs[CR_GRAY]);
-
-  // create the hud keys widget
-  // display of key letters possessed
-  // lower left of screen
-  HUlib_initTextLine(&w_keys, hud_distributed ? HU_KEYSX_D : HU_KEYSX,
-		     hud_distributed ? HU_KEYSY_D : HU_KEYSY, hu_font2,
-		     HU_FONTSTART, colrngs[CR_GRAY]);
-
-  // create the hud graphic keys widget
-  // display of key graphics possessed
-  // lower left of screen
-  HUlib_initTextLine(&w_gkeys, hud_distributed ? HU_KEYSGX_D : HU_KEYSGX,
-		     hud_distributed? HU_KEYSY_D : HU_KEYSY, hu_fontk,
-		     HU_FONTSTART, colrngs[CR_RED]);
-
-  // create the hud monster/secret widget
-  // totals and current values for kills, items, secrets
-  // lower left of screen
-  HUlib_initTextLine(&w_monsec, hud_distributed ? HU_MONSECX_D : HU_MONSECX,
-		     hud_distributed? HU_MONSECY_D : HU_MONSECY, hu_font2,
-		     HU_FONTSTART, colrngs[CR_GRAY]);
-
   // create the hud text refresh widget
   // scrolling display of last hud_msg_lines messages received
 
@@ -523,51 +459,6 @@ void HU_Start(void)
   while (*s)
     HUlib_addCharToTextLine(&w_coordz, *s++);
 
-  //jff 2/16/98 initialize ammo widget
-  sprintf(hud_ammostr,"AMM ");
-  s = hud_ammostr;
-  while (*s)
-    HUlib_addCharToTextLine(&w_ammo, *s++);
-
-  //jff 2/16/98 initialize health widget
-  sprintf(hud_healthstr,"HEL ");
-  s = hud_healthstr;
-  while (*s)
-    HUlib_addCharToTextLine(&w_health, *s++);
-
-  //jff 2/16/98 initialize armor widget
-  sprintf(hud_armorstr,"ARM ");
-  s = hud_armorstr;
-  while (*s)
-    HUlib_addCharToTextLine(&w_armor, *s++);
-
-  //jff 2/17/98 initialize weapons widget
-  sprintf(hud_weapstr,"WEA ");
-  s = hud_weapstr;
-  while (*s)
-    HUlib_addCharToTextLine(&w_weapon, *s++);
-
-  //jff 2/17/98 initialize keys widget
-  if (!deathmatch) //jff 3/17/98 show frags in deathmatch mode
-    sprintf(hud_keysstr,"KEY ");
-  else
-    sprintf(hud_keysstr,"FRG ");
-  s = hud_keysstr;
-  while (*s)
-    HUlib_addCharToTextLine(&w_keys, *s++);
-
-  //jff 2/17/98 initialize graphic keys widget
-  sprintf(hud_gkeysstr," ");
-  s = hud_gkeysstr;
-  while (*s)
-    HUlib_addCharToTextLine(&w_gkeys, *s++);
-
-  //jff 2/17/98 initialize kills/items/secret widget
-  sprintf(hud_monsecstr,"STS ");
-  s = hud_monsecstr;
-  while (*s)
-    HUlib_addCharToTextLine(&w_monsec, *s++);
-
   // create the chat widget
   HUlib_initIText
     (
@@ -587,41 +478,6 @@ void HU_Start(void)
 
   // now allow the heads-up display to run
   headsupactive = true;
-}
-
-//
-// HU_MoveHud()
-//
-// Move the HUD display from distributed to compact mode or vice-versa
-//
-// Passed nothing, returns nothing
-//
-//jff 3/9/98 create this externally callable to avoid glitch
-// when menu scatter's HUD due to delay in change of position
-//
-void HU_MoveHud(void)
-{
-  static int ohud_distributed=-1;
-
-  //jff 3/4/98 move displays around on F5 changing hud_distributed
-  if (hud_distributed!=ohud_distributed)
-    {
-      w_ammo.x =    hud_distributed? HU_AMMOX_D   : HU_AMMOX; 
-      w_ammo.y =    hud_distributed? HU_AMMOY_D   : HU_AMMOY;
-      w_weapon.x =  hud_distributed? HU_WEAPX_D   : HU_WEAPX; 
-      w_weapon.y =  hud_distributed? HU_WEAPY_D   : HU_WEAPY;
-      w_keys.x =    hud_distributed? HU_KEYSX_D   : HU_KEYSX; 
-      w_keys.y =    hud_distributed? HU_KEYSY_D   : HU_KEYSY;
-      w_gkeys.x =   hud_distributed? HU_KEYSGX_D  : HU_KEYSGX; 
-      w_gkeys.y =   hud_distributed? HU_KEYSY_D   : HU_KEYSY;
-      w_monsec.x =  hud_distributed? HU_MONSECX_D : HU_MONSECX; 
-      w_monsec.y =  hud_distributed? HU_MONSECY_D : HU_MONSECY;
-      w_health.x =  hud_distributed? HU_HEALTHX_D : HU_HEALTHX; 
-      w_health.y =  hud_distributed? HU_HEALTHY_D : HU_HEALTHY;
-      w_armor.x =   hud_distributed? HU_ARMORX_D  : HU_ARMORX; 
-      w_armor.y =   hud_distributed? HU_ARMORY_D  : HU_ARMORY;
-    }
-  ohud_distributed = hud_distributed;
 }
 
 //

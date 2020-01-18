@@ -201,13 +201,6 @@ default_t defaults[] = {
     "1 to toggle between SG/SSG and Fist/Chainsaw"
   },
 
-  { // phares 2/25/98
-    "player_bobbing",
-    (config_t *) &default_player_bobbing, (config_t *) &player_bobbing,
-    {1}, {0,1}, number, ss_weap, wad_no,
-    "1 to enable player bobbing (view moving up/down slightly)"
-  },
-
   { // killough 3/1/98
     "monsters_remember",
     (config_t *) &default_monsters_remember, (config_t *) &monsters_remember,

@@ -1985,7 +1985,9 @@ void G_ReloadDefaults(void)
   // (allows functions above to load different values for demos
   // and savegames without messing up defaults).
 
-  player_bobbing = default_player_bobbing;  // whether player bobs or not
+  // whether player bobs or not; we don't have the option any more,
+  // so this is always initialized to true.
+  player_bobbing = 1;
 
   variable_friction = allow_pushers = true;
 

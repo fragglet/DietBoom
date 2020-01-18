@@ -1244,13 +1244,6 @@ default_t defaults[] = {
     "color used for closed yellow doors"
   },
 
-  { // dk green
-    "mapcolor_tele",
-    &mapcolor_tele, NULL,
-    {119}, {0,255}, number, ss_auto, wad_yes,
-    "color used for teleporter lines"
-  },
-
   { // purple
     "mapcolor_secr",
     &mapcolor_secr, NULL,

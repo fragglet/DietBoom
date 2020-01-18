@@ -86,7 +86,6 @@ extern int mapcolor_ykey;     // yellow key color
 extern int mapcolor_rdor;     // red door color (diff from keys to allow option)
 extern int mapcolor_bdor;     // blue door color (of enabling one not other)
 extern int mapcolor_ydor;     // yellow door color
-extern int mapcolor_tele;     // teleporter line color
 extern int mapcolor_secr;     // secret sector boundary color
 //jff 4/23/98
 extern int mapcolor_unsn;     // computer map unseen line color

@@ -51,7 +51,6 @@ int mapcolor_ykey;    // yellow key color
 int mapcolor_rdor;    // red door color  (diff from keys to allow option)
 int mapcolor_bdor;    // blue door color (of enabling one but not other )
 int mapcolor_ydor;    // yellow door color
-int mapcolor_tele;    // teleporter line color
 int mapcolor_secr;    // secret sector boundary color
 int mapcolor_unsn;    // computer map unseen line color
 int mapcolor_flat;    // line with no floor/ceiling changes
@@ -1301,17 +1300,7 @@ void AM_drawWalls(void)
       }
       else
       {
-        // jff 1/10/98 add color change for all teleporter types
-        if
-        (
-            mapcolor_tele && !(lines[i].flags & ML_SECRET) && 
-            (lines[i].special == 39 || lines[i].special == 97 ||
-            lines[i].special == 125 || lines[i].special == 126)
-        )
-        { // teleporters
-          AM_drawMline(&l, mapcolor_tele);
-        }
-        else if //jff 1/5/98 this clause implements showing keyed doors
+        if //jff 1/5/98 this clause implements showing keyed doors
         (
           (mapcolor_bdor || mapcolor_ydor || mapcolor_rdor) &&
           ((lines[i].special >=26 && lines[i].special <=28) ||

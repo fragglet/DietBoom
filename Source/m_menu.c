@@ -194,7 +194,6 @@ extern int mapcolor_ykey; // yellow key color
 extern int mapcolor_rdor; // red door color  (diff from keys to allow option)
 extern int mapcolor_bdor; // blue door color (of enabling one but not other )
 extern int mapcolor_ydor; // yellow door color
-extern int mapcolor_tele; // teleporter line color
 extern int mapcolor_secr; // secret sector boundary color
 extern int mapcolor_unsn; // computer map unseen line color
 extern int mapcolor_flat; // line with no floor/ceiling changes
@@ -2683,7 +2682,6 @@ setup_menu_t auto_settings1[] =  // 1st AutoMap Settings screen
 
 setup_menu_t auto_settings2[] =  // 2nd AutoMap Settings screen
 {
-  {"teleporter line"                ,S_COLOR ,m_null,AU_X,AU_Y, {"mapcolor_tele"}},
   {"secret sector boundary"         ,S_COLOR ,m_null,AU_X,AU_Y+ 1*8, {"mapcolor_secr"}},
   //jff 4/23/98 add exit line to automap
   {"computer map unseen line"       ,S_COLOR ,m_null,AU_X,AU_Y+ 3*8, {"mapcolor_unsn"}},

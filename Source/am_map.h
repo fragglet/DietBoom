@@ -89,7 +89,6 @@ extern int mapcolor_ydor;     // yellow door color
 extern int mapcolor_tele;     // teleporter line color
 extern int mapcolor_secr;     // secret sector boundary color
 //jff 4/23/98
-extern int mapcolor_exit;     // exit line
 extern int mapcolor_unsn;     // computer map unseen line color
 extern int mapcolor_flat;     // line with no floor/ceiling changes
 extern int mapcolor_sprt;     // general sprite color

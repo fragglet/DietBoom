@@ -1258,13 +1258,6 @@ default_t defaults[] = {
     "color used for lines around secret sectors"
   },
 
-  { // none
-    "mapcolor_exit",
-    &mapcolor_exit, NULL,
-    {0}, {0,255}, number, ss_auto, wad_yes,
-    "color used for exit lines"
-  },
-
   { // dk gray
     "mapcolor_unsn",
     &mapcolor_unsn, NULL,

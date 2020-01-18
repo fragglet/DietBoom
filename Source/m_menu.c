@@ -196,7 +196,6 @@ extern int mapcolor_bdor; // blue door color (of enabling one but not other )
 extern int mapcolor_ydor; // yellow door color
 extern int mapcolor_tele; // teleporter line color
 extern int mapcolor_secr; // secret sector boundary color
-extern int mapcolor_exit; // jff 4/23/98 exit line
 extern int mapcolor_unsn; // computer map unseen line color
 extern int mapcolor_flat; // line with no floor/ceiling changes
 extern int mapcolor_sprt; // general sprite color
@@ -2687,7 +2686,6 @@ setup_menu_t auto_settings2[] =  // 2nd AutoMap Settings screen
   {"teleporter line"                ,S_COLOR ,m_null,AU_X,AU_Y, {"mapcolor_tele"}},
   {"secret sector boundary"         ,S_COLOR ,m_null,AU_X,AU_Y+ 1*8, {"mapcolor_secr"}},
   //jff 4/23/98 add exit line to automap
-  {"exit line"                      ,S_COLOR ,m_null,AU_X,AU_Y+ 2*8, {"mapcolor_exit"}},
   {"computer map unseen line"       ,S_COLOR ,m_null,AU_X,AU_Y+ 3*8, {"mapcolor_unsn"}},
   {"line w/no floor/ceiling changes",S_COLOR ,m_null,AU_X,AU_Y+ 4*8, {"mapcolor_flat"}},
   {"general sprite"                 ,S_COLOR ,m_null,AU_X,AU_Y+ 5*8, {"mapcolor_sprt"}},

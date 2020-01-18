@@ -1223,27 +1223,6 @@ default_t defaults[] = {
     "color used for yellow key sprites"
   },
 
-  { // red
-    "mapcolor_rdor",
-    &mapcolor_rdor, NULL,
-    {175}, {0,255}, number, ss_auto, wad_yes,
-    "color used for closed red doors"
-  },
-
-  { // blue
-    "mapcolor_bdor",
-    &mapcolor_bdor, NULL,
-    {204}, {0,255}, number, ss_auto, wad_yes,
-    "color used for closed blue doors"
-  },
-
-  { // yellow
-    "mapcolor_ydor",
-    &mapcolor_ydor, NULL,
-    {231}, {0,255}, number, ss_auto, wad_yes,
-    "color used for closed yellow doors"
-  },
-
   { // dk gray
     "mapcolor_unsn",
     &mapcolor_unsn, NULL,

@@ -191,9 +191,6 @@ extern int mapcolor_clsd; // line at sector with floor=ceiling color
 extern int mapcolor_rkey; // red key color
 extern int mapcolor_bkey; // blue key color
 extern int mapcolor_ykey; // yellow key color
-extern int mapcolor_rdor; // red door color  (diff from keys to allow option)
-extern int mapcolor_bdor; // blue door color (of enabling one but not other )
-extern int mapcolor_ydor; // yellow door color
 extern int mapcolor_unsn; // computer map unseen line color
 extern int mapcolor_flat; // line with no floor/ceiling changes
 extern int mapcolor_sprt; // general sprite color
@@ -2658,9 +2655,6 @@ setup_menu_t auto_settings1[] =  // 1st AutoMap Settings screen
   {"red key"                            ,S_COLOR,m_null,AU_X,AU_Y+ 6*8, {"mapcolor_rkey"}},
   {"blue key"                           ,S_COLOR,m_null,AU_X,AU_Y+ 7*8, {"mapcolor_bkey"}},
   {"yellow key"                         ,S_COLOR,m_null,AU_X,AU_Y+ 8*8, {"mapcolor_ykey"}},
-  {"red door"                           ,S_COLOR,m_null,AU_X,AU_Y+ 9*8, {"mapcolor_rdor"}},
-  {"blue door"                          ,S_COLOR,m_null,AU_X,AU_Y+10*8, {"mapcolor_bdor"}},
-  {"yellow door"                        ,S_COLOR,m_null,AU_X,AU_Y+11*8, {"mapcolor_ydor"}},
 
   {"AUTOMAP LEVEL TITLE COLOR"      ,S_CRITEM,m_null,AU_X,AU_Y+13*8, {"hudcolor_titl"}},
   {"AUTOMAP COORDINATES COLOR"      ,S_CRITEM,m_null,AU_X,AU_Y+14*8, {"hudcolor_xyco"}},

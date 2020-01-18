@@ -83,9 +83,6 @@ extern int mapcolor_clsd;     // line at sector with floor=ceiling color
 extern int mapcolor_rkey;     // red key color
 extern int mapcolor_bkey;     // blue key color
 extern int mapcolor_ykey;     // yellow key color
-extern int mapcolor_rdor;     // red door color (diff from keys to allow option)
-extern int mapcolor_bdor;     // blue door color (of enabling one not other)
-extern int mapcolor_ydor;     // yellow door color
 //jff 4/23/98
 extern int mapcolor_unsn;     // computer map unseen line color
 extern int mapcolor_flat;     // line with no floor/ceiling changes

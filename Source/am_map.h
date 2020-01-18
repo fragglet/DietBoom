@@ -79,7 +79,6 @@ extern int mapcolor_grid;     // grid lines color
 extern int mapcolor_wall;     // normal 1s wall color
 extern int mapcolor_fchg;     // line at floor height change color
 extern int mapcolor_cchg;     // line at ceiling height change color
-extern int mapcolor_clsd;     // line at sector with floor=ceiling color
 extern int mapcolor_rkey;     // red key color
 extern int mapcolor_bkey;     // blue key color
 extern int mapcolor_ykey;     // yellow key color

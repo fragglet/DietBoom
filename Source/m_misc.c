@@ -1195,13 +1195,6 @@ default_t defaults[] = {
     "color used for lines ceiling height changes across"
   },
 
-  { // white
-    "mapcolor_clsd",
-    &mapcolor_clsd, NULL,
-    {208}, {0,255}, number, ss_auto, wad_yes,
-    "color used for lines denoting closed doors, objects"
-  },
-
   { // red
     "mapcolor_rkey",
     &mapcolor_rkey, NULL,

@@ -44,7 +44,6 @@ int mapcolor_grid;    // grid lines color
 int mapcolor_wall;    // normal 1s wall color
 int mapcolor_fchg;    // line at floor height change color
 int mapcolor_cchg;    // line at ceiling height change color
-int mapcolor_clsd;    // line at sector with floor=ceiling color
 int mapcolor_rkey;    // red key color
 int mapcolor_bkey;    // blue key color
 int mapcolor_ykey;    // yellow key color
@@ -1282,16 +1281,6 @@ void AM_drawWalls(void)
         if (lines[i].flags & ML_SECRET)    // secret door
         {
           AM_drawMline(&l, mapcolor_wall);      // wall color
-        }
-        else if
-        (
-            mapcolor_clsd &&  
-            !(lines[i].flags & ML_SECRET) &&    // non-secret closed door
-            ((lines[i].backsector->floorheight==lines[i].backsector->ceilingheight) ||
-            (lines[i].frontsector->floorheight==lines[i].frontsector->ceilingheight))
-        )
-        {
-          AM_drawMline(&l, mapcolor_clsd);      // non-secret closed door
         }
         else if (lines[i].backsector->floorheight !=
                   lines[i].frontsector->floorheight)

@@ -187,7 +187,6 @@ extern int mapcolor_grid; // grid lines color
 extern int mapcolor_wall; // normal 1s wall color
 extern int mapcolor_fchg; // line at floor height change color
 extern int mapcolor_cchg; // line at ceiling height change color
-extern int mapcolor_clsd; // line at sector with floor=ceiling color
 extern int mapcolor_rkey; // red key color
 extern int mapcolor_bkey; // blue key color
 extern int mapcolor_ykey; // yellow key color
@@ -2651,7 +2650,6 @@ setup_menu_t auto_settings1[] =  // 1st AutoMap Settings screen
   {"normal 1s wall", S_COLOR, m_null,AU_X,AU_Y+ 2*8, {"mapcolor_wall"}},
   {"line at floor height change", S_COLOR, m_null, AU_X, AU_Y+ 3*8, {"mapcolor_fchg"}},
   {"line at ceiling height change"      ,S_COLOR,m_null,AU_X,AU_Y+ 4*8, {"mapcolor_cchg"}},
-  {"line at sector with floor = ceiling",S_COLOR,m_null,AU_X,AU_Y+ 5*8, {"mapcolor_clsd"}},
   {"red key"                            ,S_COLOR,m_null,AU_X,AU_Y+ 6*8, {"mapcolor_rkey"}},
   {"blue key"                           ,S_COLOR,m_null,AU_X,AU_Y+ 7*8, {"mapcolor_bkey"}},
   {"yellow key"                         ,S_COLOR,m_null,AU_X,AU_Y+ 8*8, {"mapcolor_ykey"}},

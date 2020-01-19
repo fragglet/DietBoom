@@ -2284,18 +2284,16 @@ setup_menu_t keys_settings2[] =  // Key Binding screen strings
 
   {"HELP"        ,S_SKIP|S_KEEP ,m_scrn,0   ,0    ,{&key_help}},
   {"MENU"        ,S_SKIP|S_KEEP ,m_scrn,0   ,0    ,{&key_escape},0,&joybmainmenu},
-  // killough 10/98: hotkey for entering setup menu:
-  {"SETUP"       ,S_KEY       ,m_scrn,KB_X,KB_Y+ 1*8,{&key_setup}},
-  {"PAUSE"       ,S_KEY       ,m_scrn,KB_X,KB_Y+ 2*8,{&key_pause}},
-  {"AUTOMAP"     ,S_KEY       ,m_scrn,KB_X,KB_Y+ 3*8,{&key_map},0,&joybautomap},
-  {"VOLUME"      ,S_KEY       ,m_scrn,KB_X,KB_Y+ 4*8,{&key_soundvolume}},
-  {"HUD"         ,S_KEY       ,m_scrn,KB_X,KB_Y+ 5*8,{&key_hud}},
-  {"MESSAGES"    ,S_KEY       ,m_scrn,KB_X,KB_Y+ 6*8,{&key_messages}},
-  {"GAMMA FIX"   ,S_KEY       ,m_scrn,KB_X,KB_Y+ 7*8,{&key_gamma}},
-  {"SPY"         ,S_KEY       ,m_scrn,KB_X,KB_Y+ 8*8,{&key_spy}},
-  {"LARGER VIEW" ,S_KEY       ,m_scrn,KB_X,KB_Y+ 9*8,{&key_zoomin}},
-  {"SMALLER VIEW",S_KEY       ,m_scrn,KB_X,KB_Y+10*8,{&key_zoomout}},
-  {"SCREENSHOT"  ,S_KEY       ,m_scrn,KB_X,KB_Y+11*8,{&key_screenshot}},
+  {"PAUSE"       ,S_KEY       ,m_scrn,KB_X,KB_Y+ 1*8,{&key_pause}},
+  {"AUTOMAP"     ,S_KEY       ,m_scrn,KB_X,KB_Y+ 2*8,{&key_map},0,&joybautomap},
+  {"VOLUME"      ,S_KEY       ,m_scrn,KB_X,KB_Y+ 3*8,{&key_soundvolume}},
+  {"HUD"         ,S_KEY       ,m_scrn,KB_X,KB_Y+ 4*8,{&key_hud}},
+  {"MESSAGES"    ,S_KEY       ,m_scrn,KB_X,KB_Y+ 5*8,{&key_messages}},
+  {"GAMMA FIX"   ,S_KEY       ,m_scrn,KB_X,KB_Y+ 6*8,{&key_gamma}},
+  {"SPY"         ,S_KEY       ,m_scrn,KB_X,KB_Y+ 7*8,{&key_spy}},
+  {"LARGER VIEW" ,S_KEY       ,m_scrn,KB_X,KB_Y+ 8*8,{&key_zoomin}},
+  {"SMALLER VIEW",S_KEY       ,m_scrn,KB_X,KB_Y+ 9*8,{&key_zoomout}},
+  {"SCREENSHOT"  ,S_KEY       ,m_scrn,KB_X,KB_Y+10*8,{&key_screenshot}},
   {"GAME"        ,S_SKIP|S_TITLE,m_null,KB_X,KB_Y+12*8},
   {"SAVE"        ,S_KEY       ,m_scrn,KB_X,KB_Y+13*8,{&key_savegame}},
   {"LOAD"        ,S_KEY       ,m_scrn,KB_X,KB_Y+14*8,{&key_loadgame}},
@@ -3693,17 +3691,16 @@ setup_menu_t helpstrings[] =  // HELP screen strings
   {"SCREEN"      ,S_SKIP|S_TITLE,m_null,KT_X1,KT_Y1},
   {"HELP"        ,S_SKIP|S_KEY,m_null,KT_X1,KT_Y1+ 1*8,{&key_help}},
   {"MENU"        ,S_SKIP|S_KEY,m_null,KT_X1,KT_Y1+ 2*8,{&key_escape}},
-  {"SETUP"       ,S_SKIP|S_KEY,m_null,KT_X1,KT_Y1+ 3*8,{&key_setup}},
-  {"PAUSE"       ,S_SKIP|S_KEY,m_null,KT_X1,KT_Y1+ 4*8,{&key_pause}},
-  {"AUTOMAP"     ,S_SKIP|S_KEY,m_null,KT_X1,KT_Y1+ 5*8,{&key_map}},
-  {"SOUND VOLUME",S_SKIP|S_KEY,m_null,KT_X1,KT_Y1+ 6*8,{&key_soundvolume}},
-  {"HUD"         ,S_SKIP|S_KEY,m_null,KT_X1,KT_Y1+ 7*8,{&key_hud}},
-  {"MESSAGES"    ,S_SKIP|S_KEY,m_null,KT_X1,KT_Y1+ 8*8,{&key_messages}},
-  {"GAMMA FIX"   ,S_SKIP|S_KEY,m_null,KT_X1,KT_Y1+ 9*8,{&key_gamma}},
-  {"SPY"         ,S_SKIP|S_KEY,m_null,KT_X1,KT_Y1+10*8,{&key_spy}},
-  {"LARGER VIEW" ,S_SKIP|S_KEY,m_null,KT_X1,KT_Y1+11*8,{&key_zoomin}},
-  {"SMALLER VIEW",S_SKIP|S_KEY,m_null,KT_X1,KT_Y1+12*8,{&key_zoomout}},
-  {"SCREENSHOT"  ,S_SKIP|S_KEY,m_null,KT_X1,KT_Y1+13*8,{&key_screenshot}},
+  {"PAUSE"       ,S_SKIP|S_KEY,m_null,KT_X1,KT_Y1+ 3*8,{&key_pause}},
+  {"AUTOMAP"     ,S_SKIP|S_KEY,m_null,KT_X1,KT_Y1+ 4*8,{&key_map}},
+  {"SOUND VOLUME",S_SKIP|S_KEY,m_null,KT_X1,KT_Y1+ 5*8,{&key_soundvolume}},
+  {"HUD"         ,S_SKIP|S_KEY,m_null,KT_X1,KT_Y1+ 6*8,{&key_hud}},
+  {"MESSAGES"    ,S_SKIP|S_KEY,m_null,KT_X1,KT_Y1+ 7*8,{&key_messages}},
+  {"GAMMA FIX"   ,S_SKIP|S_KEY,m_null,KT_X1,KT_Y1+ 8*8,{&key_gamma}},
+  {"SPY"         ,S_SKIP|S_KEY,m_null,KT_X1,KT_Y1+ 9*8,{&key_spy}},
+  {"LARGER VIEW" ,S_SKIP|S_KEY,m_null,KT_X1,KT_Y1+10*8,{&key_zoomin}},
+  {"SMALLER VIEW",S_SKIP|S_KEY,m_null,KT_X1,KT_Y1+11*8,{&key_zoomout}},
+  {"SCREENSHOT"  ,S_SKIP|S_KEY,m_null,KT_X1,KT_Y1+12*8,{&key_screenshot}},
 
   {"AUTOMAP"     ,S_SKIP|S_TITLE,m_null,KT_X1,KT_Y2},
   {"FOLLOW MODE" ,S_SKIP|S_KEY,m_null,KT_X1,KT_Y2+ 1*8,{&key_map_follow}},
@@ -4256,15 +4253,6 @@ boolean M_Responder (event_t* ev)
 	  M_SizeDisplay(1);                                             //  ^
 	  S_StartSound(NULL,sfx_stnmov);                                //  |
 	  return true;                                            // phares
-	}
-                                  
-      // killough 10/98: allow key shortcut into Setup menu
-      if (ch == key_setup)
-	{
-	  M_StartControlPanel();
-	  S_StartSound(NULL,sfx_swtchn);
-	  M_SetupNextMenu(&SetupDef);
-	  return true;
 	}
     }                               
   

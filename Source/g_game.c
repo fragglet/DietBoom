@@ -176,7 +176,6 @@ int     key_prevweapon;
 int     key_nextweapon;
 
 int     key_screenshot;             // killough 2/22/98: screenshot key
-int     key_setup;                  // killough 10/98: shortcut to setup menu
 
 int     mousebfire;
 int     mousebstrafe;

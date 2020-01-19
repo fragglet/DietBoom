@@ -938,13 +938,6 @@ default_t defaults[] = {
     "key to take a screenshot (devparm independent)"
   },
 
-  { // HOME key  // killough 10/98: shortcut to setup menu
-    "key_setup",
-    (config_t *) &key_setup, NULL,
-    {199}, {0,255}, number, ss_keys, wad_no,
-    "shortcut key to enter setup menu"
-  },
-
   { // jff 3/30/98 add ability to take screenshots in BMP format
     "screenshot_pcx",
     (config_t *) &screenshot_pcx, NULL,

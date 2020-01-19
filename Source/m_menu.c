@@ -273,7 +273,6 @@ void M_KeyBindings(int choice);
 void M_StatusBar(int);
 void M_Automap(int);
 void M_Enemy(int);
-void M_Messages(int);
 void M_ChatStrings(int);
 void M_InitExtendedHelp(void);
 void M_ExtHelpNextScreen(int);
@@ -285,7 +284,6 @@ void M_DrawStatusHUD(void);
 void M_DrawExtHelp(void);
 void M_DrawAutoMap(void);
 void M_DrawEnemy(void);
-void M_DrawMessages(void);
 void M_DrawChatStrings(void);
 void M_Compat(int);       // killough 10/98
 void M_General(int);      // killough 10/98
@@ -1482,11 +1480,9 @@ enum
 {
   set_compat,
   set_key_bindings,                                     
-  set_weapons,                                           
   set_statbar,                                           
   set_automap,
   set_enemy,
-  set_messages,
   set_chatstrings,
   set_setup_end
 } setup_e;
@@ -1508,7 +1504,6 @@ menuitem_t SetupMenu[]=
   {1,"M_STAT"  ,M_StatusBar,  's'},               
   {1,"M_AUTO"  ,M_Automap,    'a'},                    
   {1,"M_ENEM"  ,M_Enemy,      'e'},                     
-  {1,"M_MESS"  ,M_Messages,   'm'},                     
   {1,"M_CHAT"  ,M_ChatStrings,'c'},                     
 };
 
@@ -1601,16 +1596,6 @@ menu_t EnemyDef =                                           // phares 4/08/98
   &SetupDef,
   Generic_Setup,
   M_DrawEnemy,
-  34,5,      // skull drawn here
-  0
-};
-
-menu_t MessageDef =                                         // phares 4/08/98
-{
-  generic_setup_end,
-  &SetupDef,
-  Generic_Setup,
-  M_DrawMessages,
   34,5,      // skull drawn here
   0
 };
@@ -3088,78 +3073,6 @@ void M_DrawCompat(void)
     M_DrawDefVerify();
 }
 
-/////////////////////////////
-//
-// The Messages table.
-
-#define M_X 230
-#define M_Y  39
-
-// killough 11/98: enumerated
-
-enum {
-  mess_lines,
-};
-
-setup_menu_t mess_settings1[];
-
-setup_menu_t* mess_settings[] =
-{
-  mess_settings1,
-  NULL
-};
-
-setup_menu_t mess_settings1[] =  // Messages screen       
-{
-  {"Number of Review Message Lines", S_NUM, m_null,  M_X,
-   M_Y + mess_lines*8, {"hud_msg_lines"}},
-
-  // Button for resetting to defaults
-  {0,S_RESET,m_null,X_BUTTON,Y_BUTTON},
-
-  // Final entry
-
-  {0,S_SKIP|S_END,m_null}
-};
-
-
-// Setting up for the Messages screen. Turn on flags, set pointers,
-// locate the first item on the screen where the cursor is allowed to
-// land.
-
-void M_Messages(int choice)
-{
-  M_SetupNextMenu(&MessageDef);
-
-  setup_active = true;
-  setup_screen = ss_mess;
-  set_mess_active = true;
-  setup_select = false;
-  default_verify = false;
-  setup_gather = false;
-  mult_screens_index = 0;
-  current_setup_menu = mess_settings[0];
-  set_menu_itemon = 0;
-  while (current_setup_menu[set_menu_itemon++].m_flags & S_SKIP);
-  current_setup_menu[--set_menu_itemon].m_flags |= S_HILITE;
-}
-
-
-// The drawing part of the Messages Setup initialization. Draw the
-// background, title, instruction line, and items.
-
-void M_DrawMessages(void)
-
-{
-  inhelpscreens = true;
-  M_DrawBackground("FLOOR4_6", screens[0]); // Draw background
-  V_DrawPatchDirect (103,2,0,W_CacheLumpName("M_MESS",PU_CACHE));
-  M_DrawInstructions();
-  M_DrawScreenItems(current_setup_menu);
-  if (default_verify)
-    M_DrawDefVerify();
-}
-
 
 /////////////////////////////
 //
@@ -3267,7 +3180,6 @@ static setup_menu_t **setup_screens[] =
   stat_settings,
   auto_settings,
   enem_settings,
-  mess_settings,
   chat_settings,
   gen_settings,      // killough 10/98
   comp_settings,

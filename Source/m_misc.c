@@ -1233,14 +1233,14 @@ default_t defaults[] = {
   { // 1 line scrolling window
     "hud_msg_lines",
     (config_t *) &hud_msg_lines, NULL,
-    {4}, {1,16}, number, ss_mess, wad_yes,
+    {4}, {1,16}, number, ss_none, wad_yes,
     "number of lines in review display"
   },
 
   { // killough 11/98
     "message_list",
     (config_t *) &message_list, NULL,
-    {0}, {0,1}, number, ss_mess, wad_yes,
+    {0}, {0,1}, number, ss_none, wad_yes,
     "1 means multiline message list is active"
   },
 

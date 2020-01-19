@@ -198,8 +198,6 @@ extern int mapcolor_hair; // crosshair color
 extern int mapcolor_sngl; // single player arrow color
 extern int mapcolor_plyr[4];// colors for player arrows in multiplayer
 
-extern int mapcolor_frnd;  // friends colors  // killough 8/8/98
-
 extern int map_point_coordinates; // killough 10/98
 
 extern char* chat_macros[];  // chat macros
@@ -2558,8 +2556,6 @@ setup_menu_t auto_settings2[] =  // 2nd AutoMap Settings screen
   {"player 2 arrow"                 ,S_COLOR ,m_null,AU_X,AU_Y+ 9*8, {"mapcolor_ply2"}},
   {"player 3 arrow"                 ,S_COLOR ,m_null,AU_X,AU_Y+10*8, {"mapcolor_ply3"}},
   {"player 4 arrow"                 ,S_COLOR ,m_null,AU_X,AU_Y+11*8, {"mapcolor_ply4"}},
-
-  {"friends"                        ,S_COLOR ,m_null,AU_X,AU_Y+12*8, {"mapcolor_frnd"}},        // killough 8/8/98
 
   {"<- PREV",S_SKIP|S_PREV,m_null,AU_PREV,AU_Y+20*8, {auto_settings1}},
 

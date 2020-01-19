@@ -1262,13 +1262,6 @@ default_t defaults[] = {
     "color used for the red player arrow"
   },
 
-  {  // purple                     // killough 8/8/98
-    "mapcolor_frnd",
-    (config_t *) &mapcolor_frnd, NULL,
-    {252}, {0,255}, number, ss_auto, wad_yes,
-    "color used for friends"
-  },
-
   {
     "map_point_coord",
     (config_t *) &map_point_coordinates, NULL,

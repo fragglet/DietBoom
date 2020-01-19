@@ -205,7 +205,6 @@ extern int map_point_coordinates; // killough 10/98
 extern char* chat_macros[];  // chat macros
 extern char *wad_files[], *deh_files[]; // killough 10/98
 extern const char* shiftxform;
-extern int map_secret_after; //secrets do not appear til after bagged
 extern default_t defaults[];
 
 // end of externs added for setup menus
@@ -2535,9 +2534,7 @@ setup_menu_t auto_settings1[] =  // 1st AutoMap Settings screen
   {"AUTOMAP LEVEL TITLE COLOR"      ,S_CRITEM,m_null,AU_X,AU_Y+13*8, {"hudcolor_titl"}},
   {"AUTOMAP COORDINATES COLOR"      ,S_CRITEM,m_null,AU_X,AU_Y+14*8, {"hudcolor_xyco"}},
 
-  {"Show Secrets only after entering",S_YESNO,m_null,AU_X,AU_Y+15*8, {"map_secret_after"}},
-
-  {"Show coordinates of automap pointer",S_YESNO,m_null,AU_X,AU_Y+16*8, {"map_point_coord"}},  // killough 10/98
+  {"Show coordinates of automap pointer",S_YESNO,m_null,AU_X,AU_Y+15*8, {"map_point_coord"}},  // killough 10/98
 
   // Button for resetting to defaults
   {0,S_RESET,m_null,X_BUTTON,Y_BUTTON},

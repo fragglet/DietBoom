@@ -52,8 +52,6 @@ int mapcolor_sngl;    // single player arrow color
 int mapcolor_plyr[4]; // colors for player arrows in multiplayer
 int mapcolor_frnd;    // colors for friends of player
 
-//jff 3/9/98 add option to not show secret sectors until entered
-int map_secret_after;
 //jff 4/3/98 add symbols for "no-color" for disable and "black color" for black
 #define NC 0
 #define BC 247

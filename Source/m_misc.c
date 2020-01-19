@@ -1276,15 +1276,6 @@ default_t defaults[] = {
     "1 to show automap pointer coordinates in non-follow mode"
   },
 
-  //jff 3/9/98 add option to not show secrets til after found
-  // killough change default, to avoid spoilers and preserve Doom mystery
-  { // show secret after gotten
-    "map_secret_after",
-    (config_t *) &map_secret_after, NULL,
-    {1}, {0,1}, number, ss_auto, wad_yes,
-    "1 to not show secret sectors till after entered"
-  },
-
   //jff 1/7/98 end additions for automap
 
   //jff 2/16/98 defaults for color ranges in hud and status

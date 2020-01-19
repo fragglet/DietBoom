@@ -3099,14 +3099,10 @@ void M_DrawCompat(void)
 
 enum {
   mess_color_play,
-  mess_timer,
   mess_color_chat,
-  mess_chat_timer,
   mess_color_review,
   mess_timed,
-  mess_hud_timer,
   mess_lines,
-  mess_scrollup,
 };
 
 setup_menu_t mess_settings1[];

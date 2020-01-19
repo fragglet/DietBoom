@@ -87,8 +87,6 @@ extern int mapcolor_sngl;     // single player arrow color
 extern int mapcolor_plyr[4];  // colors for player arrows in multiplayer
 //jff 3/9/98
 
-extern int map_point_coordinates;  // killough 10/98
-
 #endif
 
 //----------------------------------------------------------------------------

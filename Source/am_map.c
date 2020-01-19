@@ -862,12 +862,20 @@ void AM_doFollowPlayer(void)
 // pointer. Allows map inspection without moving player to the location.
 //
 
-int map_point_coordinates;
-
 void AM_Coordinates(const mobj_t *mo, fixed_t *x, fixed_t *y, fixed_t *z)
 {
-  *z = followplayer || !map_point_coordinates ? *x = mo->x, *y = mo->y, mo->z :
-    R_PointInSubsector(*x = m_x+m_w/2, *y = m_y+m_h/2)->sector->floorheight;
+  if (followplayer)
+  {
+    *x = mo->x;
+    *y = mo->y;
+    *z = mo->z;
+  }
+  else
+  {
+    *x = m_x + m_w / 2;
+    *y = m_y + m_h / 2;
+    *z = R_PointInSubsector(*x, *y)->sector->floorheight;
+  }
 }
 
 //

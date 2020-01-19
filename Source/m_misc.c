@@ -1234,13 +1234,6 @@ default_t defaults[] = {
     "color used for the red player arrow"
   },
 
-  {
-    "map_point_coord",
-    (config_t *) &map_point_coordinates, NULL,
-    {1}, {0,1}, number, ss_auto, wad_yes,
-    "1 to show automap pointer coordinates in non-follow mode"
-  },
-
   //jff 1/7/98 end additions for automap
 
   //jff 2/16/98 defaults for color ranges in hud and status

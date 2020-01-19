@@ -197,8 +197,6 @@ extern int mapcolor_hair; // crosshair color
 extern int mapcolor_sngl; // single player arrow color
 extern int mapcolor_plyr[4];// colors for player arrows in multiplayer
 
-extern int map_point_coordinates; // killough 10/98
-
 extern char* chat_macros[];  // chat macros
 extern char *wad_files[], *deh_files[]; // killough 10/98
 extern const char* shiftxform;
@@ -2525,8 +2523,6 @@ setup_menu_t auto_settings1[] =  // 1st AutoMap Settings screen
   {"normal 1s wall", S_COLOR, m_null,AU_X,AU_Y+ 2*8, {"mapcolor_wall"}},
   {"line at floor height change", S_COLOR, m_null, AU_X, AU_Y+ 3*8, {"mapcolor_fchg"}},
   {"line at ceiling height change"      ,S_COLOR,m_null,AU_X,AU_Y+ 4*8, {"mapcolor_cchg"}},
-
-  {"Show coordinates of automap pointer",S_YESNO,m_null,AU_X,AU_Y+15*8, {"map_point_coord"}},  // killough 10/98
 
   // Button for resetting to defaults
   {0,S_RESET,m_null,X_BUTTON,Y_BUTTON},

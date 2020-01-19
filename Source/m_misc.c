@@ -1181,28 +1181,28 @@ default_t defaults[] = {
   { // red-brown
     "mapcolor_wall",
     (config_t *) &mapcolor_wall, NULL,
-    {23}, {0,255}, number, ss_auto, wad_yes,
+    {176}, {0,255}, number, ss_auto, wad_yes,
     "color used for one side walls on automap"
   },
 
   { // lt brown
     "mapcolor_fchg",
     (config_t *) &mapcolor_fchg, NULL,
-    {55}, {0,255}, number, ss_auto, wad_yes,
+    {64}, {0,255}, number, ss_auto, wad_yes,
     "color used for lines floor height changes across"
   },
 
   { // orange
     "mapcolor_cchg",
     (config_t *) &mapcolor_cchg, NULL,
-    {215}, {0,255}, number, ss_auto, wad_yes,
+    {231}, {0,255}, number, ss_auto, wad_yes,
     "color used for lines ceiling height changes across"
   },
 
   { // dk gray
     "mapcolor_unsn",
     (config_t *) &mapcolor_unsn, NULL,
-    {104}, {0,255}, number, ss_auto, wad_yes,
+    {96}, {0,255}, number, ss_auto, wad_yes,
     "color used for lines not seen without computer map"
   },
 
@@ -1223,7 +1223,7 @@ default_t defaults[] = {
   { // white
     "mapcolor_sngl",
     (config_t *) &mapcolor_sngl, NULL,
-    {208}, {0,255}, number, ss_auto, wad_yes,
+    {209}, {0,255}, number, ss_auto, wad_yes,
     "color used for the single player arrow"
   },
 

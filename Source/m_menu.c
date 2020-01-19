@@ -2267,7 +2267,7 @@ setup_menu_t keys_settings1[] =  // Key Binding screen strings
 
 };
 
-setup_menu_t keys_settings2[] =  // Key Binding screen strings       
+setup_menu_t keys_settings3[] =  // Key Binding screen strings       
 {
   {"SCREEN"      ,S_SKIP|S_TITLE,m_null,KB_X,KB_Y},
 
@@ -2304,15 +2304,15 @@ setup_menu_t keys_settings2[] =  // Key Binding screen strings
   {"SELECT ITEM" ,S_KEY       ,m_menu,KB_X,KB_Y+18*8,{&key_menu_enter}},
   {"EXIT"        ,S_KEY       ,m_menu,KB_X,KB_Y+19*8,{&key_menu_escape},0,&joybmainmenu},
 
-  {"<- PREV", S_SKIP|S_PREV,m_null,KB_PREV,KB_Y+20*8, {keys_settings1}},
-  {"NEXT ->", S_SKIP|S_NEXT,m_null,KB_NEXT,KB_Y+20*8, {keys_settings3}},
+  {"<- PREV", S_SKIP|S_PREV,m_null,KB_PREV,KB_Y+20*8, {keys_settings2}},
+  {"NEXT ->", S_SKIP|S_NEXT,m_null,KB_NEXT,KB_Y+20*8, {keys_settings4}},
 
   // Final entry
 
   {0,S_SKIP|S_END,m_null}
 };
 
-setup_menu_t keys_settings3[] =  // Key Binding screen strings       
+setup_menu_t keys_settings2[] =  // Key Binding screen strings       
 {
   {"WEAPONS" ,S_SKIP|S_TITLE,m_null,KB_X,KB_Y},
   {"FIST"    ,S_KEY       ,m_scrn,KB_X,KB_Y+ 1*8,{&key_weapon1}},
@@ -2332,8 +2332,8 @@ setup_menu_t keys_settings3[] =  // Key Binding screen strings
   {"Enable Fist/Chainsaw\n& SG/SSG toggle", S_YESNO, m_null, KB_X,
    KB_Y+14*8, {"doom_weapon_toggles"}},
 
-  {"<- PREV",S_SKIP|S_PREV,m_null,KB_PREV,KB_Y+20*8, {keys_settings2}},
-  {"NEXT ->",S_SKIP|S_NEXT,m_null,KB_NEXT,KB_Y+20*8, {keys_settings4}},
+  {"<- PREV",S_SKIP|S_PREV,m_null,KB_PREV,KB_Y+20*8, {keys_settings1}},
+  {"NEXT ->",S_SKIP|S_NEXT,m_null,KB_NEXT,KB_Y+20*8, {keys_settings3}},
 
   // Final entry
 

@@ -79,7 +79,6 @@ extern int joybspeed;
 extern int joybautomap;
 // [FG] main menu joystick button
 extern int joybmainmenu;
-extern int realtic_clock_rate;         // killough 4/13/98: adjustable timer
 extern int tran_filter_pct;            // killough 2/21/98
 extern int showMessages;
 
@@ -157,13 +156,6 @@ default_t defaults[] = {
     (config_t *) &use_vsync, NULL,
     {1}, {0,1}, number, ss_gen, wad_no,
     "1 to enable wait for vsync to avoid display tearing"
-  },
-
-  {
-    "realtic_clock_rate",
-    (config_t *) &realtic_clock_rate, NULL,
-    {100}, {10,1000}, number, ss_gen, wad_no,
-    "Percentage of normal speed (35 fps) realtic clock runs at"
   },
 
   { // killough 10/98

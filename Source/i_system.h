@@ -101,6 +101,8 @@ extern struct keyboard_queue_s {
   volatile int head,tail,queue[KQSIZE];
 } keyboard_queue;
 
+extern int realtic_clock_rate;
+
 #endif
 
 //----------------------------------------------------------------------------

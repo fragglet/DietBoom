@@ -1683,6 +1683,12 @@ void D_DoomMain(void)
   nodrawers = M_CheckParm ("-nodraw");
   noblit = M_CheckParm ("-noblit");
 
+  p = M_CheckParm("-gamespeed");
+  if (p && p < myargc-1)
+  {
+    realtic_clock_rate = atoi(myargv[p+1]);
+  }
+
   // jff 4/21/98 allow writing predefined lumps out as a wad
   if ((p = M_CheckParm("-dumplumps")) && p < myargc-1)
     WritePredefinedLumpWad(myargv[p+1]);

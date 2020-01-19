@@ -2414,8 +2414,6 @@ setup_menu_t stat_settings1[] =  // Status Bar and HUD Settings screen
 
   {"HEADS-UP DISPLAY"  ,S_SKIP|S_TITLE,m_null,ST_X,ST_Y+ 4*8},
 
-  {"HIDE SECRETS"      ,S_YESNO     ,m_null,ST_X,ST_Y+ 5*8, {"hud_nosecrets"}},
-
   // Button for resetting to defaults
   {0,S_RESET,m_null,X_BUTTON,Y_BUTTON},
 

@@ -41,8 +41,6 @@
 // global heads up display controls
 
 int hud_displayed;    //jff 2/23/98 turns heads-up display on/off
-int hud_nosecrets;    //jff 2/18/98 allows secrets line to be disabled in HUD
-int hud_graph_keys=1; //jff 3/7/98 display HUD keys as graphics
 
 //
 // Locally used constants, shortcuts.

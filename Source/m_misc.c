@@ -1251,13 +1251,6 @@ default_t defaults[] = {
     "1 to enable display of HUD"
   },
 
-  { // no secrets/items/kills HUD line
-    "hud_nosecrets",
-    (config_t *) &hud_nosecrets, NULL,
-    {1}, {0,1}, number, ss_stat, wad_yes,
-    "1 to disable display of kills/items/secrets on HUD"
-  },
-
   {  // killough 2/8/98: weapon preferences set by user:
     "weapon_choice_1",
     (config_t *) &weapon_preferences[0][0], NULL,

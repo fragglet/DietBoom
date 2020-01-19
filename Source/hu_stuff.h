@@ -72,8 +72,6 @@ extern int hud_msg_scrollup;// killough 11/98: whether message list scrolls up
 extern int message_list;    // killough 11/98: whether message list is active
 //jff 2/23/98 hud is currently displayed
 extern int hud_displayed;   // hud is displayed
-//jff 2/18/98 hud/status control
-extern int hud_nosecrets;   // status does not list secrets/items/kills
 
 #endif
 

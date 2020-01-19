@@ -491,7 +491,7 @@ void HU_Drawer(void)
 
   plr = &players[displayplayer];         // killough 3/7/98
   // draw the automap widgets if automap is displayed
-  if (automapactive && ddt_cheating)
+  if (automapactive)
     {
       // map title
       HUlib_drawTextLine(&w_title, false);

@@ -493,11 +493,14 @@ void HU_Drawer(void)
   // draw the automap widgets if automap is displayed
   if (automapactive && ddt_cheating)
     {
-      fixed_t x,y,z;   // killough 10/98:
-      void AM_Coordinates(const mobj_t *, fixed_t *, fixed_t *, fixed_t *);
-
       // map title
       HUlib_drawTextLine(&w_title, false);
+    }
+
+  if (automapactive && ddt_cheating)
+    {
+      fixed_t x,y,z;   // killough 10/98:
+      void AM_Coordinates(const mobj_t *, fixed_t *, fixed_t *, fixed_t *);
 
       // killough 10/98: allow coordinates to display non-following pointer 
       AM_Coordinates(plr->mo, &x, &y, &z);

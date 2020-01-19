@@ -1244,62 +1244,6 @@ default_t defaults[] = {
     "1 means multiline message list is active"
   },
 
-  { // below is red
-    "health_red",
-    (config_t *) &health_red, NULL,
-    {25}, {0,200}, number, ss_stat, wad_yes,
-    "amount of health for red to yellow transition"
-  },
-
-  { // below is yellow
-    "health_yellow",
-    (config_t *) &health_yellow, NULL,
-    {50}, {0,200}, number, ss_stat, wad_yes,
-    "amount of health for yellow to green transition"
-  },
-
-  { // below is green, above blue
-    "health_green",
-    (config_t *) &health_green, NULL,
-    {100}, {0,200}, number, ss_stat, wad_yes,
-    "amount of health for green to blue transition"
-  },
-
-  { // below is red
-    "armor_red",
-    (config_t *) &armor_red, NULL,
-    {25}, {0,200}, number, ss_stat, wad_yes,
-    "amount of armor for red to yellow transition"
-  },
-
-  { // below is yellow
-    "armor_yellow",
-    (config_t *) &armor_yellow, NULL,
-    {50}, {0,200}, number, ss_stat, wad_yes,
-    "amount of armor for yellow to green transition"
-  },
-
-  { // below is green, above blue
-    "armor_green",
-    (config_t *) &armor_green, NULL,
-    {100}, {0,200}, number, ss_stat, wad_yes,
-    "amount of armor for green to blue transition"
-  },
-
-  { // below 25% is red
-    "ammo_red",
-    (config_t *) &ammo_red, NULL,
-    {25}, {0,100}, number, ss_stat, wad_yes,
-    "percent of ammo for red to yellow transition"
-  },
-
-  { // below 50% is yellow, above green
-    "ammo_yellow",
-    (config_t *) &ammo_yellow, NULL,
-    {50}, {0,100}, number, ss_stat, wad_yes,
-    "percent of ammo for yellow to green transition"
-  },
-
   {  // whether hud is displayed //jff 2/23/98
     "hud_displayed",
     (config_t *) &hud_displayed, NULL,

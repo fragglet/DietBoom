@@ -95,8 +95,6 @@ extern int  key_reverse;
 extern int  key_zoomin;
 extern int  key_zoomout;
 extern int  key_chat;
-extern int  key_backspace;
-extern int  key_enter;
 extern int  key_help;
 extern int  key_soundvolume;
 extern int  key_hud;

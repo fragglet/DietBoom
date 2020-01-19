@@ -137,8 +137,6 @@ int     key_reverse;
 int     key_zoomin;
 int     key_zoomout;
 int     key_chat;
-int     key_backspace;
-int     key_enter;
 int     key_map_right;
 int     key_map_left;
 int     key_map_up;

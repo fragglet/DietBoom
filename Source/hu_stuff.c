@@ -116,7 +116,6 @@ int hud_graph_keys=1; //jff 3/7/98 display HUD keys as graphics
 #define key_shift key_speed
 extern int  key_chat;
 extern int  key_escape;
-extern int  key_enter;
 extern int  key_shift;
 extern int  key_alt;
 extern int  destination_keys[MAXPLAYERS];                           // phares
@@ -768,7 +767,7 @@ boolean HU_Responder(event_t *ev)
 
   if (!chat_on)
     {
-      if (ev->data1 == key_enter)                                 // phares
+      if (ev->data1 == KEYD_ENTER)                                 // phares
         {
 	  //jff 2/26/98 toggle list of messages
 
@@ -782,7 +781,7 @@ boolean HU_Responder(event_t *ev)
 		if (!(message_list = !message_list))
 		  {
 		    // killough 12/98:
-		    // fix crash at startup if key_enter held down
+		    // fix crash at startup if KEYD_ENTER held down
 		    if (gametic && gamestate == GS_LEVEL)
 		      HU_Erase(); //jff 4/28/98 erase behind messages
 
@@ -852,12 +851,12 @@ boolean HU_Responder(event_t *ev)
             macromessage = chat_macros[c];
       
             // kill last message with a '\n'
-            HU_queueChatChar((char)key_enter); // DEBUG!!!                // phares
+            HU_queueChatChar((char)KEYD_ENTER); // DEBUG!!!                // phares
       
             // send the macro message
             while (*macromessage)
               HU_queueChatChar(*macromessage++);
-            HU_queueChatChar((char)key_enter);                            // phares
+            HU_queueChatChar((char)KEYD_ENTER);                            // phares
       
             // leave chat mode and notify that it was sent
             chat_on = false;
@@ -873,7 +872,7 @@ boolean HU_Responder(event_t *ev)
             if (eatkey)
               HU_queueChatChar(c);
 
-            if (c == key_enter)                                     // phares
+            if (c == KEYD_ENTER)                                     // phares
               {
                 chat_on = false;
                 if (w_chat.l.len)

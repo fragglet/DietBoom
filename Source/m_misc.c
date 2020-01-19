@@ -715,20 +715,6 @@ default_t defaults[] = {
   },
 
   {
-    "key_backspace",
-    (config_t *) &key_backspace, NULL,
-    {KEYD_BACKSPACE}, {0,255}, number, ss_keys, wad_no,
-    "key to erase last character typed"
-  },
-
-  {
-    "key_enter",
-    (config_t *) &key_enter, NULL,
-    {KEYD_ENTER}, {0,255}, number, ss_keys, wad_no,
-    "key to select from menu or review past messages"
-  },
-
-  {
     "key_map",
     (config_t *) &key_map, NULL,
     {KEYD_TAB}, {0,255}, number, ss_keys, wad_no,

@@ -181,12 +181,7 @@ static int        chat_count;        // killough 11/98
 extern int        showMessages;
 static boolean    headsupactive = false;
 
-//jff 2/16/98 hud text colors, controls added
-int hudcolor_mesg;  // color range of scrolling messages
-int hudcolor_chat;  // color range of chat lines
 int hud_msg_lines;  // number of message lines in window
-//jff 2/26/98 hud text colors, controls added
-int hudcolor_list;  // list of messages color
 
 int hud_msg_timed;     // killough 11/98: allow > 1 messages to time out
 int message_list;      // killough 11/98: made global
@@ -396,7 +391,7 @@ void HU_Start(void)
   // create the message widget
   // messages to player in upper-left of screen
   HUlib_initSText(&w_message, HU_MSGX, HU_MSGY, HU_MSGHEIGHT, hu_font,
-		  HU_FONTSTART, colrngs[hudcolor_mesg], &message_on);
+		  HU_FONTSTART, colrngs[6], &message_on);
 
   //jff 2/16/98 added some HUD widgets
   // create the map title widget - map title display in lower left of automap
@@ -412,7 +407,7 @@ void HU_Start(void)
   //jff 2/26/98 add the text refresh widget initialization
   HUlib_initMText(&w_rtext, 0, 0, SCREENWIDTH,
 		  (hud_msg_lines+2)*HU_REFRESHSPACING, hu_font,
-		  HU_FONTSTART, colrngs[hudcolor_list],
+		  HU_FONTSTART, colrngs[6],
 		  &message_list_on);      // killough 11/98
 
   // initialize the automap's level title widget
@@ -462,13 +457,13 @@ void HU_Start(void)
      HU_INPUTY,
      hu_font,
      HU_FONTSTART,
-     colrngs[hudcolor_chat],
+     colrngs[6],
      &chat_on
      );
 
   // create the inputbuffer widgets, one per player
   for (i=0 ; i<MAXPLAYERS ; i++)
-    HUlib_initIText(&w_inputbuffer[i], 0, 0, 0, 0, colrngs[hudcolor_chat],
+    HUlib_initIText(&w_inputbuffer[i], 0, 0, 0, 0, colrngs[6],
 		    &always_off);
 
   // now allow the heads-up display to run

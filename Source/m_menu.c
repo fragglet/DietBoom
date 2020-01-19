@@ -3098,9 +3098,6 @@ void M_DrawCompat(void)
 // killough 11/98: enumerated
 
 enum {
-  mess_color_play,
-  mess_color_chat,
-  mess_color_review,
   mess_timed,
   mess_lines,
 };
@@ -3115,15 +3112,6 @@ setup_menu_t* mess_settings[] =
 
 setup_menu_t mess_settings1[] =  // Messages screen       
 {
-  {"Message Color During Play", S_CRITEM, m_null, M_X,
-   M_Y + mess_color_play*8, {"hudcolor_mesg"}},
-
-  {"Chat Message Color", S_CRITEM, m_null, M_X,
-   M_Y + mess_color_chat*8, {"hudcolor_chat"}},
-
-  {"Message Review Color", S_CRITEM, m_null, M_X,
-   M_Y + mess_color_review*8, {"hudcolor_list"}},
-
   {"Message Listing Review is Temporary",  S_YESNO,  m_null,  M_X,
    M_Y + mess_timed*8, {"hud_msg_timed"}},
 

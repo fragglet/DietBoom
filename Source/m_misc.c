@@ -1230,27 +1230,6 @@ default_t defaults[] = {
 
   //jff 2/16/98 defaults for color ranges in hud and status
 
-  { // red range
-    "hudcolor_mesg",
-    (config_t *) &hudcolor_mesg, NULL,
-    {6}, {0,9}, number, ss_mess, wad_yes,
-    "color range used for messages during play"
-  },
-
-  { // gold range
-    "hudcolor_chat",
-    (config_t *) &hudcolor_chat, NULL,
-    {5}, {0,9}, number, ss_mess, wad_yes,
-    "color range used for chat messages and entry"
-  },
-
-  { // gold range  //jff 2/26/98
-    "hudcolor_list",
-    (config_t *) &hudcolor_list, NULL,
-    {5}, {0,9}, number, ss_mess, wad_yes,
-    "color range used for message review"
-  },
-
   { // 1 line scrolling window
     "hud_msg_lines",
     (config_t *) &hud_msg_lines, NULL,

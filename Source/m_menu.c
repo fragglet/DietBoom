@@ -192,7 +192,6 @@ extern int mapcolor_wall; // normal 1s wall color
 extern int mapcolor_fchg; // line at floor height change color
 extern int mapcolor_cchg; // line at ceiling height change color
 extern int mapcolor_unsn; // computer map unseen line color
-extern int mapcolor_flat; // line with no floor/ceiling changes
 extern int mapcolor_sprt; // general sprite color
 extern int mapcolor_hair; // crosshair color
 extern int mapcolor_sngl; // single player arrow color
@@ -2548,7 +2547,6 @@ setup_menu_t auto_settings2[] =  // 2nd AutoMap Settings screen
 {
   //jff 4/23/98 add exit line to automap
   {"computer map unseen line"       ,S_COLOR ,m_null,AU_X,AU_Y+ 3*8, {"mapcolor_unsn"}},
-  {"line w/no floor/ceiling changes",S_COLOR ,m_null,AU_X,AU_Y+ 4*8, {"mapcolor_flat"}},
   {"general sprite"                 ,S_COLOR ,m_null,AU_X,AU_Y+ 5*8, {"mapcolor_sprt"}},
   {"crosshair"                      ,S_COLOR ,m_null,AU_X,AU_Y+ 6*8, {"mapcolor_hair"}},
   {"single player arrow"            ,S_COLOR ,m_null,AU_X,AU_Y+ 7*8, {"mapcolor_sngl"}},

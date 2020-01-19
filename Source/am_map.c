@@ -45,7 +45,6 @@ int mapcolor_wall;    // normal 1s wall color
 int mapcolor_fchg;    // line at floor height change color
 int mapcolor_cchg;    // line at ceiling height change color
 int mapcolor_unsn;    // computer map unseen line color
-int mapcolor_flat;    // line with no floor/ceiling changes
 int mapcolor_sprt;    // general sprite color
 int mapcolor_hair;    // crosshair color
 int mapcolor_sngl;    // single player arrow color
@@ -1301,9 +1300,9 @@ void AM_drawWalls(void)
         {
           AM_drawMline(&l, mapcolor_cchg); // ceiling level change
         }
-        else if (mapcolor_flat && ddt_cheating)
+        else if (ddt_cheating)
         { 
-          AM_drawMline(&l, mapcolor_flat); //2S lines that appear only in IDDT  
+          AM_drawMline(&l, mapcolor_unsn); //2S lines that appear only in IDDT  
         }
       }
     } // now draw the lines only visible because the player has computermap
@@ -1313,8 +1312,6 @@ void AM_drawWalls(void)
       {
         if
         (
-          mapcolor_flat
-          ||
           !lines[i].backsector
           ||
           lines[i].backsector->floorheight

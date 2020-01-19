@@ -81,7 +81,6 @@ extern int mapcolor_fchg;     // line at floor height change color
 extern int mapcolor_cchg;     // line at ceiling height change color
 //jff 4/23/98
 extern int mapcolor_unsn;     // computer map unseen line color
-extern int mapcolor_flat;     // line with no floor/ceiling changes
 extern int mapcolor_sprt;     // general sprite color
 extern int mapcolor_hair;     // crosshair color
 extern int mapcolor_sngl;     // single player arrow color

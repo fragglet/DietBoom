@@ -1206,13 +1206,6 @@ default_t defaults[] = {
     "color used for lines not seen without computer map"
   },
 
-  { // lt gray
-    "mapcolor_flat",
-    (config_t *) &mapcolor_flat, NULL,
-    {88}, {0,255}, number, ss_auto, wad_yes,
-    "color used for lines with no height changes"
-  },
-
   { // green
     "mapcolor_sprt",
     (config_t *) &mapcolor_sprt, NULL,

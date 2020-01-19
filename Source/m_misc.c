@@ -242,13 +242,6 @@ default_t defaults[] = {
     "1 to enable monsters to help dying friends"
   },
 
-  { // killough 2/28/98
-    "sts_traditional_keys",
-    (config_t *) &sts_traditional_keys, NULL,
-    {1}, {0,1}, number, ss_stat, wad_yes,
-    "1 to disable doubled card and skull key display on status bar"
-  },
-
   { // killough 3/6/98
     "leds_always_off",
     (config_t *) &leds_always_off, NULL,

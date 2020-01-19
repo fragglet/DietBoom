@@ -544,7 +544,6 @@ void ST_updateFaceWidget(void)
 
 }
 
-int sts_traditional_keys; // killough 2/28/98: traditional status bar keys
 int distinguish_key_types;
 
 void ST_updateWidgets(void)

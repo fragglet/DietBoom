@@ -177,7 +177,6 @@ extern int joybnextweapon;
 extern int joybautomap;
 // [FG] main menu joystick button
 extern int joybmainmenu;
-extern int sts_traditional_keys;  // display keys the traditional way
 extern int mapcolor_back; // map background
 extern int mapcolor_grid; // grid lines color
 extern int mapcolor_wall; // normal 1s wall color
@@ -262,7 +261,6 @@ void M_ClearMenus (void);
 int  M_GetKeyString(int,int);
 void M_Setup(int choice);                               
 void M_KeyBindings(int choice);                        
-void M_StatusBar(int);
 void M_Automap(int);
 void M_Enemy(int);
 void M_ChatStrings(int);
@@ -272,7 +270,6 @@ void M_ExtHelp(int);
 int  M_GetPixelWidth(char*);
 void M_DrawKeybnd(void);
 void M_DrawMenuString(int,int,int);                    
-void M_DrawStatusHUD(void);
 void M_DrawExtHelp(void);
 void M_DrawAutoMap(void);
 void M_DrawEnemy(void);
@@ -1415,8 +1412,6 @@ void M_SizeDisplay(int choice)
 // of variables w/o having to restart the game. There are 7 screens:
 //
 //    Key Bindings
-//    Weapons
-//    Status Bar / HUD
 //    Automap
 //    Enemies
 //    Messages
@@ -1472,7 +1467,6 @@ enum
 {
   set_compat,
   set_key_bindings,                                     
-  set_statbar,                                           
   set_automap,
   set_enemy,
   set_chatstrings,
@@ -1493,7 +1487,6 @@ menuitem_t SetupMenu[]=
 {
   {1,"M_COMPAT",M_Compat,     'p'},
   {1,"M_KEYBND",M_KeyBindings,'k'},
-  {1,"M_STAT"  ,M_StatusBar,  's'},               
   {1,"M_AUTO"  ,M_Automap,    'a'},                    
   {1,"M_ENEM"  ,M_Enemy,      'e'},                     
   {1,"M_CHAT"  ,M_ChatStrings,'c'},                     
@@ -1558,16 +1551,6 @@ menu_t KeybndDef =
   &SetupDef,
   Generic_Setup,
   M_DrawKeybnd,
-  34,5,      // skull drawn here
-  0
-};
-
-menu_t StatusHUDDef =
-{
-  generic_setup_end,
-  &SetupDef,
-  Generic_Setup,
-  M_DrawStatusHUD,
   34,5,      // skull drawn here
   0
 };
@@ -2391,81 +2374,6 @@ void M_DrawKeybnd(void)
 
 /////////////////////////////
 //
-// The Status Bar / HUD tables.
-
-#define ST_X 203
-#define ST_Y  31
-
-// Screen table definitions
-
-setup_menu_t stat_settings1[];
-
-setup_menu_t* stat_settings[] =
-{
-  stat_settings1,
-  NULL
-};
-
-setup_menu_t stat_settings1[] =  // Status Bar and HUD Settings screen       
-{
-  {"STATUS BAR"        ,S_SKIP|S_TITLE,m_null,ST_X,ST_Y+ 1*8 },
-
-  {"SINGLE KEY DISPLAY",S_YESNO, m_null,ST_X,ST_Y+ 2*8, {"sts_traditional_keys"}},
-
-  {"HEADS-UP DISPLAY"  ,S_SKIP|S_TITLE,m_null,ST_X,ST_Y+ 4*8},
-
-  // Button for resetting to defaults
-  {0,S_RESET,m_null,X_BUTTON,Y_BUTTON},
-
-  // Final entry
-  {0,S_SKIP|S_END,m_null}
-};
-
-// Setting up for the Status Bar / HUD screen. Turn on flags, set pointers,
-// locate the first item on the screen where the cursor is allowed to
-// land.
-
-void M_StatusBar(int choice)
-{
-  M_SetupNextMenu(&StatusHUDDef);
-
-  setup_active = true;
-  setup_screen = ss_stat;
-  set_status_active = true;
-  setup_select = false;
-  default_verify = false;
-  setup_gather = false;
-  mult_screens_index = 0;
-  current_setup_menu = stat_settings[0];
-  set_menu_itemon = 0;
-  while (current_setup_menu[set_menu_itemon++].m_flags & S_SKIP);
-  current_setup_menu[--set_menu_itemon].m_flags |= S_HILITE;
-}
-
-
-// The drawing part of the Status Bar / HUD Setup initialization. Draw the
-// background, title, instruction line, and items.
-
-void M_DrawStatusHUD(void)
-
-{
-  inhelpscreens = true;    // killough 4/6/98: Force status bar redraw
-
-  M_DrawBackground("FLOOR4_6", screens[0]); // Draw background
-  V_DrawPatchDirect (59,2,0,W_CacheLumpName("M_STAT",PU_CACHE));
-  M_DrawInstructions();
-  M_DrawScreenItems(current_setup_menu);
-
-  // If the Reset Button has been selected, an "Are you sure?" message
-  // is overlayed across everything else.
-
-  if (default_verify)
-    M_DrawDefVerify();
-}
-
-
-/////////////////////////////
-//
 // The Automap tables.
 
 #define AU_X    250
@@ -3159,7 +3067,6 @@ void M_SelectDone(setup_menu_t* ptr)
 static setup_menu_t **setup_screens[] =
 {
   keys_settings,
-  stat_settings,
   auto_settings,
   enem_settings,
   chat_settings,

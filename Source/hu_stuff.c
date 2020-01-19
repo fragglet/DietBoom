@@ -57,52 +57,11 @@ int hud_displayed;    //jff 2/23/98 turns heads-up display on/off
 #define HU_TITLEY (ST_Y - 1 - SHORT(hu_font[0]->height)) 
 
 //jff 2/16/98 add coord text widget coordinates
-#define HU_COORDX (SCREENWIDTH - 13*SHORT(hu_font2['A'-HU_FONTSTART]->width))
+#define HU_COORDX (SCREENWIDTH - 13*SHORT(hu_font['A'-HU_FONTSTART]->width))
 //jff 3/3/98 split coord widget into three lines in upper right of screen
 #define HU_COORDX_Y (1 + 0*SHORT(hu_font['A'-HU_FONTSTART]->height))
 #define HU_COORDY_Y (2 + 1*SHORT(hu_font['A'-HU_FONTSTART]->height))
 #define HU_COORDZ_Y (3 + 2*SHORT(hu_font['A'-HU_FONTSTART]->height))
-
-//jff 2/16/98 add ammo, health, armor widgets, 2/22/98 less gap
-#define HU_GAPY 8
-#define HU_HUDHEIGHT (6*HU_GAPY)
-#define HU_HUDX 2
-#define HU_HUDY (SCREENHEIGHT-HU_HUDHEIGHT-1)
-#define HU_MONSECX (HU_HUDX)
-#define HU_MONSECY (HU_HUDY+0*HU_GAPY)
-#define HU_KEYSX   (HU_HUDX) 
-//jff 3/7/98 add offset for graphic key widget
-#define HU_KEYSGX  (HU_HUDX+4*SHORT(hu_font2['A'-HU_FONTSTART]->width))
-#define HU_KEYSY   (HU_HUDY+1*HU_GAPY)
-#define HU_WEAPX   (HU_HUDX)
-#define HU_WEAPY   (HU_HUDY+2*HU_GAPY)
-#define HU_AMMOX   (HU_HUDX)
-#define HU_AMMOY   (HU_HUDY+3*HU_GAPY)
-#define HU_HEALTHX (HU_HUDX)
-#define HU_HEALTHY (HU_HUDY+4*HU_GAPY)
-#define HU_ARMORX  (HU_HUDX)
-#define HU_ARMORY  (HU_HUDY+5*HU_GAPY)
-
-//jff 3/4/98 distributed HUD positions
-#define HU_HUDX_LL 2
-#define HU_HUDY_LL (SCREENHEIGHT-2*HU_GAPY-1)
-#define HU_HUDX_LR 200
-#define HU_HUDY_LR (SCREENHEIGHT-2*HU_GAPY-1)
-#define HU_HUDX_UR 224
-#define HU_HUDY_UR 2
-#define HU_MONSECX_D (HU_HUDX_LL)
-#define HU_MONSECY_D (HU_HUDY_LL+0*HU_GAPY)
-#define HU_KEYSX_D   (HU_HUDX_LL)
-#define HU_KEYSGX_D  (HU_HUDX_LL+4*SHORT(hu_font2['A'-HU_FONTSTART]->width))
-#define HU_KEYSY_D   (HU_HUDY_LL+1*HU_GAPY)
-#define HU_WEAPX_D   (HU_HUDX_LR)
-#define HU_WEAPY_D   (HU_HUDY_LR+0*HU_GAPY)
-#define HU_AMMOX_D   (HU_HUDX_LR)
-#define HU_AMMOY_D   (HU_HUDY_LR+1*HU_GAPY)
-#define HU_HEALTHX_D (HU_HUDX_UR)
-#define HU_HEALTHY_D (HU_HUDY_UR+0*HU_GAPY)
-#define HU_ARMORX_D  (HU_HUDX_UR)
-#define HU_ARMORY_D  (HU_HUDY_UR+1*HU_GAPY)
 
 //#define HU_INPUTTOGGLE  't' // not used                           // phares
 #define HU_INPUTX HU_MSGX
@@ -148,7 +107,6 @@ static player_t*  plr;
 
 // font sets
 patch_t* hu_font[HU_FONTSIZE];
-patch_t* hu_font2[HU_FONTSIZE];
 patch_t* hu_fontk[HU_FONTSIZE];//jff 3/7/98 added for graphic key indicators
 
 // widgets
@@ -269,67 +227,18 @@ void HU_Init(void)
   j = HU_FONTSTART;
   for (i=0;i<HU_FONTSIZE;i++,j++)
     {
-      if ('0'<=j && j<='9')
+      if (j<97)
         {
-          sprintf(buffer, "DIG%.1d",j-48);
-          hu_font2[i] = (patch_t *) W_CacheLumpName(buffer, PU_STATIC);
           sprintf(buffer, "STCFN%.3d",j);
           hu_font[i] = (patch_t *) W_CacheLumpName(buffer, PU_STATIC);
         }
+      else if (j>122)
+        {
+          sprintf(buffer, "STBR%.3d",j);
+          hu_font[i] = (patch_t *) W_CacheLumpName(buffer, PU_STATIC);
+        }
       else
-        if ('A'<=j && j<='Z')
-          {
-            sprintf(buffer, "DIG%c",j);
-            hu_font2[i] = (patch_t *) W_CacheLumpName(buffer, PU_STATIC);
-            sprintf(buffer, "STCFN%.3d",j);
-            hu_font[i] = (patch_t *) W_CacheLumpName(buffer, PU_STATIC);
-          }
-        else
-          if (j=='-')
-            {
-              hu_font2[i] = (patch_t *) W_CacheLumpName("DIG45", PU_STATIC);
-              hu_font[i] = (patch_t *) W_CacheLumpName("STCFN045", PU_STATIC);
-            }
-          else
-            if (j=='/')
-              {
-                hu_font2[i] = (patch_t *) W_CacheLumpName("DIG47", PU_STATIC);
-                hu_font[i] = (patch_t *) W_CacheLumpName("STCFN047", PU_STATIC);
-              }
-            else
-              if (j==':')
-                {
-                  hu_font2[i] = (patch_t *) W_CacheLumpName("DIG58", PU_STATIC);
-                  hu_font[i] = (patch_t *) W_CacheLumpName("STCFN058", PU_STATIC);
-                }
-              else
-                if (j=='[')
-                  {
-                    hu_font2[i] = (patch_t *) W_CacheLumpName("DIG91", PU_STATIC);
-                    hu_font[i] = (patch_t *) W_CacheLumpName("STCFN091", PU_STATIC);
-                  }
-                else
-                  if (j==']')
-                    {
-                      hu_font2[i] = (patch_t *) W_CacheLumpName("DIG93", PU_STATIC);
-                      hu_font[i] = (patch_t *) W_CacheLumpName("STCFN093", PU_STATIC);
-                    }
-                  else
-                    if (j<97)
-                      {
-                        sprintf(buffer, "STCFN%.3d",j);
-                        hu_font2[i] = hu_font[i] = (patch_t *) W_CacheLumpName(buffer, PU_STATIC);
-                        //jff 2/23/98 make all font chars defined, useful or not
-                      }
-                    else
-                      if (j>122)
-                        {
-                          sprintf(buffer, "STBR%.3d",j);
-                          hu_font2[i] = hu_font[i] =
-                            (patch_t *) W_CacheLumpName(buffer, PU_STATIC);
-                        }
-                      else
-                        hu_font[i] = hu_font[0]; //jff 2/16/98 account for gap
+        hu_font[i] = hu_font[0]; //jff 2/16/98 account for gap
     }
 
   //jff 2/26/98 load patches for keys and double keys

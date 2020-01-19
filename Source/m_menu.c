@@ -3122,23 +3122,14 @@ setup_menu_t mess_settings1[] =  // Messages screen
   {"Message Color During Play", S_CRITEM, m_null, M_X,
    M_Y + mess_color_play*8, {"hudcolor_mesg"}},
 
-  {"Message Duration During Play (ms)", S_NUM, m_null, M_X,
-   M_Y  + mess_timer*8, {"message_timer"}},
-
   {"Chat Message Color", S_CRITEM, m_null, M_X,
    M_Y + mess_color_chat*8, {"hudcolor_chat"}},
-
-  {"Chat Message Duration (ms)", S_NUM, m_null, M_X,
-   M_Y  + mess_chat_timer*8, {"chat_msg_timer"}},
 
   {"Message Review Color", S_CRITEM, m_null, M_X,
    M_Y + mess_color_review*8, {"hudcolor_list"}},
 
   {"Message Listing Review is Temporary",  S_YESNO,  m_null,  M_X,
    M_Y + mess_timed*8, {"hud_msg_timed"}},
-
-  {"Message Review Duration (ms)", S_NUM, m_null, M_X,
-   M_Y  + mess_hud_timer*8, {"hud_msg_timer"}},
 
   {"Number of Review Message Lines", S_NUM, m_null,  M_X,
    M_Y + mess_lines*8, {"hud_msg_lines"}},

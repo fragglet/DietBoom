@@ -191,9 +191,9 @@ int hudcolor_list;  // list of messages color
 int hud_msg_timed;     // killough 11/98: allow > 1 messages to time out
 int message_list;      // killough 11/98: made global
 
-int hud_msg_timer  = HU_MSGTIMEOUT * (1000/TICRATE);     // killough 11/98
-int message_timer  = HU_MSGTIMEOUT * (1000/TICRATE);     // killough 11/98
-int chat_msg_timer = HU_MSGTIMEOUT * (1000/TICRATE);     // killough 11/98
+#define HUD_MSG_TIMER (HU_MSGTIMEOUT * (1000/TICRATE))
+#define MESSAGE_TIMER (HU_MSGTIMEOUT * (1000/TICRATE))
+#define CHAT_MSG_TIMER (HU_MSGTIMEOUT * (1000/TICRATE))
 
 //jff 2/16/98 initialization strings for ammo, health, armor widgets
 static char hud_coordstrx[32];
@@ -389,9 +389,9 @@ void HU_Start(void)
   // killough 11/98:
   reviewing_message = message_list_on = false;
   message_counter = message_list_counter = 0;
-  hud_msg_count = (hud_msg_timer  * TICRATE) / 1000 + 1;
-  message_count = (message_timer  * TICRATE) / 1000 + 1;
-  chat_count    = (chat_msg_timer * TICRATE) / 1000 + 1;
+  hud_msg_count = (HUD_MSG_TIMER * TICRATE) / 1000 + 1;
+  message_count = (MESSAGE_TIMER * TICRATE) / 1000 + 1;
+  chat_count    = (CHAT_MSG_TIMER * TICRATE) / 1000 + 1;
 
   // create the message widget
   // messages to player in upper-left of screen

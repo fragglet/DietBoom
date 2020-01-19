@@ -1244,13 +1244,6 @@ default_t defaults[] = {
     "color range used for chat messages and entry"
   },
 
-  { // killough 11/98
-    "chat_msg_timer",
-    (config_t *) &chat_msg_timer, NULL,
-    {4000}, {0,UL}, 0, ss_mess, wad_yes,
-    "Duration of chat messages (ms)"
-  },
-
   { // gold range  //jff 2/26/98
     "hudcolor_list",
     (config_t *) &hudcolor_list, NULL,
@@ -1273,24 +1266,10 @@ default_t defaults[] = {
   },
 
   { // killough 11/98
-    "hud_msg_timer",
-    (config_t *) &hud_msg_timer, NULL,
-    {4000}, {0,UL}, 0, ss_mess, wad_yes,
-    "Duration of temporary message review list (ms)"
-  },
-
-  { // killough 11/98
     "message_list",
     (config_t *) &message_list, NULL,
     {0}, {0,1}, number, ss_mess, wad_yes,
     "1 means multiline message list is active"
-  },
-
-  { // killough 11/98
-    "message_timer",
-    (config_t *) &message_timer, NULL,
-    {4000}, {0,UL}, 0, ss_mess, wad_yes,
-    "Duration of normal Doom messages (ms)"
   },
 
   { // below is red

@@ -2524,9 +2524,6 @@ setup_menu_t auto_settings1[] =  // 1st AutoMap Settings screen
   {"line at floor height change", S_COLOR, m_null, AU_X, AU_Y+ 3*8, {"mapcolor_fchg"}},
   {"line at ceiling height change"      ,S_COLOR,m_null,AU_X,AU_Y+ 4*8, {"mapcolor_cchg"}},
 
-  {"AUTOMAP LEVEL TITLE COLOR"      ,S_CRITEM,m_null,AU_X,AU_Y+13*8, {"hudcolor_titl"}},
-  {"AUTOMAP COORDINATES COLOR"      ,S_CRITEM,m_null,AU_X,AU_Y+14*8, {"hudcolor_xyco"}},
-
   {"Show coordinates of automap pointer",S_YESNO,m_null,AU_X,AU_Y+15*8, {"map_point_coord"}},  // killough 10/98
 
   // Button for resetting to defaults

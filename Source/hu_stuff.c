@@ -181,9 +181,6 @@ static int        chat_count;        // killough 11/98
 extern int        showMessages;
 static boolean    headsupactive = false;
 
-//jff 2/16/98 hud supported automap colors added
-int hudcolor_titl;  // color range of automap level title
-int hudcolor_xyco;  // color range of new coords on automap
 //jff 2/16/98 hud text colors, controls added
 int hudcolor_mesg;  // color range of scrolling messages
 int hudcolor_chat;  // color range of chat lines
@@ -405,7 +402,7 @@ void HU_Start(void)
   //jff 2/16/98 added some HUD widgets
   // create the map title widget - map title display in lower left of automap
   HUlib_initTextLine(&w_title, HU_TITLEX, HU_TITLEY, hu_font,
-		     HU_FONTSTART, colrngs[hudcolor_titl]);
+		     HU_FONTSTART, colrngs[6]);
 
   // create the hud text refresh widget
   // scrolling display of last hud_msg_lines messages received
@@ -437,11 +434,11 @@ void HU_Start(void)
   // jff 3/3/98 split coord widget into three lines: x,y,z
 
   HUlib_initTextLine(&w_coordx, HU_COORDX, HU_COORDX_Y, hu_font,
-		     HU_FONTSTART, colrngs[hudcolor_xyco]);
+		     HU_FONTSTART, colrngs[6]);
   HUlib_initTextLine(&w_coordy, HU_COORDX, HU_COORDY_Y, hu_font,
-		     HU_FONTSTART, colrngs[hudcolor_xyco]);
+		     HU_FONTSTART, colrngs[6]);
   HUlib_initTextLine(&w_coordz, HU_COORDX, HU_COORDZ_Y, hu_font,
-		     HU_FONTSTART, colrngs[hudcolor_xyco]);
+		     HU_FONTSTART, colrngs[6]);
   
   // initialize the automaps coordinate widget
   //jff 3/3/98 split coordstr widget into 3 parts

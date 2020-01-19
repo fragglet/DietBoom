@@ -62,9 +62,6 @@ void HU_Erase(void);
 
 // killough 5/2/98: moved from m_misc.c:
 
-//jff 2/16/98 hud supported automap colors added
-extern int hudcolor_titl;   // color range of automap level title
-extern int hudcolor_xyco;   // color range of new coords on automap
 //jff 2/16/98 hud text colors, controls added
 extern int hudcolor_mesg;   // color range of scrolling messages
 extern int hudcolor_chat;   // color range of chat lines

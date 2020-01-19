@@ -1245,20 +1245,6 @@ default_t defaults[] = {
 
   //jff 2/16/98 defaults for color ranges in hud and status
 
-  { // gold range
-    "hudcolor_titl",
-    (config_t *) &hudcolor_titl, NULL,
-    {5}, {0,9}, number, ss_auto, wad_yes,
-    "color range used for automap level title"
-  },
-
-  { // green range
-    "hudcolor_xyco",
-    (config_t *) &hudcolor_xyco, NULL,
-    {3}, {0,9}, number, ss_auto, wad_yes,
-    "color range used for automap coordinates"
-  },
-
   { // red range
     "hudcolor_mesg",
     (config_t *) &hudcolor_mesg, NULL,

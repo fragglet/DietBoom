@@ -485,12 +485,13 @@ void HU_Start(void)
 //
 void HU_Drawer(void)
 {
+  extern int ddt_cheating;
   char *s;
   player_t *plr;
 
   plr = &players[displayplayer];         // killough 3/7/98
   // draw the automap widgets if automap is displayed
-  if (automapactive)
+  if (automapactive && ddt_cheating)
     {
       fixed_t x,y,z;   // killough 10/98:
       void AM_Coordinates(const mobj_t *, fixed_t *, fixed_t *, fixed_t *);

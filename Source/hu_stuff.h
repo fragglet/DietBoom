@@ -69,7 +69,6 @@ extern int hudcolor_chat;   // color range of chat lines
 extern int hudcolor_list;   // color of list of past messages
 extern int hud_msg_lines;   // number of message lines in window up to 16
 extern int hud_msg_scrollup;// killough 11/98: whether message list scrolls up
-extern int hud_msg_timed;   // killough 11/98: whether message list is timed
 extern int message_list;    // killough 11/98: whether message list is active
 //jff 2/23/98 hud is currently displayed
 extern int hud_displayed;   // hud is displayed

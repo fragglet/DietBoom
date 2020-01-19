@@ -1238,13 +1238,6 @@ default_t defaults[] = {
   },
 
   { // killough 11/98
-    "hud_msg_timed",
-    (config_t *) &hud_msg_timed, NULL,
-    {1}, {0,1}, 0, ss_mess, wad_yes,
-    "1 enables temporary message review list"
-  },
-
-  { // killough 11/98
     "message_list",
     (config_t *) &message_list, NULL,
     {0}, {0,1}, number, ss_mess, wad_yes,

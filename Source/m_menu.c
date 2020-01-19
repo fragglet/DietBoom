@@ -3098,7 +3098,6 @@ void M_DrawCompat(void)
 // killough 11/98: enumerated
 
 enum {
-  mess_timed,
   mess_lines,
 };
 
@@ -3112,9 +3111,6 @@ setup_menu_t* mess_settings[] =
 
 setup_menu_t mess_settings1[] =  // Messages screen       
 {
-  {"Message Listing Review is Temporary",  S_YESNO,  m_null,  M_X,
-   M_Y + mess_timed*8, {"hud_msg_timed"}},
-
   {"Number of Review Message Lines", S_NUM, m_null,  M_X,
    M_Y + mess_lines*8, {"hud_msg_lines"}},
 

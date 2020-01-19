@@ -183,7 +183,6 @@ static boolean    headsupactive = false;
 
 int hud_msg_lines;  // number of message lines in window
 
-int hud_msg_timed;     // killough 11/98: allow > 1 messages to time out
 int message_list;      // killough 11/98: made global
 
 #define HUD_MSG_TIMER (HU_MSGTIMEOUT * (1000/TICRATE))
@@ -610,8 +609,7 @@ void HU_Ticker(void)
       // killough 11/98: display message list, possibly timed
       if (message_list)
 	{
-	  if (hud_msg_timed || message_dontfuckwithme) // Messages Off => timed
-	    message_list_counter = hud_msg_count;
+	  message_list_counter = hud_msg_count;
 	  message_list_on = true;
 	}
       else
@@ -770,8 +768,7 @@ boolean HU_Responder(event_t *ev)
 	  // Toggle message list only if a message is actively being reviewed.
 	  if (has_message)
 	    {
-	      if (message_list ? message_list_on && 
-		  (reviewing_message || !hud_msg_timed) :
+	      if (message_list ? message_list_on && reviewing_message :
 		  message_on && reviewing_message)
 		if (!(message_list = !message_list))
 		  {
@@ -792,8 +789,7 @@ boolean HU_Responder(event_t *ev)
 		}
 	      else
 		{                     // message list, possibly timed
-		  if (hud_msg_timed)
-		    message_list_counter = hud_msg_count;
+		  message_list_counter = hud_msg_count;
 		  reviewing_message = message_list_on = true;
 		}
 	    }

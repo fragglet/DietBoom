@@ -298,7 +298,6 @@ static void updateSoundParams(int handle, int volume, int separation, int pitch)
    int slot = handle;
    int rightvol;
    int leftvol;
-   int step = steptable[pitch];
    
    if(!snd_init)
       return;

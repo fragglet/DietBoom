@@ -188,7 +188,6 @@ int hud_msg_lines;  // number of message lines in window
 //jff 2/26/98 hud text colors, controls added
 int hudcolor_list;  // list of messages color
 
-int hud_msg_scrollup;  // killough 11/98: allow messages to scroll upwards
 int hud_msg_timed;     // killough 11/98: allow > 1 messages to time out
 int message_list;      // killough 11/98: made global
 

@@ -445,7 +445,7 @@ void HUlib_drawMText(hu_mtext_t* m)
 	idx += m->nl; // handle queue of lines
 
       m->l[idx].x = m->x;       // killough 11/98: optional scroll up/down:
-      m->l[idx].y = m->y+(hud_msg_scrollup ? m->nl-1-i : i)*HU_REFRESHSPACING;
+      m->l[idx].y = m->y+(m->nl-1-i)*HU_REFRESHSPACING;
 
       HUlib_drawTextLine(&m->l[idx], false); // no cursor, please
     }

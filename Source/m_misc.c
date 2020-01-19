@@ -1266,13 +1266,6 @@ default_t defaults[] = {
   },
 
   { // killough 11/98
-    "hud_msg_scrollup",
-    (config_t *) &hud_msg_scrollup, NULL,
-    {1}, {0,1}, number, ss_mess, wad_yes,
-    "1 enables message review list scrolling upward"
-  },
-
-  { // killough 11/98
     "hud_msg_timed",
     (config_t *) &hud_msg_timed, NULL,
     {1}, {0,1}, 0, ss_mess, wad_yes,

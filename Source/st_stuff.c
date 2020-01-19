@@ -545,6 +545,7 @@ void ST_updateFaceWidget(void)
 }
 
 int sts_traditional_keys; // killough 2/28/98: traditional status bar keys
+int distinguish_key_types;
 
 void ST_updateWidgets(void)
 {
@@ -580,10 +581,11 @@ void ST_updateWidgets(void)
       keyboxes[i] = plyr->cards[i] ? i : -1;
 
       //jff 2/24/98 select double key
-      //killough 2/28/98: preserve traditional keys by config option
+      // we only use double key indicator if the level distinguishes between
+      // key types.
 
       if (plyr->cards[i+3])
-        keyboxes[i] = keyboxes[i]==-1 || sts_traditional_keys ? i+3 : i+6;
+        keyboxes[i] = keyboxes[i]==-1 || !distinguish_key_types ? i+3 : i+6;
     }
 
   // refresh everything if this is him coming back to life

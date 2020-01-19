@@ -76,6 +76,7 @@ typedef enum
 } st_chatstateenum_t;
 
 extern int sts_traditional_keys;  // display keys the traditional way
+extern int distinguish_key_types;
 
 #endif
 

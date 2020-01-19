@@ -41,6 +41,7 @@
 #include "p_tick.h"
 #include "p_enemy.h"
 #include "s_sound.h"
+#include "st_stuff.h"
 
 //
 // MAP related Lookup tables.
@@ -378,6 +379,29 @@ void P_LoadThings (int lump)
     }
 
   Z_Free (data);
+}
+
+// Returns true if the level contains keyed doors that require a specific kind
+// of key, eg. all 6, "red keycard (not skull)", etc. This is used to control
+// whether the status bar uses the double-key display to show that both keycard
+// and skull key have been picked up.
+static boolean HaveSpecificKeyDoors(void)
+{
+  int i, spec;
+  for (i=0; i<numlines; i++)
+    {
+      spec = lines[i].special;
+      // Must be a generalized locked door type:
+      if (spec < GenLockedBase || spec >= GenDoorBase)
+        continue;
+      // Does not distinguish between skull/key:
+      if ((spec & LockedNKeys) != 0)
+        continue;
+      // Anything except an "any key" door:
+      if (((spec & LockedKey) >> LockedKeyShift) != AnyKey)
+        return true;
+    }
+  return false;
 }
 
 //
@@ -1032,6 +1056,8 @@ void P_SetupLevel(int episode, int map, int playermask, skill_t skill)
   P_LoadSubsectors(lumpnum+ML_SSECTORS);
   P_LoadNodes     (lumpnum+ML_NODES);
   P_LoadSegs      (lumpnum+ML_SEGS);
+
+  distinguish_key_types = HaveSpecificKeyDoors();
 
   // [FG] pad the REJECT table when the lump is too small
   P_LoadReject (lumpnum+ML_REJECT);

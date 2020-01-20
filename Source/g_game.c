@@ -1978,6 +1978,8 @@ void G_DeferedInitNew(skill_t skill, int episode, int map)
 
 void G_ReloadDefaults(void)
 {
+  int i;
+
   // killough 3/1/98: Initialize options based on config file
   // (allows functions above to load different values for demos
   // and savegames without messing up defaults).
@@ -2017,8 +2019,14 @@ void G_ReloadDefaults(void)
 
   consoleplayer = 0;
 
-  compatibility = false;     // killough 10/98: replaced by comp[] vector
-  memcpy(comp, default_comp, sizeof comp);
+  compatibility = true;     // killough 10/98: replaced by comp[] vector
+
+  // For DietBoom we just turn on all the compat options, apart from a few
+  // game logic non-affecting fixes that we retain.
+  for (i = 0; i < COMP_TOTAL; ++i)
+  {
+    comp[i] = i != comp_blazing && i != comp_god && i != comp_skymap;
+  }
 
   demo_version = MBFVERSION;     // killough 7/19/98: use this version's id
 

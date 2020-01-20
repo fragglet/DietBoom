@@ -331,7 +331,6 @@ typedef enum {
   ss_keys,
   ss_chat,
   ss_gen,       // killough 10/98
-  ss_comp,      // killough 10/98
   ss_max
 } ss_types;
 

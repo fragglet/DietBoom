@@ -44,7 +44,7 @@ boolean modifiedgame;
 // compatibility with old engines (monster behavior, metrics, etc.)
 int compatibility;          // killough 1/31/98
 
-int comp[COMP_TOTAL], default_comp[COMP_TOTAL];    // killough 10/98
+int comp[COMP_TOTAL];    // killough 10/98
 
 int demo_version;           // killough 7/19/98: Boom version of demo
 

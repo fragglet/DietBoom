@@ -58,7 +58,6 @@ static void cheat_pw();
 static void cheat_behold();
 static void cheat_clev();
 static void cheat_mypos();
-static void cheat_comp();
 static void cheat_friction();
 static void cheat_pushers();
 static void cheat_tran();
@@ -151,9 +150,6 @@ struct cheat_s cheat[] = {
 
   {"idmypos",    "Player Position",   not_net | not_demo,
    cheat_mypos    },
-
-  {"comp",    NULL,                   not_net | not_demo,
-   cheat_comp     },     // phares
 
   {"killem",     NULL,                not_net | not_demo,
    cheat_massacre },     // jff 2/01/98 kill all monsters
@@ -424,19 +420,6 @@ static void cheat_mypos()
           players[consoleplayer].mo->y >> FRACBITS,
           players[consoleplayer].mo->z >> FRACBITS,
           players[consoleplayer].mo->angle * (90.0/ANG90));
-}
-
-// compatibility cheat
-
-static void cheat_comp()
-{
-  int i;
-
-  plyr->message =   // Ty 03/27/98 - externalized
-    (compatibility = !compatibility) ? s_STSTR_COMPON : s_STSTR_COMPOFF;
-
-  for (i=0; i<COMP_TOTAL; i++)  // killough 10/98: reset entire vector
-    comp[i] = compatibility;
 }
 
 // variable friction cheat

@@ -61,7 +61,6 @@ int  default_variable_friction;  // killough 3/1/98: make local to each game
 int player_bobbing;  // whether player bobs or not          // phares 2/25/98
 
 int monsters_remember=1;        // killough 3/1/98
-int default_monsters_remember=1;
 
 int monster_infighting=1;       // killough 7/19/98: monster<=>monster attacks
 

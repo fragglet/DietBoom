@@ -1984,8 +1984,6 @@ void G_ReloadDefaults(void)
 
   variable_friction = allow_pushers = true;
 
-  monsters_remember = default_monsters_remember;   // remember former enemies
-
   distfriend = default_distfriend;                 // killough 8/8/98
 
   monster_friction = default_monster_friction;     // killough 10/98
@@ -1998,6 +1996,7 @@ void G_ReloadDefaults(void)
   monster_avoid_hazards = 0; // killough 9/9/98
   monster_infighting = 1;
   player_bobbing = 1;
+  monsters_remember = 0;
 
   // jff 1/24/98 reset play mode to command line spec'd version
   // killough 3/1/98: moved to here

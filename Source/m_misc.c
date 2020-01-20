@@ -193,13 +193,6 @@ default_t defaults[] = {
     "1 to toggle between SG/SSG and Fist/Chainsaw"
   },
 
-  { // killough 3/1/98
-    "monsters_remember",
-    (config_t *) &default_monsters_remember, (config_t *) &monsters_remember,
-    {1}, {0,1}, number, ss_enem, wad_yes,
-    "1 to enable monsters remembering enemies after killing others"
-  },
-
   { //killough 9/9/98:
     "monster_friction",
     (config_t *) &default_monster_friction, (config_t *) &monster_friction,

@@ -73,7 +73,6 @@ static void cheat_weap();
 static void cheat_weapx();
 static void cheat_ammo();
 static void cheat_ammox();
-static void cheat_smart();
 static void cheat_nuke();
 
 #ifdef INSTRUMENTED
@@ -209,9 +208,6 @@ struct cheat_s cheat[] = {
 
   {"tran",    NULL,                   always,
    cheat_tran  },     // invoke translucency         // phares
-
-  {"smart",   NULL,                   not_net | not_demo,
-   cheat_smart},         // killough 2/21/98: smart monster toggle
 
   // killough 2/21/98: reduce RSI injury by adding simpler alias sequences:
   {"mbfran",     NULL,                always, 
@@ -611,12 +607,6 @@ char buf[1];
         plyr->message = (plyr->ammo[a] = !plyr->ammo[a]) ? 
           plyr->ammo[a] = plyr->maxammo[a], "Ammo Added" : "Ammo Removed";
       }
-}
-
-static void cheat_smart()
-{
-  plyr->message = (monsters_remember = !monsters_remember) ? 
-    "Smart Monsters Enabled" : "Smart Monsters Disabled";
 }
 
 static void cheat_nuke()

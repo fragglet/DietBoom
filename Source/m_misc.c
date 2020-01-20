@@ -200,13 +200,6 @@ default_t defaults[] = {
     "1 to enable monsters remembering enemies after killing others"
   },
 
-  {
-    "monkeys",
-    (config_t *) &default_monkeys, (config_t *) &monkeys,
-    {0}, {0,1}, number, ss_enem, wad_yes,
-    "1 to enable monsters to move up/down steep stairs"
-  },
-
   { //killough 9/9/98:
     "monster_friction",
     (config_t *) &default_monster_friction, (config_t *) &monster_friction,

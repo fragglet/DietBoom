@@ -82,7 +82,7 @@ int help_friends, default_help_friends;
 
 int doom_weapon_toggles; // killough 10/98
 
-int monkeys, default_monkeys;
+int monkeys;
 
 //----------------------------------------------------------------------------
 //

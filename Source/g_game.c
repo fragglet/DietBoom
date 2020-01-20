@@ -2004,7 +2004,8 @@ void G_ReloadDefaults(void)
 
   help_friends = default_help_friends;             // killough 9/9/98
 
-  monkeys = default_monkeys;
+  // climb steep stairs; MBF option got removed
+  monkeys = 0;
 
   // jff 1/24/98 reset play mode to command line spec'd version
   // killough 3/1/98: moved to here

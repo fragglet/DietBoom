@@ -75,7 +75,7 @@ int distfriend = 128, default_distfriend = 128;
 int monster_backing, default_monster_backing;
 
 // killough 9/9/98: whether monsters are able to avoid hazards (e.g. crushers)
-int monster_avoid_hazards, default_monster_avoid_hazards;
+int monster_avoid_hazards;
 
 // killough 9/9/98: whether monsters help friends
 int help_friends, default_help_friends;

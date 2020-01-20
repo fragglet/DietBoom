@@ -2353,9 +2353,6 @@ setup_menu_t enem_settings1[] =  // Enemy Settings screen
 
   {"Climb Steep Stairs", S_YESNO,m_null,E_X,E_Y+enem_monkeys*8, {"monkeys"}},
 
-  // killough 9/9/98
-  {"Intelligently Avoid Hazards",S_YESNO,m_null,E_X,E_Y+ enem_avoid_hazards*8, {"monster_avoid_hazards"}},
-
   // killough 10/98
   {"Affected by Friction",S_YESNO,m_null,E_X,E_Y+ enem_friction*8, {"monster_friction"}},
 

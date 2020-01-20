@@ -207,13 +207,6 @@ default_t defaults[] = {
     "1 to enable monsters backing away from targets"
   },
 
-  { //killough 9/9/98:
-    "monster_avoid_hazards",
-    (config_t *) &default_monster_avoid_hazards, (config_t *) &monster_avoid_hazards,
-    {1}, {0,1}, number, ss_enem, wad_yes,
-    "1 to enable monsters to intelligently avoid hazards"
-  },
-
   {
     "monkeys",
     (config_t *) &default_monkeys, (config_t *) &monkeys,

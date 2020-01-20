@@ -1997,7 +1997,8 @@ void G_ReloadDefaults(void)
 
   monster_backing = default_monster_backing;     // killough 9/8/98
 
-  monster_avoid_hazards = default_monster_avoid_hazards; // killough 9/9/98
+  // MBF added this, but we no longer have the option.
+  monster_avoid_hazards = 0; // killough 9/9/98
 
   monster_friction = default_monster_friction;     // killough 10/98
 

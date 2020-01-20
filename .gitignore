@@ -37,3 +37,11 @@ Makefile.in
 /depcomp
 /install-sh
 /missing
+
+# Common CMake build directory
+/build*
+
+# Visual Studio/CMake ignored directories
+/.vs
+/CMakeSettings.json
+/out

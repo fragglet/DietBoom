@@ -1986,8 +1986,6 @@ void G_ReloadDefaults(void)
 
   distfriend = default_distfriend;                 // killough 8/8/98
 
-  monster_friction = default_monster_friction;     // killough 10/98
-
   // MBF added these as options, but we no longer have them except for demo
   // compatibility:
   help_friends = 0;             // killough 9/9/98
@@ -1997,6 +1995,7 @@ void G_ReloadDefaults(void)
   monster_infighting = 1;
   player_bobbing = 1;
   monsters_remember = 0;
+  monster_friction = 1;     // killough 10/98
 
   // jff 1/24/98 reset play mode to command line spec'd version
   // killough 3/1/98: moved to here

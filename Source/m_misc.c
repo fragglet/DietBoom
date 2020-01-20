@@ -193,13 +193,6 @@ default_t defaults[] = {
     "1 to toggle between SG/SSG and Fist/Chainsaw"
   },
 
-  { //killough 9/9/98:
-    "monster_friction",
-    (config_t *) &default_monster_friction, (config_t *) &monster_friction,
-    {1}, {0,1}, number, ss_enem, wad_yes,
-    "1 to enable monsters to be affected by friction"
-  },
-
   { // killough 3/6/98
     "leds_always_off",
     (config_t *) &leds_always_off, NULL,

@@ -251,7 +251,6 @@ void M_ClearMenus (void);
 int  M_GetKeyString(int,int);
 void M_Setup(int choice);                               
 void M_KeyBindings(int choice);                        
-void M_Enemy(int);
 void M_ChatStrings(int);
 void M_InitExtendedHelp(void);
 void M_ExtHelpNextScreen(int);
@@ -260,7 +259,6 @@ int  M_GetPixelWidth(char*);
 void M_DrawKeybnd(void);
 void M_DrawMenuString(int,int,int);                    
 void M_DrawExtHelp(void);
-void M_DrawEnemy(void);
 void M_DrawChatStrings(void);
 void M_Compat(int);       // killough 10/98
 void M_General(int);      // killough 10/98
@@ -1400,7 +1398,6 @@ void M_SizeDisplay(int choice)
 // of variables w/o having to restart the game. There are 7 screens:
 //
 //    Key Bindings
-//    Enemies
 //    Messages
 //    Chat Strings
 //
@@ -1453,7 +1450,6 @@ enum
 {
   set_compat,
   set_key_bindings,                                     
-  set_enemy,
   set_chatstrings,
   set_setup_end
 } setup_e;
@@ -1472,7 +1468,6 @@ menuitem_t SetupMenu[]=
 {
   {1,"M_COMPAT",M_Compat,     'p'},
   {1,"M_KEYBND",M_KeyBindings,'k'},
-  {1,"M_ENEM"  ,M_Enemy,      'e'},                     
   {1,"M_CHAT"  ,M_ChatStrings,'c'},                     
 };
 
@@ -1535,16 +1530,6 @@ menu_t KeybndDef =
   &SetupDef,
   Generic_Setup,
   M_DrawKeybnd,
-  34,5,      // skull drawn here
-  0
-};
-
-menu_t EnemyDef =                                           // phares 4/08/98
-{
-  generic_setup_end,
-  &SetupDef,
-  Generic_Setup,
-  M_DrawEnemy,
   34,5,      // skull drawn here
   0
 };
@@ -2315,86 +2300,6 @@ void M_DrawKeybnd(void)
 
 /////////////////////////////
 //
-// The Enemies table.
-
-#define E_X 250
-#define E_Y  31
-
-setup_menu_t enem_settings1[];
-
-setup_menu_t* enem_settings[] =
-{
-  enem_settings1,
-  NULL
-};
-
-enum {
-  enem_remember = 1,
-
-  enem_friction,
-
-  enem_end
-};
-
-setup_menu_t enem_settings1[] =  // Enemy Settings screen       
-{
-  // killough 10/98
-  {"Affected by Friction",S_YESNO,m_null,E_X,E_Y+ enem_friction*8, {"monster_friction"}},
-
-  // Button for resetting to defaults
-  {0,S_RESET,m_null,X_BUTTON,Y_BUTTON},
-
-  // Final entry
-  {0,S_SKIP|S_END,m_null}
-
-};
-
-/////////////////////////////
-
-// Setting up for the Enemies screen. Turn on flags, set pointers,
-// locate the first item on the screen where the cursor is allowed to
-// land.
-
-void M_Enemy(int choice)
-{
-  M_SetupNextMenu(&EnemyDef);
-
-  setup_active = true;
-  setup_screen = ss_enem;
-  set_enemy_active = true;
-  setup_select = false;
-  default_verify = false;
-  setup_gather = false;
-  mult_screens_index = 0;
-  current_setup_menu = enem_settings[0];
-  set_menu_itemon = 0;
-  while (current_setup_menu[set_menu_itemon++].m_flags & S_SKIP);
-  current_setup_menu[--set_menu_itemon].m_flags |= S_HILITE;
-}
-
-// The drawing part of the Enemies Setup initialization. Draw the
-// background, title, instruction line, and items.
-
-void M_DrawEnemy(void)
-
-{
-  inhelpscreens = true;
-
-  M_DrawBackground("FLOOR4_6", screens[0]); // Draw background
-  V_DrawPatchDirect (114,2,0,W_CacheLumpName("M_ENEM",PU_CACHE));
-  M_DrawInstructions();
-  M_DrawScreenItems(current_setup_menu);
-
-  // If the Reset Button has been selected, an "Are you sure?" message
-  // is overlayed across everything else.
-
-  if (default_verify)
-    M_DrawDefVerify();
-}
-
-
-/////////////////////////////
-//
 // The General table.
 // killough 10/10/98
 
@@ -2843,7 +2748,6 @@ void M_SelectDone(setup_menu_t* ptr)
 static setup_menu_t **setup_screens[] =
 {
   keys_settings,
-  enem_settings,
   chat_settings,
   gen_settings,      // killough 10/98
   comp_settings,

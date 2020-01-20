@@ -95,6 +95,17 @@ result_e T_MovePlane
             lastpos = sector->floorheight;
             sector->floorheight -= speed;
             flag = P_CheckSector(sector,crush); //jff 3/19/98 use faster chk
+
+            // [FG] Compatibility bug in T_MovePlane
+            // http://prboom.sourceforge.net/mbf-bugs.html
+            if ((flag == true) && demo_compatibility)
+            {
+              extern boolean P_ChangeSector(sector_t *sector,boolean crunch);
+
+              sector->floorheight = lastpos;
+              P_ChangeSector(sector,crush);
+              return crushed;
+            }
           }
           break;
                                                 
@@ -681,6 +692,24 @@ int EV_DoChange
 // Returns true if any thinkers are created
 //
 
+// [FG] Compatibility bug in EV_BuildStairs
+// http://prboom.sourceforge.net/mbf-bugs.html
+
+static int P_FindSectorFromLineTag_Vanilla (const line_t* line, int start)
+{
+    int i;
+
+    for (i=start+1;i<numsectors;i++)
+	if (sectors[i].tag == line->tag)
+	    return i;
+
+    return -1;
+}
+
+int (*P_FindSectorFromLineTag_BuildStairs)(const line_t* line, int start);
+
+#define STAIRS_UNINITIALIZED_CRUSH_FIELD_VALUE 10
+
 int EV_BuildStairs
 ( line_t*       line,
   stair_e       type )
@@ -705,8 +734,14 @@ int EV_BuildStairs
   secnum = -1;
   rtn = 0;
 
+// [FG] Compatibility bug in EV_BuildStairs
+// http://prboom.sourceforge.net/mbf-bugs.html
+  P_FindSectorFromLineTag_BuildStairs = demo_compatibility ?
+                                        P_FindSectorFromLineTag_Vanilla :
+                                        P_FindSectorFromLineTag;
+
   // start a stair at each sector tagged the same as the linedef
-  while ((secnum = P_FindSectorFromLineTag(line,secnum)) >= 0)
+  while ((secnum = P_FindSectorFromLineTag_BuildStairs(line,secnum)) >= 0)
   {
     sec = &sectors[secnum];
               
@@ -733,12 +768,18 @@ int EV_BuildStairs
         stairsize = 8*FRACUNIT;
         if (!demo_compatibility)
           floor->crush = false; //jff 2/27/98 fix uninitialized crush field
+        // [FG] initialize crush field
+        else
+          floor->crush = STAIRS_UNINITIALIZED_CRUSH_FIELD_VALUE;
         break;
       case turbo16:
         speed = FLOORSPEED*4;
         stairsize = 16*FRACUNIT;
         if (!demo_compatibility)
           floor->crush = true;  //jff 2/27/98 fix uninitialized crush field
+        // [FG] initialize crush field
+        else
+          floor->crush = STAIRS_UNINITIALIZED_CRUSH_FIELD_VALUE;
         break;
     }
     floor->speed = speed;
@@ -798,12 +839,17 @@ int EV_BuildStairs
         //jff 2/27/98 fix uninitialized crush field
         if (!demo_compatibility)
           floor->crush = type==build8? false : true;
+        // [FG] initialize crush field
+        else
+          floor->crush = STAIRS_UNINITIALIZED_CRUSH_FIELD_VALUE;
         ok = 1;
         break;
       }
     } while(ok);      // continue until no next step is found
 
-    if (!comp[comp_stairs])      // killough 10/98: compatibility option
+    // [FG] Compatibility bug in EV_BuildStairs
+    // http://prboom.sourceforge.net/mbf-bugs.html
+    if (!comp[comp_stairs] && !demo_compatibility)      // killough 10/98: compatibility option
       secnum = osecnum;          //jff 3/4/98 restore loop index
   }
   return rtn;

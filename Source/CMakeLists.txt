@@ -82,6 +82,7 @@ set(DIETBOOM_SOURCES
     wi_stuff.c wi_stuff.h
     z_zone.c   z_zone.h)
 
-add_executable(dietboom ${DIETBOOM_SOURCES})
+add_executable(dietboom WIN32 ${DIETBOOM_SOURCES})
+target_compile_definitions(dietboom PRIVATE MY_SDL_VER RANGECHECK)
 target_include_directories(dietboom PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/../")
 target_link_libraries(dietboom PRIVATE SDL2::SDL2main SDL2::SDL2 SDL2::mixer SDL2::net)

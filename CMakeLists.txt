@@ -1,9 +1,11 @@
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 cmake_minimum_required(VERSION 3.7.2)
-project("Diet Boom" VERSION 2.0.3 LANGUAGES C)
+project("Diet Boom" VERSION 2.03 LANGUAGES C)
 
-set(PACKAGE_STRING "${PROJECT_NAME} ${PROJECT_VERSION}")
+# Specify the version by hand, because some versions of CMake strip the
+# leading 0 from the minor version number.
+set(PACKAGE_STRING "${PROJECT_NAME} 2.03")
 
 if(MSVC)
     add_definitions("/D_CRT_SECURE_NO_WARNINGS" "/D_CRT_NONSTDC_NO_DEPRECATE")

@@ -1990,7 +1990,8 @@ void G_ReloadDefaults(void)
 
   monsters_remember = default_monsters_remember;   // remember former enemies
 
-  monster_infighting = default_monster_infighting; // killough 7/19/98
+  // we always enable infighting.
+  monster_infighting = 1;
 
   distfriend = default_distfriend;                 // killough 8/8/98
 

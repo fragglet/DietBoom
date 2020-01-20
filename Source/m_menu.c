@@ -2346,9 +2346,6 @@ enum {
 
 setup_menu_t enem_settings1[] =  // Enemy Settings screen       
 {
-  // killough 7/19/98
-  {"Monster Infighting When Provoked",S_YESNO,m_null,E_X,E_Y+ enem_infighting*8, {"monster_infighting"}},
-
   {"Remember Previous Enemy",S_YESNO,m_null,E_X,E_Y+ enem_remember*8, {"monsters_remember"}},
 
   // killough 9/8/98

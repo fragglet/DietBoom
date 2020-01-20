@@ -200,13 +200,6 @@ default_t defaults[] = {
     "1 to enable monsters remembering enemies after killing others"
   },
 
-  { // killough 7/19/98
-    "monster_infighting",
-    (config_t *) &default_monster_infighting, (config_t *) &monster_infighting,
-    {1}, {0,1}, number, ss_enem, wad_yes,
-    "1 to enable monsters fighting against each other when provoked"
-  },
-
   { // killough 9/8/98
     "monster_backing",
     (config_t *) &default_monster_backing, (config_t *) &monster_backing,

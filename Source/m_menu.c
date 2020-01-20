@@ -920,7 +920,7 @@ menuitem_t OptionsMenu[]=
 {
   // killough 4/6/98: move setup to be a sub-menu of OPTIONs
   {1,"M_GENERL", M_General, 'g'},      // killough 10/98
-  {1,"M_SETUP",  M_Setup,   's'},                          // phares 3/21/98
+  {1,"M_KEYBND", M_KeyBindings,'k'},
   {1,"M_ENDGAM", M_EndGame,'e'},
   {1,"M_MESSG",  M_ChangeMessages,'m'},
   /*    {1,"M_DETAIL",  M_ChangeDetail,'g'},  unused -- killough */  
@@ -1396,7 +1396,6 @@ void M_SizeDisplay(int choice)
 // of variables w/o having to restart the game. There are 7 screens:
 //
 //    Key Bindings
-//    Messages
 //    Chat Strings
 //
 // killough 10/98: added Compatibility and General menus
@@ -1411,10 +1410,6 @@ void M_SizeDisplay(int choice)
 
 boolean setup_active      = false; // in one of the setup screens
 boolean set_keybnd_active = false; // in key binding setup screens
-boolean set_weapon_active = false; // in weapons setup screen
-boolean set_status_active = false; // in status bar/hud setup screen
-boolean set_enemy_active  = false; // in enemies setup screen
-boolean set_mess_active   = false; // in messages setup screen
 boolean set_chat_active   = false; // in chat string setup screen
 boolean setup_select      = false; // changing an item
 boolean setup_gather      = false; // gathering keys for value
@@ -1445,26 +1440,12 @@ static char menu_buffer[64];
 
 enum
 {
-  set_key_bindings,                                     
+  set_key_bindings,
   set_chatstrings,
   set_setup_end
 } setup_e;
 
-int setup_screen; // the current setup screen. takes values from setup_e 
-
-/////////////////////////////
-//
-// SetupMenu is the definition of what the main Setup Screen should look
-// like. Each entry shows that the cursor can land on each item (1), the
-// built-in graphic lump (i.e. "M_KEYBND") that should be displayed,
-// the program which takes over when an item is selected, and the hotkey
-// associated with the item.
-
-menuitem_t SetupMenu[]=
-{
-  {1,"M_KEYBND",M_KeyBindings,'k'},
-  {1,"M_CHAT"  ,M_ChatStrings,'c'},                     
-};
+int setup_screen; // the current setup screen. takes values from setup_e
 
 /////////////////////////////
 //
@@ -1497,24 +1478,6 @@ menuitem_t Generic_Setup[] =
 
 /////////////////////////////
 //
-// SetupDef is the menu definition that the mainstream Menu code understands.
-// This is used by M_Setup (below) to define what is drawn and what is done
-// with the main Setup screen.
-
-menu_t  SetupDef =
-{
-  set_setup_end, // number of Setup Menu items (Key Bindings, etc.)
-  &OptionsDef,   // menu to return to when BACKSPACE is hit on this menu
-  SetupMenu,     // definition of items to show on the Setup Screen
-  M_DrawSetup,   // program that draws the Setup Screen
-  59,37,         // x,y position of the skull (modified when the skull is
-                 // drawn). The skull is parked on the upper-left corner
-                 // of the Setup screens, since it isn't needed as a cursor
-  0              // last item the user was on for this menu
-};
-
-/////////////////////////////
-//
 // Here are the definitions of the individual Setup Menu screens. They
 // follow the format of the 'Big Font' menu structures. See the comments
 // for SetupDef (above) to help understand what each of these says.
@@ -1522,7 +1485,7 @@ menu_t  SetupDef =
 menu_t KeybndDef =
 {
   generic_setup_end,
-  &SetupDef,
+  &OptionsDef,
   Generic_Setup,
   M_DrawKeybnd,
   34,5,      // skull drawn here
@@ -1532,7 +1495,7 @@ menu_t KeybndDef =
 menu_t ChatStrDef =                                         // phares 4/10/98
 {
   generic_setup_end,
-  &SetupDef,
+  &OptionsDef,
   Generic_Setup,
   M_DrawChatStrings,
   34,5,      // skull drawn here
@@ -1594,25 +1557,6 @@ void M_DrawBackground(char* patchname, byte *back_dest)
 	  memcpy (back_dest,back_src+((y & 63)<<6),64);
 	  back_dest += 64;
 	}
-}
-
-/////////////////////////////
-//
-// Draws the Title for the main Setup screen
-
-void M_DrawSetup(void)
-{
-  V_DrawPatchDirect(124,15,0,W_CacheLumpName("M_SETUP",PU_CACHE));
-}
-
-/////////////////////////////
-//
-// Uses the SetupDef structure to draw the menu items for the main
-// Setup screen
-
-void M_Setup(int choice)
-{
-  M_SetupNextMenu(&SetupDef);
 }
 
 /////////////////////////////
@@ -3797,8 +3741,7 @@ boolean M_Responder (event_t* ev)
 
       // killough 10/98: consolidate handling into one place:
       if (setup_select &&
-	  set_enemy_active | set_general_active | set_chat_active | 
-	  set_mess_active | set_status_active)
+	  set_general_active | set_chat_active)
 	{
 	  if (ptr1->m_flags & S_STRING) // creating/editing a string?
 	    {
@@ -3972,10 +3915,6 @@ boolean M_Responder (event_t* ev)
 	  ptr1->m_flags &= ~(S_HILITE|S_SELECT);// phares 4/19/98
 	  setup_active = false;
 	  set_keybnd_active = false;
-	  set_weapon_active = false;
-	  set_status_active = false;
-	  set_enemy_active = false;
-	  set_mess_active = false;
 	  set_chat_active = false;
 	  colorbox_active = false;
 	  default_verify = false;       // phares 4/19/98

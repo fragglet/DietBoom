@@ -42,7 +42,7 @@ boolean modifiedgame;
 //-----------------------------------------------------------------------------
 
 // compatibility with old engines (monster behavior, metrics, etc.)
-int compatibility, default_compatibility;          // killough 1/31/98
+int compatibility;          // killough 1/31/98
 
 int comp[COMP_TOTAL], default_comp[COMP_TOTAL];    // killough 10/98
 

@@ -78,7 +78,7 @@ int monster_backing;
 int monster_avoid_hazards;
 
 // killough 9/9/98: whether monsters help friends
-int help_friends, default_help_friends;
+int help_friends;
 
 int doom_weapon_toggles; // killough 10/98
 

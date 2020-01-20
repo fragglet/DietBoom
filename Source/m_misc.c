@@ -207,13 +207,6 @@ default_t defaults[] = {
     "1 to enable monsters to be affected by friction"
   },
 
-  { //killough 9/9/98:
-    "help_friends",
-    (config_t *) &default_help_friends, (config_t *) &help_friends,
-    {1}, {0,1}, number, ss_enem, wad_yes,
-    "1 to enable monsters to help dying friends"
-  },
-
   { // killough 3/6/98
     "leds_always_off",
     (config_t *) &leds_always_off, NULL,

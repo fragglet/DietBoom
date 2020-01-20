@@ -2331,11 +2331,7 @@ setup_menu_t* enem_settings[] =
 enum {
   enem_remember = 1,
 
-  enem_avoid_hazards,
   enem_friction,
-  enem_help_friends,
-
-  enem_distfriend,
 
   enem_end
 };
@@ -2346,8 +2342,6 @@ setup_menu_t enem_settings1[] =  // Enemy Settings screen
 
   // killough 10/98
   {"Affected by Friction",S_YESNO,m_null,E_X,E_Y+ enem_friction*8, {"monster_friction"}},
-
-  {"Rescue Dying Friends",S_YESNO,m_null,E_X,E_Y+ enem_help_friends*8, {"help_friends"}},
 
   // Button for resetting to defaults
   {0,S_RESET,m_null,X_BUTTON,Y_BUTTON},

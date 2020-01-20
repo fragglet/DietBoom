@@ -1982,30 +1982,22 @@ void G_ReloadDefaults(void)
   // (allows functions above to load different values for demos
   // and savegames without messing up defaults).
 
-  // whether player bobs or not; we don't have the option any more,
-  // so this is always initialized to true.
-  player_bobbing = 1;
-
   variable_friction = allow_pushers = true;
 
   monsters_remember = default_monsters_remember;   // remember former enemies
 
-  // we always enable infighting.
-  monster_infighting = 1;
-
   distfriend = default_distfriend;                 // killough 8/8/98
-
-  monster_backing = 0;     // killough 9/8/98
-
-  // MBF added this, but we no longer have the option.
-  monster_avoid_hazards = 0; // killough 9/9/98
 
   monster_friction = default_monster_friction;     // killough 10/98
 
-  help_friends = default_help_friends;             // killough 9/9/98
-
-  // climb steep stairs; MBF option got removed
+  // MBF added these as options, but we no longer have them except for demo
+  // compatibility:
+  help_friends = 0;             // killough 9/9/98
+  monster_backing = 0;     // killough 9/8/98
   monkeys = 0;
+  monster_avoid_hazards = 0; // killough 9/9/98
+  monster_infighting = 1;
+  player_bobbing = 1;
 
   // jff 1/24/98 reset play mode to command line spec'd version
   // killough 3/1/98: moved to here

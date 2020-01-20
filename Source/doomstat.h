@@ -318,7 +318,7 @@ extern int monster_avoid_hazards, default_monster_avoid_hazards;
 extern int monster_friction, default_monster_friction;
 
 // killough 9/9/98: whether monsters help friends
-extern int help_friends, default_help_friends;
+extern int help_friends;
 
 extern int doom_weapon_toggles;   // killough 10/98
 

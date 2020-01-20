@@ -72,7 +72,7 @@ int default_monster_friction=1;
 int distfriend = 128, default_distfriend = 128;
 
 // killough 9/8/98: whether monsters are allowed to strafe or retreat
-int monster_backing, default_monster_backing;
+int monster_backing;
 
 // killough 9/9/98: whether monsters are able to avoid hazards (e.g. crushers)
 int monster_avoid_hazards;

@@ -1995,7 +1995,7 @@ void G_ReloadDefaults(void)
 
   distfriend = default_distfriend;                 // killough 8/8/98
 
-  monster_backing = default_monster_backing;     // killough 9/8/98
+  monster_backing = 0;     // killough 9/8/98
 
   // MBF added this, but we no longer have the option.
   monster_avoid_hazards = 0; // killough 9/9/98

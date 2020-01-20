@@ -200,13 +200,6 @@ default_t defaults[] = {
     "1 to enable monsters remembering enemies after killing others"
   },
 
-  { // killough 9/8/98
-    "monster_backing",
-    (config_t *) &default_monster_backing, (config_t *) &monster_backing,
-    {0}, {0,1}, number, ss_enem, wad_yes,
-    "1 to enable monsters backing away from targets"
-  },
-
   {
     "monkeys",
     (config_t *) &default_monkeys, (config_t *) &monkeys,

@@ -31,9 +31,13 @@
 #include <stdarg.h>
 #endif
 
+#ifndef _WIN32
 #include <unistd.h> // [FG] isatty()
+#endif
+
 #include "SDL.h"
 
+#include "config.h"
 #include "z_zone.h"
 #include "i_system.h"
 #include "i_sound.h"

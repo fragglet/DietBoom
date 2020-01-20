@@ -71,21 +71,6 @@ extern int automap_grid;
 
 // end changes -- killough 2/22/98
 
-// killough 5/2/98: moved from m_misc.c
-
-//jff 1/7/98 automap colors added
-extern int mapcolor_back;     // map background
-extern int mapcolor_grid;     // grid lines color
-extern int mapcolor_wall;     // normal 1s wall color
-extern int mapcolor_fchg;     // line at floor height change color
-extern int mapcolor_cchg;     // line at ceiling height change color
-//jff 4/23/98
-extern int mapcolor_unsn;     // computer map unseen line color
-extern int mapcolor_sprt;     // general sprite color
-extern int mapcolor_hair;     // crosshair color
-extern int mapcolor_sngl;     // single player arrow color
-//jff 3/9/98
-
 #endif
 
 //----------------------------------------------------------------------------

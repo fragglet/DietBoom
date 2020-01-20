@@ -39,15 +39,15 @@
 #include "d_deh.h"    // Ty 03/27/98 - externalizations
 
 //jff 1/7/98 default automap colors added
-int mapcolor_back;    // map background
-int mapcolor_grid;    // grid lines color
-int mapcolor_wall;    // normal 1s wall color
-int mapcolor_fchg;    // line at floor height change color
-int mapcolor_cchg;    // line at ceiling height change color
-int mapcolor_unsn;    // computer map unseen line color
-int mapcolor_sprt;    // general sprite color
-int mapcolor_hair;    // crosshair color
-int mapcolor_sngl;    // single player arrow color
+static int mapcolor_back = 247;    // map background
+static int mapcolor_grid = 104;    // grid lines color
+static int mapcolor_wall = 176;    // normal 1s wall color
+static int mapcolor_fchg = 64;    // line at floor height change color
+static int mapcolor_cchg = 231;    // line at ceiling height change color
+static int mapcolor_unsn = 96;    // computer map unseen line color
+static int mapcolor_sprt = 112;    // general sprite color
+static int mapcolor_hair = 208;    // crosshair color
+static int mapcolor_sngl = 209;    // single player arrow color
 static int mapcolor_plyr[4] = {112,88,64,176}; // colors for player arrows in multiplayer
 
 //jff 4/3/98 add symbols for "no-color" for disable and "black color" for black

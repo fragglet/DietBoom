@@ -177,15 +177,6 @@ extern int joybnextweapon;
 extern int joybautomap;
 // [FG] main menu joystick button
 extern int joybmainmenu;
-extern int mapcolor_back; // map background
-extern int mapcolor_grid; // grid lines color
-extern int mapcolor_wall; // normal 1s wall color
-extern int mapcolor_fchg; // line at floor height change color
-extern int mapcolor_cchg; // line at ceiling height change color
-extern int mapcolor_unsn; // computer map unseen line color
-extern int mapcolor_sprt; // general sprite color
-extern int mapcolor_hair; // crosshair color
-extern int mapcolor_sngl; // single player arrow color
 
 extern char* chat_macros[];  // chat macros
 extern char *wad_files[], *deh_files[]; // killough 10/98
@@ -260,7 +251,6 @@ void M_ClearMenus (void);
 int  M_GetKeyString(int,int);
 void M_Setup(int choice);                               
 void M_KeyBindings(int choice);                        
-void M_Automap(int);
 void M_Enemy(int);
 void M_ChatStrings(int);
 void M_InitExtendedHelp(void);
@@ -270,7 +260,6 @@ int  M_GetPixelWidth(char*);
 void M_DrawKeybnd(void);
 void M_DrawMenuString(int,int,int);                    
 void M_DrawExtHelp(void);
-void M_DrawAutoMap(void);
 void M_DrawEnemy(void);
 void M_DrawChatStrings(void);
 void M_Compat(int);       // killough 10/98
@@ -1411,7 +1400,6 @@ void M_SizeDisplay(int choice)
 // of variables w/o having to restart the game. There are 7 screens:
 //
 //    Key Bindings
-//    Automap
 //    Enemies
 //    Messages
 //    Chat Strings
@@ -1430,7 +1418,6 @@ boolean setup_active      = false; // in one of the setup screens
 boolean set_keybnd_active = false; // in key binding setup screens
 boolean set_weapon_active = false; // in weapons setup screen
 boolean set_status_active = false; // in status bar/hud setup screen
-boolean set_auto_active   = false; // in automap setup screen
 boolean set_enemy_active  = false; // in enemies setup screen
 boolean set_mess_active   = false; // in messages setup screen
 boolean set_chat_active   = false; // in chat string setup screen
@@ -1466,7 +1453,6 @@ enum
 {
   set_compat,
   set_key_bindings,                                     
-  set_automap,
   set_enemy,
   set_chatstrings,
   set_setup_end
@@ -1486,7 +1472,6 @@ menuitem_t SetupMenu[]=
 {
   {1,"M_COMPAT",M_Compat,     'p'},
   {1,"M_KEYBND",M_KeyBindings,'k'},
-  {1,"M_AUTO"  ,M_Automap,    'a'},                    
   {1,"M_ENEM"  ,M_Enemy,      'e'},                     
   {1,"M_CHAT"  ,M_ChatStrings,'c'},                     
 };
@@ -1550,16 +1535,6 @@ menu_t KeybndDef =
   &SetupDef,
   Generic_Setup,
   M_DrawKeybnd,
-  34,5,      // skull drawn here
-  0
-};
-
-menu_t AutoMapDef =
-{
-  generic_setup_end,
-  &SetupDef,
-  Generic_Setup,
-  M_DrawAutoMap,
   34,5,      // skull drawn here
   0
 };
@@ -1686,9 +1661,6 @@ void M_Setup(int choice)
 
 #define CHIP_SIZE 7 // size of color block for colored items
 
-#define COLORPALXORIG ((320 - 16*(CHIP_SIZE+1))/2)
-#define COLORPALYORIG ((200 - 16*(CHIP_SIZE+1))/2)
-
 #define PAL_BLACK   0
 #define PAL_WHITE   4
 
@@ -1778,8 +1750,7 @@ char gather_buffer[MAXGATHER+1];  // killough 10/98: make input character-based
 // M_DrawSetting draws the setting of the provided item (the right-hand
 // part. It determines the text color based on whether the item is
 // selected or being changed. Then, depending on the type of item, it
-// displays the appropriate setting value: yes/no, a key binding, a number,
-// a paint chip, etc.
+// displays the appropriate setting value: yes/no, a key binding, number, etc.
 
 void M_DrawSetting(setup_menu_t* s)
 {
@@ -1868,34 +1839,6 @@ void M_DrawSetting(setup_menu_t* s)
     {
       sprintf(menu_buffer,"%d", s->var.def->location->i);
       M_DrawMenuString(x,y, flags & S_CRITEM ? s->var.def->location->i : color);
-      return;
-    }
-
-  // Is the item a paint chip?
-
-  if (flags & S_COLOR) // Automap paint chip
-    {
-      int i, ch;
-      byte *ptr = colorblock;
-
-      // draw the border of the paint chip
-       
-      for (i = 0 ; i < (CHIP_SIZE+2)*(CHIP_SIZE+2) ; i++)
-	*ptr++ = PAL_BLACK;
-      V_DrawBlock(x,y-1,0,CHIP_SIZE+2,CHIP_SIZE+2,colorblock);
-      
-      // draw the paint chip
-       
-      ch = s->var.def->location->i;
-      if (!ch) // don't show this item in automap mode
-	V_DrawPatchDirect (x+1,y,0,W_CacheLumpName("M_PALNO",PU_CACHE));
-      else
-	{
-	  ptr = colorblock;
-	  for (i = 0 ; i < CHIP_SIZE*CHIP_SIZE ; i++)
-	    *ptr++ = ch;
-	  V_DrawBlock(x+1,y,0,CHIP_SIZE,CHIP_SIZE,colorblock);
-	}
       return;
     }
 
@@ -2105,7 +2048,6 @@ void M_DrawInstructions()
       flags & S_YESNO  ? (s = "Press ENTER key to toggle", 78)               :
       flags & S_WEAP   ? (s = "Enter weapon number", 97)                     :
       flags & S_NUM    ? (s = "Enter value. Press ENTER when finished.", 37) :
-      flags & S_COLOR  ? (s = "Select color and press enter", 70)            :
       flags & S_CRITEM ? (s = "Enter value", 125)                            :
       flags & S_CHAT   ? (s = "Type/edit chat string and Press ENTER", 43)   :
       flags & S_FILE   ? (s = "Type/edit filename and Press ENTER", 52)      :
@@ -2370,144 +2312,6 @@ void M_DrawKeybnd(void)
   if (default_verify)
     M_DrawDefVerify();
 }
-
-/////////////////////////////
-//
-// The Automap tables.
-
-#define AU_X    250
-#define AU_Y     31
-#define AU_PREV KB_PREV
-#define AU_NEXT KB_NEXT
-
-setup_menu_t auto_settings1[];       
-setup_menu_t auto_settings2[];
-
-setup_menu_t* auto_settings[] =
-{
-  auto_settings1,
-  auto_settings2,
-  NULL
-};
-
-setup_menu_t auto_settings1[] =  // 1st AutoMap Settings screen       
-{
-  {"background", S_COLOR, m_null, AU_X, AU_Y, {"mapcolor_back"}},
-  {"grid lines", S_COLOR, m_null, AU_X, AU_Y + 1*8, {"mapcolor_grid"}},
-  {"normal 1s wall", S_COLOR, m_null,AU_X,AU_Y+ 2*8, {"mapcolor_wall"}},
-  {"line at floor height change", S_COLOR, m_null, AU_X, AU_Y+ 3*8, {"mapcolor_fchg"}},
-  {"line at ceiling height change"      ,S_COLOR,m_null,AU_X,AU_Y+ 4*8, {"mapcolor_cchg"}},
-
-  // Button for resetting to defaults
-  {0,S_RESET,m_null,X_BUTTON,Y_BUTTON},
-
-  {"NEXT ->",S_SKIP|S_NEXT,m_null,AU_NEXT,AU_Y+20*8, {auto_settings2}},
-
-  // Final entry
-  {0,S_SKIP|S_END,m_null}
-
-};
-
-setup_menu_t auto_settings2[] =  // 2nd AutoMap Settings screen
-{
-  //jff 4/23/98 add exit line to automap
-  {"computer map unseen line"       ,S_COLOR ,m_null,AU_X,AU_Y+ 3*8, {"mapcolor_unsn"}},
-  {"general sprite"                 ,S_COLOR ,m_null,AU_X,AU_Y+ 5*8, {"mapcolor_sprt"}},
-  {"crosshair"                      ,S_COLOR ,m_null,AU_X,AU_Y+ 6*8, {"mapcolor_hair"}},
-  {"single player arrow"            ,S_COLOR ,m_null,AU_X,AU_Y+ 7*8, {"mapcolor_sngl"}},
-
-  {"<- PREV",S_SKIP|S_PREV,m_null,AU_PREV,AU_Y+20*8, {auto_settings1}},
-
-  // Final entry
-
-  {0,S_SKIP|S_END,m_null}
-
-};
-
-
-// Setting up for the Automap screen. Turn on flags, set pointers,
-// locate the first item on the screen where the cursor is allowed to
-// land.
-
-void M_Automap(int choice)
-{
-  M_SetupNextMenu(&AutoMapDef);
-
-  setup_active = true;
-  setup_screen = ss_auto;
-  set_auto_active = true;
-  setup_select = false;
-  colorbox_active = false;
-  default_verify = false;
-  setup_gather = false;
-  set_menu_itemon = 0;
-  mult_screens_index = 0;
-  current_setup_menu = auto_settings[0];
-  while (current_setup_menu[set_menu_itemon++].m_flags & S_SKIP);
-  current_setup_menu[--set_menu_itemon].m_flags |= S_HILITE;
-}
-
-// Data used by the color palette that is displayed for the player to
-// select colors.
-
-int color_palette_x; // X position of the cursor on the color palette
-int color_palette_y; // Y position of the cursor on the color palette
-byte palette_background[16*(CHIP_SIZE+1)+8];
-
-// M_DrawColPal() draws the color palette when the user needs to select a
-// color.
-
-// phares 4/1/98: now uses a single lump for the palette instead of
-// building the image out of individual paint chips.
-
-void M_DrawColPal()
-{
-  int i,cpx,cpy;
-  byte *ptr;
-
-  // Draw a background, border, and paint chips
-
-  V_DrawPatchDirect (COLORPALXORIG-5,COLORPALYORIG-5,0,W_CacheLumpName("M_COLORS",PU_CACHE));
-
-  // Draw the cursor around the paint chip
-  // (cpx,cpy) is the upper left-hand corner of the paint chip
-
-  ptr = colorblock;
-  for (i = 0 ; i < CHIP_SIZE+2 ; i++)
-    *ptr++ = PAL_WHITE;
-  cpx = COLORPALXORIG+color_palette_x*(CHIP_SIZE+1)-1;
-  cpy = COLORPALYORIG+color_palette_y*(CHIP_SIZE+1)-1;
-  V_DrawBlock(cpx,cpy,0,CHIP_SIZE+2,1,colorblock);
-  V_DrawBlock(cpx+CHIP_SIZE+1,cpy,0,1,CHIP_SIZE+2,colorblock);
-  V_DrawBlock(cpx,cpy+CHIP_SIZE+1,0,CHIP_SIZE+2,1,colorblock);
-  V_DrawBlock(cpx,cpy,0,1,CHIP_SIZE+2,colorblock);
-}
-
-// The drawing part of the Automap Setup initialization. Draw the
-// background, title, instruction line, and items.
-
-void M_DrawAutoMap(void)
-
-{
-  inhelpscreens = true;    // killough 4/6/98: Force status bar redraw
-
-  M_DrawBackground("FLOOR4_6", screens[0]); // Draw background
-  V_DrawPatchDirect (109,2,0,W_CacheLumpName("M_AUTO",PU_CACHE));
-  M_DrawInstructions();
-  M_DrawScreenItems(current_setup_menu);
-
-  // If a color is being selected, need to show color paint chips
-
-  if (colorbox_active)
-    M_DrawColPal();
-
-  // If the Reset Button has been selected, an "Are you sure?" message
-  // is overlayed across everything else.
-
-  else if (default_verify)
-    M_DrawDefVerify();
-}
-
 
 /////////////////////////////
 //
@@ -3062,7 +2866,6 @@ void M_SelectDone(setup_menu_t* ptr)
 static setup_menu_t **setup_screens[] =
 {
   keys_settings,
-  auto_settings,
   enem_settings,
   chat_settings,
   gen_settings,      // killough 10/98
@@ -4289,52 +4092,6 @@ boolean M_Responder (event_t* ev)
 	    return true;
 	  }
 
-      // Automap
-
-      if (set_auto_active) // on the automap setup screen
-	if (setup_select) // incoming key
-	  {
-	    if (ch == key_menu_down)                
-	      {
-		if (++color_palette_y == 16)
-		  color_palette_y = 0;
-		S_StartSound(NULL,sfx_itemup);
-		return true;
-	      }
-
-	    if (ch == key_menu_up)                
-	      {
-		if (--color_palette_y < 0)
-		  color_palette_y = 15;
-		S_StartSound(NULL,sfx_itemup);
-		return true;
-	      }
-
-	    if (ch == key_menu_left)                
-	      {
-		if (--color_palette_x < 0)
-		  color_palette_x = 15;
-		S_StartSound(NULL,sfx_itemup);
-		return true;
-	      }
-
-	    if (ch == key_menu_right)                
-	      {
-		if (++color_palette_x == 16)
-		  color_palette_x = 0;
-		S_StartSound(NULL,sfx_itemup);
-		return true;
-	      }
-
-	    if (ch == key_menu_enter)               
-	      {
-		ptr1->var.def->location->i = color_palette_x + 16*color_palette_y;
-		M_SelectDone(ptr1);                         // phares 4/17/98
-		colorbox_active = false;
-		return true;
-	      }
-	  }
-      
       // killough 10/98: consolidate handling into one place:
       if (setup_select &&
 	  set_enemy_active | set_general_active | set_chat_active | 
@@ -4467,17 +4224,6 @@ boolean M_Responder (event_t* ev)
 	      print_warning_about_changes = false;
 	      gather_count = 0;
 	    }
-	  else if (flags & S_COLOR)
-	    {
-	      int color = ptr1->var.def->location->i;
-        
-	      if (color < 0 || color > 255) // range check the value
-		color = 0;        // 'no show' if invalid
-
-	      color_palette_x = ptr1->var.def->location->i & 15;
-	      color_palette_y = ptr1->var.def->location->i >> 4;
-	      colorbox_active = true;
-	    }
 	  else if (flags & S_STRING)
 	    {
 	      // copy chat string into working buffer; trim if needed.
@@ -4525,7 +4271,6 @@ boolean M_Responder (event_t* ev)
 	  set_keybnd_active = false;
 	  set_weapon_active = false;
 	  set_status_active = false;
-	  set_auto_active = false;
 	  set_enemy_active = false;
 	  set_mess_active = false;
 	  set_chat_active = false;

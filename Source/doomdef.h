@@ -329,7 +329,6 @@ typedef enum {
 typedef enum {
   ss_none,
   ss_keys,
-  ss_auto,
   ss_enem,
   ss_chat,
   ss_gen,       // killough 10/98

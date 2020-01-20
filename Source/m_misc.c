@@ -1191,34 +1191,6 @@ default_t defaults[] = {
     "color used for the single player arrow"
   },
 
-  { // green
-    "mapcolor_ply1",
-    (config_t *) &mapcolor_plyr[0], NULL,
-    {112}, {0,255}, number, ss_auto, wad_yes,
-    "color used for the green player arrow"
-  },
-
-  { // lt gray
-    "mapcolor_ply2",
-    (config_t *) &mapcolor_plyr[1], NULL,
-    {88}, {0,255}, number, ss_auto, wad_yes,
-    "color used for the gray player arrow"
-  },
-
-  { // brown
-    "mapcolor_ply3",
-    (config_t *) &mapcolor_plyr[2], NULL,
-    {64}, {0,255}, number, ss_auto, wad_yes,
-    "color used for the brown player arrow"
-  },
-
-  { // red
-    "mapcolor_ply4",
-    (config_t *) &mapcolor_plyr[3], NULL,
-    {176}, {0,255}, number, ss_auto, wad_yes,
-    "color used for the red player arrow"
-  },
-
   //jff 1/7/98 end additions for automap
 
   //jff 2/16/98 defaults for color ranges in hud and status

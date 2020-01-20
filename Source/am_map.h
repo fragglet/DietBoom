@@ -84,7 +84,6 @@ extern int mapcolor_unsn;     // computer map unseen line color
 extern int mapcolor_sprt;     // general sprite color
 extern int mapcolor_hair;     // crosshair color
 extern int mapcolor_sngl;     // single player arrow color
-extern int mapcolor_plyr[4];  // colors for player arrows in multiplayer
 //jff 3/9/98
 
 #endif

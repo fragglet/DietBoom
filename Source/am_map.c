@@ -48,7 +48,7 @@ int mapcolor_unsn;    // computer map unseen line color
 int mapcolor_sprt;    // general sprite color
 int mapcolor_hair;    // crosshair color
 int mapcolor_sngl;    // single player arrow color
-int mapcolor_plyr[4]; // colors for player arrows in multiplayer
+static int mapcolor_plyr[4] = {112,88,64,176}; // colors for player arrows in multiplayer
 
 //jff 4/3/98 add symbols for "no-color" for disable and "black color" for black
 #define NC 0

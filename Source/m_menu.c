@@ -186,7 +186,6 @@ extern int mapcolor_unsn; // computer map unseen line color
 extern int mapcolor_sprt; // general sprite color
 extern int mapcolor_hair; // crosshair color
 extern int mapcolor_sngl; // single player arrow color
-extern int mapcolor_plyr[4];// colors for player arrows in multiplayer
 
 extern char* chat_macros[];  // chat macros
 extern char *wad_files[], *deh_files[]; // killough 10/98
@@ -2416,10 +2415,6 @@ setup_menu_t auto_settings2[] =  // 2nd AutoMap Settings screen
   {"general sprite"                 ,S_COLOR ,m_null,AU_X,AU_Y+ 5*8, {"mapcolor_sprt"}},
   {"crosshair"                      ,S_COLOR ,m_null,AU_X,AU_Y+ 6*8, {"mapcolor_hair"}},
   {"single player arrow"            ,S_COLOR ,m_null,AU_X,AU_Y+ 7*8, {"mapcolor_sngl"}},
-  {"player 1 arrow"                 ,S_COLOR ,m_null,AU_X,AU_Y+ 8*8, {"mapcolor_ply1"}},
-  {"player 2 arrow"                 ,S_COLOR ,m_null,AU_X,AU_Y+ 9*8, {"mapcolor_ply2"}},
-  {"player 3 arrow"                 ,S_COLOR ,m_null,AU_X,AU_Y+10*8, {"mapcolor_ply3"}},
-  {"player 4 arrow"                 ,S_COLOR ,m_null,AU_X,AU_Y+11*8, {"mapcolor_ply4"}},
 
   {"<- PREV",S_SKIP|S_PREV,m_null,AU_PREV,AU_Y+20*8, {auto_settings1}},
 

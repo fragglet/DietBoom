@@ -69,13 +69,9 @@ fi
 
 AC_CONFIG_FILES([
 Makefile
-configs/Makefile
 data/Makefile
-docs/Makefile
-examples/Makefile
 Source/Makefile
 Source/resource.rc
-toolsrc/Makefile
 pkg/Makefile
 pkg/config.make
 ])

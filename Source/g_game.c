@@ -1153,6 +1153,11 @@ static void G_DoPlayDemo(void)
 
       monster_infighting = 1;           // killough 7/19/98
 
+#ifdef DOGS
+      dogs = 0;                         // killough 7/19/98
+      dog_jumping = 0;                  // killough 10/98
+#endif
+
       monster_backing = 0;              // killough 9/8/98
       
       monster_avoid_hazards = 0;        // killough 9/9/98
@@ -1991,6 +1996,12 @@ void G_ReloadDefaults(void)
 
   variable_friction = allow_pushers = true;
 
+#ifdef DOGS
+  // This was an MBF feature that we must maintain for demo compat, but
+  // we do not allow it to be configured.
+  dogs = 0;
+  dog_jumping = 1;
+#endif
   distfriend = default_distfriend;                 // killough 8/8/98
 
   // MBF added these as options, but we no longer have them except for demo
@@ -2214,7 +2225,11 @@ byte *G_WriteOptions(byte *demo_p)
 
   *demo_p++ = monster_infighting;   // killough 7/19/98
 
-  *demo_p++ = 0; // dogs, not supported
+#ifdef DOGS
+  *demo_p++ = dogs;                 // killough 7/19/98
+#else
+  *demo_p++ = 0;
+#endif
 
   // beta stuff, not used
   *demo_p++ = 0;
@@ -2231,7 +2246,11 @@ byte *G_WriteOptions(byte *demo_p)
 
   *demo_p++ = help_friends;             // killough 9/9/98
 
-  *demo_p++ = 0;  // dogs option, not supported
+#ifdef DOGS
+  *demo_p++ = dog_jumping;
+#else
+  *demo_p++ = 0;
+#endif
 
   *demo_p++ = monkeys;
 
@@ -2297,7 +2316,11 @@ byte *G_ReadOptions(byte *demo_p)
     {
       monster_infighting = *demo_p++;   // killough 7/19/98
 
-      demo_p++; // MBF dogs
+#ifdef DOGS
+      dogs = *demo_p++;                 // killough 7/19/98
+#else
+      demo_p++;
+#endif
 
       // beta stuff, not used
       demo_p += 2;
@@ -2313,7 +2336,11 @@ byte *G_ReadOptions(byte *demo_p)
 
       help_friends = *demo_p++;          // killough 9/9/98
 
-      demo_p++; // MBF dogs
+#ifdef DOGS
+      dog_jumping = *demo_p++;           // killough 10/98
+#else
+      demo_p++;
+#endif
 
       monkeys = *demo_p++;
 
@@ -2343,6 +2370,10 @@ byte *G_ReadOptions(byte *demo_p)
 
       help_friends = 0;                 // killough 9/9/98
 
+#ifdef DOGS
+      dogs = 0;                         // killough 7/19/98
+      dog_jumping = 0;                  // killough 10/98
+#endif
       monkeys = 0;
     }
 

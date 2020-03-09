@@ -13,7 +13,7 @@
 // GNU General Public License for more details.
 //
 // DESCRIPTION:
-//      Miscellaneous helper functions from Chocolate Doom.
+//      [FG] miscellaneous helper functions from Chocolate Doom.
 //
 
 #ifndef __M_MISC2__
@@ -22,8 +22,11 @@
 #include <string.h>
 
 void M_MakeDirectory(const char *dir);
+boolean M_FileExists(const char *file);
+char *M_FileCaseExists(const char *file);
 char *M_DirName(const char *path);
 const char *M_BaseName(const char *path);
+void M_ForceUppercase(char *text);
 void M_ForceLowercase(char *text);
 char *M_StringDuplicate(const char *orig);
 boolean M_StringCopy(char *dest, const char *src, size_t dest_size);

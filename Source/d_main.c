@@ -527,7 +527,8 @@ void D_AddFile(char *file)
   if (numwadfiles >= numwadfiles_alloc)
     wadfiles = realloc(wadfiles, (numwadfiles_alloc = numwadfiles_alloc ?
                                   numwadfiles_alloc * 2 : 8)*sizeof*wadfiles);
-  wadfiles[numwadfiles++] = !file ? NULL : strdup(file);
+  // [FG] search for PWADs by their filename
+  wadfiles[numwadfiles++] = !file ? NULL : D_TryFindWADByName(file);
 }
 
 // Return the path where the executable lies -- Lee Killough
@@ -1099,6 +1100,7 @@ void FindResponseFile (void)
         size = ftell(handle);
         fseek(handle,0,SEEK_SET);
         file = malloc (size);
+        // [FG] check return value
         if (!fread(file,size,1,handle))
         {
           fclose(handle);
@@ -1558,7 +1560,7 @@ void D_DoomMain(void)
   if (devparm)
     printf(D_DEVSTR);
 
-#ifndef __unix__
+#ifdef _WIN32
   if (M_CheckParm("-cdrom"))
     {
       printf(D_CDROM);
@@ -1784,6 +1786,7 @@ void D_DoomMain(void)
   idmusnum = -1; //jff 3/17/98 insure idmus number is blank
 
   // check for a driver that wants intermission stats
+  // [FG] replace with -statdump implementation from Chocolate Doom
   if ((p = M_CheckParm ("-statdump")) && p<myargc-1)
     {
       atexit(StatDump);

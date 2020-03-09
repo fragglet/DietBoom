@@ -44,6 +44,10 @@
 #include "i_video.h"
 #include "i_savepng.h" // [FG] SavePNG()
 
+// [FG] set the application icon
+
+#include "icon.c"
+
 SDL_Surface *sdlscreen;
 
 // [FG] rendering window, renderer, intermediate ARGB frame buffer and texture
@@ -72,7 +76,7 @@ int joystickSens_y;
 
 extern SDL_Joystick *sdlJoystick;
 
-// Get a bitmask of all currently-pressed buttons
+// [FG] adapt joystick button and axis handling from Chocolate Doom 3.0
 
 static int GetButtonsState(void)
 {
@@ -91,8 +95,6 @@ static int GetButtonsState(void)
 
     return result;
 }
-
-// Read the state of an axis
 
 static int GetAxisState(int axis, int sens)
 {
@@ -297,7 +299,8 @@ int I_DoomCode2ScanCode (int a)
    return a;
 }
 
-// Bit mask of mouse button state.
+// [FG] mouse button and movement handling from Chocolate Doom 3.0
+
 static unsigned int mouse_button_state = 0;
 
 static void UpdateMouseButtonState(unsigned int button, boolean on)
@@ -405,6 +408,8 @@ static void I_HandleMouseEvent(SDL_Event *sdlevent)
     }
 }
 
+// [FG] keyboard event handling from Chocolate Doom 3.0
+
 static void I_HandleKeyboardEvent(SDL_Event *sdlevent)
 {
     // XXX: passing pointers to event for access after this function
@@ -418,10 +423,7 @@ static void I_HandleKeyboardEvent(SDL_Event *sdlevent)
             event.data1 = TranslateKey(&sdlevent->key.keysym);
             event.data2 = 0;
             event.data3 = 0;
-/*
-            event.data2 = GetLocalizedKey(&sdlevent->key.keysym);
-            event.data3 = GetTypedChar(&sdlevent->key.keysym);
-*/
+
             if (event.data1 != 0)
             {
                 D_PostEvent(&event);
@@ -861,6 +863,21 @@ boolean I_WritePNGfile(char *filename)
     return false;
 }
 
+// Set the application icon
+
+static void I_InitWindowIcon(void)
+{
+    SDL_Surface *surface;
+
+    surface = SDL_CreateRGBSurfaceFrom((void *) icon_data, icon_w, icon_h,
+                                       32, icon_w * 4,
+                                       0xff << 24, 0xff << 16,
+                                       0xff << 8, 0xff << 0);
+
+    SDL_SetWindowIcon(screen, surface);
+    SDL_FreeSurface(surface);
+}
+
 extern boolean setsizeneeded;
 
 int cfg_scalefactor; // haleyjd 05/11/09: scale factor in config
@@ -962,6 +979,7 @@ static void I_InitGraphicsMode(void)
       }
 
       SDL_SetWindowTitle(screen, PACKAGE_STRING);
+      I_InitWindowIcon();
    }
 
    SDL_SetWindowMinimumSize(screen, v_w, actualheight);

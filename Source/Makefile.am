@@ -1,5 +1,6 @@
 bin_PROGRAMS = dietboom
-dietboom_SOURCES = \
+
+SOURCE_FILES = \
 	am_map.c   am_map.h \
 	d_deh.c    d_deh.h \
 	d_englsh.h \
@@ -82,5 +83,27 @@ dietboom_SOURCES = \
 	w_wad.c    w_wad.h \
 	wi_stuff.c wi_stuff.h \
 	z_zone.c   z_zone.h
+
+if HAVE_WINDRES
+dietboom_SOURCES = $(SOURCE_FILES) resource.rc
+else
+dietboom_SOURCES = $(SOURCE_FILES)
+endif
+
 dietboom_CFLAGS = @SDL_CFLAGS@ @SDL_mixer_CFLAGS@ @SDL_net_CFLAGS@
 dietboom_LDADD = @SDL_LIBS@ @SDL_mixer_LIBS@ @SDL_net_LIBS@
+
+EXTRA_DIST = \
+	icon.c \
+	manifest.xml \
+	resource.rc.in
+
+.rc.o:
+	$(WINDRES) $< -o $@
+%.o : %.rc
+	$(WINDRES) $< -o $@
+
+if HAVE_PYTHON
+icon.c : $(top_builddir)/data/woof.png
+	$(top_builddir)/data/convert-icon $(top_builddir)/data/woof.png $@
+endif

@@ -28,6 +28,8 @@
 //
 //--------------------------------------------------------------------
 
+#include "d_io.h"
+
 // killough 5/2/98: fixed headers, removed rendunant external declarations:
 #include "doomdef.h"
 #include "doomstat.h"
@@ -39,7 +41,6 @@
 #include "g_game.h"
 #include "d_think.h"
 #include "w_wad.h"
-#include "d_io.h"
 
 
 // killough 10/98: new functions, to allow processing DEH files in-memory
@@ -1830,7 +1831,7 @@ void deh_procPointer(DEHFILE *fpin, FILE* fpout, char *line) // done
           states[indexnum].action = deh_codeptr[value];
           if (fpout) fprintf(fpout," - applied %p from codeptr[%ld] to states[%d]\n",deh_codeptr[value],value,indexnum);
           // Write BEX-oriented line to match:
-          for (i=0;i<arrlen(deh_bexptrs);i++)
+          for (i=0;i<arrlen(deh_bexptrs);i++) // [FG] array size!
             {
               if (deh_bexptrs[i].cptr == deh_codeptr[value])
                 {
@@ -2575,7 +2576,7 @@ boolean deh_procStringSub(char *key, char *lookfor, char *newstring, FILE *fpout
           if (!key)
             if (fpout) fprintf(fpout,
                                "Assigned '%.12s%s' to'%.12s%s' at key %s\n",
-                               lookfor ? lookfor : "", (lookfor && strlen(lookfor) > 12) ? "..." : "",
+                               lookfor ? lookfor : "", (lookfor && strlen(lookfor) > 12) ? "..." : "", // [FG] NULL dereference
                                newstring, (strlen(newstring) > 12) ? "..." :"",
                                deh_strlookup[i].lookup);
 

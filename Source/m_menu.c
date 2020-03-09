@@ -262,6 +262,8 @@ void M_DrawExtHelp(void);
 void M_DrawChatStrings(void);
 void M_General(int);      // killough 10/98
 void M_DrawGeneral(void); // killough 10/98
+// cph 2006/08/06 - M_DrawString() is the old M_DrawMenuString, except that it is not tied to menu_buffer
+void M_DrawString(int,int,int,const char*);
 
 menu_t NewDef;                                              // phares 5/04/98
 
@@ -1431,7 +1433,7 @@ setup_menu_t* current_setup_menu; // points to current setup menu table
 //
 // The menu_buffer is used to construct strings for display on the screen.
 
-static char menu_buffer[64];
+static char menu_buffer[66];
 
 /////////////////////////////
 //
@@ -1643,6 +1645,9 @@ void M_DrawItem(setup_menu_t* s)
 	  if (!(flags & S_LEFTJUST))
 	    w = M_GetPixelWidth(menu_buffer) + 4;
 	  M_DrawMenuString(x - w, y ,color);
+	  // [FG] print a blinking "arrow" next to the currently highlighted menu item
+	  if (s == current_setup_menu + set_menu_itemon && whichSkull)
+	    M_DrawString(x - w - 8, y, color, ">");
 	}
       free(t);
     }
@@ -1680,6 +1685,9 @@ void M_DrawSetting(setup_menu_t* s)
   if (flags & S_YESNO)
     {
       strcpy(menu_buffer,s->var.def->location->i ? "YES" : "NO");
+      // [FG] print a blinking "arrow" next to the currently highlighted menu item
+      if (s == current_setup_menu + set_menu_itemon && whichSkull && !setup_select)
+        strcat(menu_buffer, " <");
       M_DrawMenuString(x,y,color);
       return;
     }
@@ -1696,6 +1704,9 @@ void M_DrawSetting(setup_menu_t* s)
 	}
       else
 	sprintf(menu_buffer,"%d",s->var.def->location->i);
+      // [FG] print a blinking "arrow" next to the currently highlighted menu item
+      if (s == current_setup_menu + set_menu_itemon && whichSkull && !setup_select)
+        strcat(menu_buffer, " <");
       M_DrawMenuString(x,y,color);
       return;
     }
@@ -1735,6 +1746,9 @@ void M_DrawSetting(setup_menu_t* s)
 		  sprintf(menu_buffer+strlen(menu_buffer), "/JSB%d",
 			  *s->m_joy+1);
 	      }
+	  // [FG] print a blinking "arrow" next to the currently highlighted menu item
+	  if (s == current_setup_menu + set_menu_itemon && whichSkull && !setup_select)
+	    strcat(menu_buffer, " <");
 	  M_DrawMenuString(x,y,color);
 	}
       return;
@@ -1752,6 +1766,9 @@ void M_DrawSetting(setup_menu_t* s)
   if (flags & (S_WEAP|S_CRITEM)) // weapon number or color range
     {
       sprintf(menu_buffer,"%d", s->var.def->location->i);
+      // [FG] print a blinking "arrow" next to the currently highlighted menu item
+      if (s == current_setup_menu + set_menu_itemon && whichSkull && !setup_select)
+        M_DrawString(x + 8, y, color, " <");
       M_DrawMenuString(x,y, flags & S_CRITEM ? s->var.def->location->i : color);
       return;
     }
@@ -1806,6 +1823,9 @@ void M_DrawSetting(setup_menu_t* s)
       // Draw the setting for the item
 
       strcpy(menu_buffer,text);
+      // [FG] print a blinking "arrow" next to the currently highlighted menu item
+      if (s == current_setup_menu + set_menu_itemon && whichSkull && !setup_select)
+        strcat(menu_buffer, " <");
       M_DrawMenuString(x,y,color);
       return;
     }
@@ -2710,7 +2730,7 @@ void M_ExtHelp(int choice)
 
 void M_DrawExtHelp(void)
 {
-  char namebfr[] = "HELPnn";
+  char namebfr[] = "HELPnn"; // [FG] char array!
 
   inhelpscreens = true;              // killough 5/1/98
   namebfr[4] = extended_help_index/10 + 0x30;
@@ -2958,11 +2978,10 @@ setup_menu_t helpstrings[] =  // HELP screen strings
 
 // M_DrawMenuString() draws the string in menu_buffer[]
 
-void M_DrawMenuString(int cx, int cy, int color)
+void M_DrawString(int cx, int cy, int color, const char* ch)
 {
   int   w;
   int   c;
-  char* ch = menu_buffer;
 
   while (*ch)
     {
@@ -2986,6 +3005,13 @@ void M_DrawMenuString(int cx, int cy, int color)
       // character so they butt up against each other.
       cx += w - 1; 
     }
+}
+
+// cph 2006/08/06 - M_DrawString() is the old M_DrawMenuString, except that it is not tied to menu_buffer
+
+void M_DrawMenuString(int cx, int cy, int color)
+{
+  return M_DrawString(cx, cy, color, menu_buffer);
 }
 
 // M_GetPixelWidth() returns the number of pixels in the width of
@@ -3036,6 +3062,7 @@ enum {
   test, test_stub, test_stub2,
   canine,
   musicsfx, /*musicsfx_stub,*/
+  woof, // [FG] shamelessly add myself to the Credits page ;)
   adcr, adcr_stub,
   special, special_stub, special_stub2,
 };
@@ -3046,6 +3073,7 @@ enum {
   cr_test,
   cr_canine,
   cr_musicsfx,
+  cr_woof, // [FG] shamelessly add myself to the Credits page ;)
   cr_adcr,
   cr_special,
 };
@@ -3075,6 +3103,10 @@ setup_menu_t cred_settings[]={
   // haleyjd 05/12/09: changed Allegro credits to Team Eternity
   {"SDL Port By",S_SKIP|S_CREDIT,m_null, CR_X, CR_Y + CR_S*musicsfx + CR_SH*cr_musicsfx},
   {"Team Eternity",S_SKIP|S_CREDIT|S_LEFTJUST,m_null, CR_X2, CR_Y + CR_S*musicsfx + CR_SH*cr_musicsfx},
+
+  // [FG] shamelessly add myself to the Credits page ;)
+  {"Woof! by",S_SKIP|S_CREDIT,m_null, CR_X, CR_Y + CR_S*woof + CR_SH*cr_woof},
+  {"Fabian Greffrath",S_SKIP|S_CREDIT|S_LEFTJUST,m_null, CR_X2, CR_Y + CR_S*woof + CR_SH*cr_woof},
 
   {"Additional Credit To",S_SKIP|S_CREDIT,m_null, CR_X, CR_Y + CR_S*adcr + CR_SH*cr_adcr},
   {"id Software",S_SKIP|S_CREDIT|S_LEFTJUST,m_null, CR_X2, CR_Y + CR_S*adcr+CR_SH*cr_adcr},
@@ -3173,7 +3205,7 @@ boolean M_Responder (event_t* ev)
 	  joywait = I_GetTime() + 5;
 	}
 
-      // [FG] Menu joystick button
+      // [FG] main menu joystick button
       if (joybmainmenu > -1 && (ev->data1 & (1 << joybmainmenu)))
 	{
 	  ch = menuactive ? key_menu_escape : key_escape;
@@ -4476,12 +4508,14 @@ void M_Init(void)
   M_InitExtendedHelp(); // init extended help screens // phares 3/30/98
 
   // [FG] support the BFG Edition IWADs
+
   if (bfgedition)
   {
     strcpy(OptionsMenu[scrnsize].name, "M_DISP");
   }
 
   // [FG] save screenshots in PNG format
+
   if (SavePNG)
   {
     const char *bmp_text, *png_text;

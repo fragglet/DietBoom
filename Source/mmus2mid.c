@@ -26,7 +26,6 @@
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <malloc.h>
 #include "mmus2mid.h"
 
 //#define STANDALONE  /* uncomment this to make MMUS2MID.EXE */
@@ -601,6 +600,7 @@ int MidiToMIDI(UBYTE *mid,MIDI *mididata)
   return 0;
 }
 
+// [FG] disable dead static code
 #if 0
 //#ifdef STANDALONE /* this code unused by BOOM provided for future portability */
 //                  /* it also provides a MUS to MID file converter*/
@@ -758,6 +758,7 @@ int main(int argc,char **argv)
     musst = fopen(musfile,"rb");
     if (musst)
     {
+      // [FG] check return value
       if(!fread(&MUSh,sizeof(MUSheader),1,musst))
       {
         printf("Error reading MUS file\n");

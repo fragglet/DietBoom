@@ -75,6 +75,5 @@ Makefile
 data/Makefile
 Source/Makefile
 Source/resource.rc
-pkg/Makefile
 ])
 AC_OUTPUT

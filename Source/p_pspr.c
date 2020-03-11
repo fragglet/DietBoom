@@ -65,11 +65,9 @@ static void P_SetPsprite(player_t *player, int position, statenum_t stnum)
           break;
         }
 
-#ifdef BETA
       // killough 7/19/98: Pre-Beta BFG
       if (stnum == S_BFG1 && classic_bfg)
 	stnum = S_OLDBFG1;                 // Skip to alternative weapon frame
-#endif
 
       state = &states[stnum];
       psp->state = state;
@@ -576,7 +574,6 @@ void A_FireBFG(player_t *player, pspdef_t *psp)
 
 void A_FireOldBFG(player_t *player, pspdef_t *psp)
 {
-#ifdef BETA
   int type = MT_PLASMA1;
 
   player->ammo[weaponinfo[player->readyweapon].ammo]--;
@@ -620,7 +617,6 @@ void A_FireOldBFG(player_t *player, pspdef_t *psp)
       P_CheckMissileSpawn(th);
     }
   while ((type != MT_PLASMA2) && (type = MT_PLASMA2)); //killough: obfuscated!
-#endif
 }
 
 //

@@ -986,7 +986,6 @@ void P_SpawnMapThing (mapthing_t* mthing)
 
   if (mthing->type <= 4 && mthing->type > 0) // killough 2/26/98 -- fix crashes
     {
-#ifdef DOGS
       // killough 7/19/98: Marine's best friend :)
       if (!netgame && mthing->type > 1 && mthing->type <= dogs+1 &&
 	  !players[mthing->type-1].secretcount)
@@ -998,7 +997,6 @@ void P_SpawnMapThing (mapthing_t* mthing)
 	  i = MT_DOGS;
 	  goto spawnit;
 	}
-#endif
 
       // save spots for respawning in network games
       playerstarts[mthing->type-1] = *mthing;
@@ -1056,10 +1054,8 @@ void P_SpawnMapThing (mapthing_t* mthing)
   if (nomonsters && (i == MT_SKULL || (mobjinfo[i].flags & MF_COUNTKILL)))
     return;
 
-#ifdef DOGS
   // spawn it
 spawnit:
-#endif
 
   x = mthing->x << FRACBITS;
   y = mthing->y << FRACBITS;

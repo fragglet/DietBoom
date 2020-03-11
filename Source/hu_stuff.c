@@ -227,7 +227,7 @@ void HU_Init(void)
   j = HU_FONTSTART;
   for (i=0;i<HU_FONTSIZE;i++,j++)
     {
-      if (j<97)
+      if (j<96)
         {
           sprintf(buffer, "STCFN%.3d",j);
           hu_font[i] = (patch_t *) W_CacheLumpName(buffer, PU_STATIC);

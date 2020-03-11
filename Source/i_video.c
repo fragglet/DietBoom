@@ -604,8 +604,8 @@ void I_GetEvent(void)
 // This is to combine all mouse movement for a tic into one mouse
 // motion event.
 
-static const float mouse_acceleration = 2.0;
-static const int mouse_threshold = 10;
+static const float mouse_acceleration = 1.0; // 2.0;
+static const int mouse_threshold = 0; // 10;
 
 static int AccelerateMouse(int val)
 {
@@ -978,7 +978,7 @@ static void I_InitGraphicsMode(void)
                  SDL_GetError());
       }
 
-      SDL_SetWindowTitle(screen, PACKAGE_STRING);
+      SDL_SetWindowTitle(screen, PROJECT_STRING);
       I_InitWindowIcon();
    }
 

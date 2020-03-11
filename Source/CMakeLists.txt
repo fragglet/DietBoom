@@ -1,4 +1,6 @@
-set(DIETBOOM_SOURCES
+include(WoofSettings)
+
+set(DIETBOOM_SOURCES,
     am_map.c   am_map.h
     d_deh.c    d_deh.h
     d_englsh.h
@@ -43,6 +45,7 @@ set(DIETBOOM_SOURCES
     p_ceilng.c
     p_doors.c
     p_enemy.c  p_enemy.h
+    p_extnodes.c p_extnodes.h
     p_floor.c
     p_genlin.c
     p_inter.c  p_inter.h
@@ -82,7 +85,70 @@ set(DIETBOOM_SOURCES
     wi_stuff.c wi_stuff.h
     z_zone.c   z_zone.h)
 
+# Some platforms require standard libraries to be linked against.
+if(m_FOUND)
+    list(APPEND DIETBOOM_LIBRARIES m)
+endif()
+if(dl_FOUND)
+    list(APPEND DIETBOOM_LIBRARIES dl)
+endif()
+if(z_FOUND)
+    list(APPEND DIETBOOM_LIBRARIES z)
+endif()
+
+if(WIN32)
+    # Stamp out and compile resource file on Windows.
+    configure_file(resource.rc.in "${CMAKE_CURRENT_BINARY_DIR}/resource.rc")
+    list(APPEND DIETBOOM_SOURCES "${CMAKE_CURRENT_BINARY_DIR}/resource.rc")
+endif()
+
+# Standard target definition
 add_executable(dietboom WIN32 ${DIETBOOM_SOURCES})
-target_compile_definitions(dietboom PRIVATE MY_SDL_VER RANGECHECK)
+target_woof_settings(dietboom)
 target_include_directories(dietboom PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/../")
-target_link_libraries(dietboom PRIVATE SDL2::SDL2main SDL2::SDL2 SDL2::mixer SDL2::net)
+target_link_libraries(dietboom PRIVATE ${DIETBOOM_LIBRARIES}
+    SDL2::SDL2main SDL2::SDL2 SDL2::mixer SDL2::net)
+
+if(MSVC)
+    # MSVC tries to supply a default manifest and complains when it finds ours
+    # unless we specifically tell it not to.
+    set_target_properties(dietboom PROPERTIES LINK_FLAGS "/MANIFEST:NO")
+endif()
+
+# Optional features.
+#
+# Our defines are not namespaced, so we pass them at compile-time instead of
+# using config.h.
+if("${${PROJECT_NAME}_INSTRUMENTED}")
+    target_compile_definitions(dietboom PRIVATE INSTRUMENTED)
+endif()
+if("${${PROJECT_NAME}_RANGECHECK}")
+    target_compile_definitions(dietboom PRIVATE RANGECHECK)
+endif()
+
+# Copy library files to target directory.
+if(SDL2_FILES)
+    add_custom_command(TARGET dietboom POST_BUILD
+        COMMAND "${CMAKE_COMMAND}" -E copy_if_different
+        ${SDL2_FILES} $<TARGET_FILE_DIR:dietboom>)
+endif()
+if(SDL2_MIXER_FILES)
+    add_custom_command(TARGET dietboom POST_BUILD
+        COMMAND "${CMAKE_COMMAND}" -E copy_if_different
+        ${SDL2_MIXER_FILES} $<TARGET_FILE_DIR:dietboom>)
+endif()
+if(SDL2_NET_FILES)
+    add_custom_command(TARGET dietboom POST_BUILD
+        COMMAND "${CMAKE_COMMAND}" -E copy_if_different
+        ${SDL2_NET_FILES} $<TARGET_FILE_DIR:dietboom>)
+endif()
+
+# Files to package in our distribution.
+if(WIN32)
+    install(TARGETS dietboom RUNTIME DESTINATION .)
+else()
+    install(TARGETS dietboom RUNTIME DESTINATION bin)
+endif()
+install(FILES ${SDL2_FILES} DESTINATION .)
+install(FILES ${SDL2_MIXER_FILES} DESTINATION .)
+install(FILES ${SDL2_NET_FILES} DESTINATION .)

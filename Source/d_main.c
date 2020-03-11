@@ -137,7 +137,7 @@ const char *const standard_iwads[]=
   "/tnt.wad",
   "/doom.wad",
   "/doom1.wad",
-  // [FG] support the FreeDoom IWADs
+  // [FG] support the Freedoom IWADs
   "/freedoom2.wad",
   "/freedoom1.wad",
   "/freedm.wad",
@@ -495,7 +495,8 @@ void D_DoAdvanceDemo(void)
     demosequence = 0;
   demostates[demosequence][gamemode].func
     // [FG] the BFG Edition IWADs have no TITLEPIC lump, use DMENUPIC instead
-    ((bfgedition && strncmp(demostates[demosequence][gamemode].name,"TITLEPIC",8) == 0) ? "DMENUPIC" :
+    ((bfgedition && strcasecmp(demostates[demosequence][gamemode].name, "TITLEPIC") == 0 && W_CheckNumForName("TITLEPIC") < 0) ?
+     "DMENUPIC" :
      demostates[demosequence][gamemode].name);
 }
 
@@ -599,7 +600,7 @@ char *D_DoomPrefDir(void)
         // ~/.local/share/chocolate-doom.  On Windows, we behave like
         // Vanilla Doom and save in the current directory.
 
-        result = SDL_GetPrefPath("", PACKAGE_TARNAME);
+        result = SDL_GetPrefPath("", PROJECT_TARNAME);
         if (result != NULL)
         {
             dir = M_StringDuplicate(result);
@@ -686,7 +687,7 @@ static void CheckIWAD(const char *iwadname,
   *gmission = doom;
   *hassec = false;
   *gmode =
-    // [FG] improve gamemission detection to support the FreeDoom IWADs
+    // [FG] improve gamemission detection to support the Freedoom IWADs
     cm >= 30 ? (*gmission = (tnt >= 4 && plut < 8) ? pack_tnt :
                 (plut >= 8 && tnt < 4) ? pack_plut : doom2,
                 *hassec = sc >= 2, commercial) :
@@ -1201,7 +1202,7 @@ static int GuessFileType(const char *name)
         ret = FILETYPE_DEH;
     }
 
-    free(lower);
+    (free)(lower);
 
     return ret;
 }

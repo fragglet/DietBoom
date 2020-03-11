@@ -131,6 +131,7 @@ typedef struct
   //   choice=0:leftarrow,1:rightarrow
   void  (*routine)(int choice);
   char  alphaKey; // hotkey in menu     
+  char *alttext; // [FG] alternative text for missing menu graphics lumps
 } menuitem_t;
 
 typedef struct menu_s
@@ -142,6 +143,7 @@ typedef struct menu_s
   short           x;
   short           y;            // x,y of menu
   short           lastOn;       // last item user was on in menu
+  int             lumps_missing; // [FG] indicate missing menu graphics lumps
 } menu_t;
 
 short itemOn;           // menu item skull is on (for Big Font menus)
@@ -264,6 +266,9 @@ void M_General(int);      // killough 10/98
 void M_DrawGeneral(void); // killough 10/98
 // cph 2006/08/06 - M_DrawString() is the old M_DrawMenuString, except that it is not tied to menu_buffer
 void M_DrawString(int,int,int,const char*);
+
+// [FG] alternative text for missing menu graphics lumps
+void M_DrawTitle(int x, int y, const char *patch, char *alttext);
 
 menu_t NewDef;                                              // phares 5/04/98
 
@@ -926,11 +931,11 @@ menuitem_t OptionsMenu[]=
   {1,"M_ENDGAM", M_EndGame,'e'},
   {1,"M_MESSG",  M_ChangeMessages,'m'},
   /*    {1,"M_DETAIL",  M_ChangeDetail,'g'},  unused -- killough */  
-  {2,"M_SCRNSZ", M_SizeDisplay,'s'},
+  {2,"M_SCRNSZ", M_SizeDisplay,'s', "SCREEN SIZE"},
   {-1,"",0},
-  {1,"M_MSENS",  M_ChangeSensitivity,'m'},
+  {1,"M_MSENS",  M_ChangeSensitivity,'m', "MOUSE SENSITIVITY"},
   /* {-1,"",0},  replaced with submenu -- killough */ 
-  {1,"M_SVOL",   M_Sound,'s'}
+  {1,"M_SVOL",   M_Sound,'s', "SOUND VOLUME"}
 };
 
 menu_t OptionsDef =
@@ -959,6 +964,13 @@ void M_DrawOptions(void)
       W_CacheLumpName(detailNames[detailLevel],PU_CACHE));
       */
 
+  // [FG] alternative text for missing menu graphics lumps
+  if (OptionsDef.lumps_missing > 0)
+    M_WriteText(OptionsDef.x + M_StringWidth("MESSAGES: "),
+                OptionsDef.y + LINEHEIGHT*messages + 8-(M_StringHeight("ONOFF")/2),
+                showMessages ? "ON" : "OFF");
+  else
+  if (OptionsDef.lumps_missing == -1)
   V_DrawPatchDirect (OptionsDef.x + 120,OptionsDef.y+LINEHEIGHT*messages,0,
 		     W_CacheLumpName(msgNames[showMessages],PU_CACHE));
 
@@ -1144,9 +1156,10 @@ enum
 
 menuitem_t MouseMenu[]=
 {
-  {2,"M_HORSEN",M_MouseHoriz,'h'},
+  // [FG] alternative text for missing menu graphics lumps
+  {2,"M_HORSEN",M_MouseHoriz,'h', "HORIZONTAL"},
   {-1,"",0},
-  {2,"M_VERSEN",M_MouseVert,'v'},
+  {2,"M_VERSEN",M_MouseVert,'v', "VERTICAL"},
   {-1,"",0}
 };
 
@@ -1230,7 +1243,7 @@ void M_Mouse(int choice, int *sens)
 //    M_QuickSave
 //
 
-char tempstring[80];
+char tempstring[84]; // [FG] increase
 
 void M_QuickSaveResponse(int ch)
 {
@@ -1260,7 +1273,8 @@ void M_QuickSave(void)
       quickSaveSlot = -2; // means to pick a slot now
       return;
     }
-  sprintf(tempstring,s_QSPROMPT,savegamestrings[quickSaveSlot]); // Ty 03/27/98 - externalized
+  // [FG] fix format string vulnerability
+  sprintf(tempstring,QSPROMPT,savegamestrings[quickSaveSlot]); // Ty 03/27/98 - externalized
   M_StartMessage(tempstring,M_QuickSaveResponse,true);
 }
 
@@ -1299,7 +1313,8 @@ void M_QuickLoad(void)
       M_StartMessage(s_QSAVESPOT,NULL,false); // Ty 03/27/98 - externalized
       return;
     }
-  sprintf(tempstring,s_QLPROMPT,savegamestrings[quickSaveSlot]); // Ty 03/27/98 - externalized
+  // [FG] fix format string vulnerability
+  sprintf(tempstring,QLPROMPT,savegamestrings[quickSaveSlot]); // Ty 03/27/98 - externalized
   M_StartMessage(tempstring,M_QuickLoadResponse,true);
 }
 
@@ -1966,7 +1981,7 @@ void M_DrawInstructions()
 	}
       if (allow && setup_select)            // killough 8/15/98: Set new value
 	if (!(flags & (S_LEVWARN | S_PRGWARN)))
-	  *def->current = *def->location;
+	  def->current->i = def->location->i;
     }
 
   // There are different instruction messages depending on whether you
@@ -2421,7 +2436,7 @@ void M_DrawGeneral(void)
   inhelpscreens = true;
 
   M_DrawBackground("FLOOR4_6", screens[0]); // Draw background
-  V_DrawPatchDirect (114,2,0,W_CacheLumpName("M_GENERL",PU_CACHE));
+  M_DrawTitle(114,2,"M_GENERL","GENERAL");
   M_DrawInstructions();
   M_DrawScreenItems(current_setup_menu);
 
@@ -2496,7 +2511,7 @@ void M_DrawChatStrings(void)
 {
   inhelpscreens = true;
   M_DrawBackground("FLOOR4_6", screens[0]); // Draw background
-  V_DrawPatchDirect (83,2,0,W_CacheLumpName("M_CHAT",PU_CACHE));
+  M_DrawTitle(83,2,"M_CHAT","CHAT STRINGS");
   M_DrawInstructions();
   M_DrawScreenItems(current_setup_menu);
 
@@ -2579,7 +2594,12 @@ void M_ResetDefaults()
 		  if (dp->current)
 		  {
 		    if (allow_changes())
-		      *dp->current = *dp->location;
+		    {
+		      if (dp->isstr)
+		      dp->current->s = dp->location->s;
+		      else
+		      dp->current->i = dp->location->i;
+		    }
 		    else
 		      warn |= S_LEVWARN;
 		  }
@@ -3121,10 +3141,11 @@ setup_menu_t cred_settings[]={
 
 void M_DrawCredits(void)     // killough 10/98: credit screen
 {
+  char mbftext_s[32];
+  sprintf(mbftext_s, PROJECT_STRING);
   inhelpscreens = true;
   M_DrawBackground(gamemode==shareware ? "CEIL5_1" : "MFLR8_4", screens[0]);
-  V_DrawPatchTranslated(42,9,0, W_CacheLumpName("MBFTEXT",PU_CACHE),
-			colrngs[CR_GOLD],0);
+  M_DrawTitle(42,9,"MBFTEXT",mbftext_s);
   V_MarkRect(0,0,SCREENWIDTH,SCREENHEIGHT);
   M_DrawScreenItems(cred_settings);
 }
@@ -3160,10 +3181,13 @@ boolean M_Responder (event_t* ev)
   int    i;
   static int joywait   = 0;
   static int mousewait = 0;
+// [FG] disable menu control by mouse
+/*
   static int mousey    = 0;
   static int lasty     = 0;
   static int mousex    = 0;
   static int lastx     = 0;
+*/
   
   ch = -1; // will be changed to a legit char if we're going to use it here
 
@@ -3234,6 +3258,8 @@ boolean M_Responder (event_t* ev)
 
       if (ev->type == ev_mouse && mousewait < I_GetTime())
 	{
+// [FG] disable menu control by mouse
+/*
 	  mousey += ev->data3;
 	  if (mousey < lasty-30)
 	    {
@@ -3261,6 +3287,7 @@ boolean M_Responder (event_t* ev)
 	      mousewait = I_GetTime() + 5;
 	      mousex = lastx += 30;
 	    }
+*/
   
 	  if (ev->data1&1)
 	    {
@@ -3564,7 +3591,7 @@ boolean M_Responder (event_t* ev)
 		    if (ptr1->var.def->current)
 		    {
 		      if (allow_changes())  // killough 8/15/98
-			*ptr1->var.def->current = *ptr1->var.def->location;
+			ptr1->var.def->current->i = ptr1->var.def->location->i;
 		      else
 			if (ptr1->var.def->current->i != ptr1->var.def->location->i)
 			  warn_about_changes(S_LEVWARN); // killough 8/15/98
@@ -4228,6 +4255,31 @@ void M_Drawer (void)
       y = currentMenu->y;
       max = currentMenu->numitems;
       
+      // [FG] check current menu for missing menu graphics lumps - only once
+      if (currentMenu->lumps_missing == 0)
+      {
+        for (i = 0; i < max; i++)
+          if (currentMenu->menuitems[i].name[0])
+            if (W_CheckNumForName(currentMenu->menuitems[i].name) < 0)
+              currentMenu->lumps_missing++;
+
+        // [FG] no lump missing, no need to check again
+        if (currentMenu->lumps_missing == 0)
+          currentMenu->lumps_missing = -1;
+      }
+
+      // [FG] at least one menu graphics lump is missing, draw alternative text
+      if (currentMenu->lumps_missing > 0)
+      {
+        for (i = 0; i < max; i++)
+        {
+          char *alttext = currentMenu->menuitems[i].alttext;
+          if (alttext)
+            M_WriteText(x, y+8-(M_StringHeight(alttext)/2), alttext);
+          y += LINEHEIGHT;
+        }
+      }
+      else
       for (i=0;i<max;i++)
       {
          if (currentMenu->menuitems[i].name[0])
@@ -4423,6 +4475,22 @@ void M_WriteText (int x,int y,char* string)
       V_DrawPatchDirect(cx, cy, 0, hu_font[c]);
       cx+=w;
     }
+}
+
+// [FG] alternative text for missing menu graphics lumps
+
+void M_DrawTitle(int x, int y, const char *patch, char *alttext)
+{
+  if (W_CheckNumForName(patch) >= 0)
+    V_DrawPatchDirect(x,y,0,W_CacheLumpName(patch,PU_CACHE));
+  else
+  {
+    // patch doesn't exist, draw some text in place of it
+    strcpy(menu_buffer,alttext);
+    M_DrawMenuString(160-(M_StringWidth(alttext)/2),
+                y+8-(M_StringHeight(alttext)/2), // assumes patch height 16
+                CR_TITLE);
+  }
 }
 
 /////////////////////////////

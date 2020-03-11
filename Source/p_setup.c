@@ -43,6 +43,9 @@
 #include "s_sound.h"
 #include "st_stuff.h"
 
+// [FG] support maps with NODES in compressed or uncompressed ZDBSP format or DeePBSP format
+#include "p_extnodes.h"
+
 //
 // MAP related Lookup tables.
 // Store VERTEXES, LINEDEFS, SIDEDEFS, etc.
@@ -136,6 +139,10 @@ void P_LoadVertexes (int lump)
     {
       vertexes[i].x = SHORT(((mapvertex_t *) data)[i].x)<<FRACBITS;
       vertexes[i].y = SHORT(((mapvertex_t *) data)[i].y)<<FRACBITS;
+
+      // [FG] vertex coordinates used for rendering
+      vertexes[i].r_x = vertexes[i].x;
+      vertexes[i].r_y = vertexes[i].y;
     }
 
   // Free buffer memory.
@@ -284,21 +291,6 @@ void P_LoadNodes (int lump)
   numnodes = W_LumpLength (lump) / sizeof(mapnode_t);
   nodes = Z_Malloc (numnodes*sizeof(node_t),PU_LEVEL,0);
   data = W_CacheLumpNum (lump, PU_STATIC);
-
-  // [FG] warn about unsupported node formats and exit gracefully
-  if (W_LumpLength(lump) >= 8)
-  {
-    if (!memcmp(data, "xNd4\0\0\0\0", 8) ||
-        !memcmp(data, "XNOD", 4) ||
-        !memcmp(data, "ZNOD", 4))
-      {
-        char fmt[5];
-        memcpy(fmt, data, 4);
-        fmt[4] = '\0';
-        I_Error("Unsupported nodes format for %s: %s.\n",
-                lumpinfo[lump-ML_NODES].name, fmt);
-      }
-  }
 
   for (i=0; i<numnodes; i++)
     {
@@ -953,14 +945,51 @@ void P_RemoveSlimeTrails(void)                // killough 10/98
 		    Long64 dxy = (l->dx >> FRACBITS) * (l->dy >> FRACBITS);
 		    Long64 s = dx2 + dy2;
 		    int x0 = v->x, y0 = v->y, x1 = l->v1->x, y1 = l->v1->y;
-		    v->x = (fixed_t)((dx2 * x0 + dy2 * x1 + dxy * (y0 - y1)) / s);
-		    v->y = (fixed_t)((dy2 * y0 + dx2 * y1 + dxy * (x0 - x1)) / s);
+		    // [FG] move vertex coordinates used for rendering
+		    v->r_x = (fixed_t)((dx2 * x0 + dy2 * x1 + dxy * (y0 - y1)) / s);
+		    v->r_y = (fixed_t)((dy2 * y0 + dx2 * y1 + dxy * (x0 - x1)) / s);
+
+		    // [FG] override actual vertex coordinates except in compatibility mode
+		    if (!demo_compatibility)
+		    {
+		      v->x = v->r_x;
+		      v->y = v->r_y;
+		    }
+
+		    // [FG] wait a minute... moved more than 8 map units?
+		    // maybe that's a Linguortal then, back to the original coordinates
+		    if (abs(v->r_x - x0) > 8*FRACUNIT || abs(v->r_y - y0) > 8*FRACUNIT)
+		    {
+		      v->r_x = x0;
+		      v->r_y = y0;
+		    }
 		  }
 	      }  // Obfuscated C contest entry:   :)
 	  while ((v != segs[i].v2) && (v = segs[i].v2));
 	}
     }
   free(hit);
+}
+
+// [FG] re-calculated seg lengths and angles used for rendering
+
+static void P_SegLengthsAngles (void)
+{
+    int i;
+
+    for (i = 0; i < numsegs; i++)
+    {
+	seg_t *li = segs+i;
+	int64_t dx, dy;
+
+	dx = li->v2->r_x - li->v1->r_x;
+	dy = li->v2->r_y - li->v1->r_y;
+	li->r_length = (uint32_t)(sqrt((double)dx*dx + (double)dy*dy)/2);
+
+	viewx = li->v1->r_x;
+	viewy = li->v1->r_y;
+	li->r_angle = R_PointToAngleCrispy(li->v2->r_x, li->v2->r_y);
+    }
 }
 
 // [FG] pad the REJECT table when the lump is too small
@@ -1014,6 +1043,7 @@ void P_SetupLevel(int episode, int map, int playermask, skill_t skill)
   int   i;
   char  lumpname[9];
   int   lumpnum;
+  mapformat_t mapformat;
 
   totalkills = totalitems = totalsecret = wminfo.maxfrags = 0;
   wminfo.partime = 180;
@@ -1049,6 +1079,9 @@ void P_SetupLevel(int episode, int map, int playermask, skill_t skill)
   // killough 4/4/98: split load of sidedefs into two parts,
   // to allow texture names to be used in special linedefs
 
+  // [FG] check nodes format
+  mapformat = P_CheckMapFormat(lumpnum);
+
   P_LoadVertexes  (lumpnum+ML_VERTEXES);
   P_LoadSectors   (lumpnum+ML_SECTORS);
   P_LoadSideDefs  (lumpnum+ML_SIDEDEFS);             // killough 4/4/98
@@ -1056,9 +1089,23 @@ void P_SetupLevel(int episode, int map, int playermask, skill_t skill)
   P_LoadSideDefs2 (lumpnum+ML_SIDEDEFS);             //       |
   P_LoadLineDefs2 (lumpnum+ML_LINEDEFS);             // killough 4/4/98
   P_LoadBlockMap  (lumpnum+ML_BLOCKMAP);             // killough 3/1/98
+  // [FG] support maps with NODES in compressed or uncompressed ZDBSP format or DeePBSP format
+  if (mapformat == MFMT_ZDBSPX || mapformat == MFMT_ZDBSPZ)
+  {
+    P_LoadNodes_ZDBSP (lumpnum+ML_NODES, mapformat == MFMT_ZDBSPZ);
+  }
+  else if (mapformat == MFMT_DEEPBSP)
+  {
+    P_LoadSubsectors_DeePBSP (lumpnum+ML_SSECTORS);
+    P_LoadNodes_DeePBSP (lumpnum+ML_NODES);
+    P_LoadSegs_DeePBSP (lumpnum+ML_SEGS);
+  }
+  else
+  {
   P_LoadSubsectors(lumpnum+ML_SSECTORS);
   P_LoadNodes     (lumpnum+ML_NODES);
   P_LoadSegs      (lumpnum+ML_SEGS);
+  }
 
   distinguish_key_types = HaveSpecificKeyDoors();
 
@@ -1067,6 +1114,9 @@ void P_SetupLevel(int episode, int map, int playermask, skill_t skill)
   P_GroupLines();
 
   P_RemoveSlimeTrails();    // killough 10/98: remove slime trails from wad
+
+  // [FG] seg lengths and angles used for rendering
+  P_SegLengthsAngles();
 
   // Note: you don't need to clear player queue slots --
   // a much simpler fix is in g_game.c -- killough 10/98

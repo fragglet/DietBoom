@@ -1,6 +1,6 @@
 #!/bin/sh
 if [ "$ANALYZE" = "true" ] ; then
-	cppcheck --error-exitcode=1 -j2 -DRANGECHECK -DDOGS -DBETA -ISource Source toolsrc 2> stderr.txt
+	cppcheck --error-exitcode=1 -j2 -DRANGECHECK -ISource Source toolsrc 2> stderr.txt
 	RET=$?
 	if [ -s stderr.txt ]
 	then
@@ -9,9 +9,9 @@ if [ "$ANALYZE" = "true" ] ; then
 	exit $RET
 else
 	set -e
-	autoreconf -fiv
-	./configure --enable-werror
-	make -j4
+	mkdir build && cd build
+	cmake -G "Unix Makefiles" ..
+	make
 	make install DESTDIR=/tmp/whatever
-	make dist
+	make package
 fi

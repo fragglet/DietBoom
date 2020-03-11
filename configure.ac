@@ -39,6 +39,9 @@ PKG_CHECK_MODULES([SDL_mixer], [SDL2_mixer])
 PKG_CHECK_MODULES([SDL_net],   [SDL2_net])
 AC_DEFINE([RANGECHECK], [1], [Parameter Validation Debugging])
 
+AC_DEFINE([PROJECT_STRING], ["$PACKAGE_STRING"], "Package name")
+AC_DEFINE([PROJECT_TARNAME], ["$PACKAGE_TARNAME"], "Package name")
+
 # Checks for header files.
 AC_CHECK_HEADERS([fcntl.h limits.h malloc.h stddef.h stdint.h stdlib.h string.h unistd.h])
 
@@ -73,6 +76,5 @@ data/Makefile
 Source/Makefile
 Source/resource.rc
 pkg/Makefile
-pkg/config.make
 ])
 AC_OUTPUT

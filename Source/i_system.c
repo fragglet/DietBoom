@@ -326,7 +326,7 @@ void I_Error(const char *error, ...) // killough 3/20/98: add const
     if (exit_gui_popup && !I_ConsoleStdout())
     {
         SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,
-                                 PACKAGE_STRING, errmsg, NULL);
+                                 PROJECT_STRING, errmsg, NULL);
     }
    
    if(!has_exited)    // If it hasn't exited yet, exit now -- killough

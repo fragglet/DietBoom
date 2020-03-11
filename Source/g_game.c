@@ -406,9 +406,10 @@ void G_BuildTiccmd(ticcmd_t* cmd)
         cmd->angleturn += angleturn[tspeed];
     }
 
-  if (gamekeydown[key_up])
+  // [FG] change default movement key binding to WASD scheme
+  if (gamekeydown[key_up] || gamekeydown[key_menu_up])
     forward += forwardmove[speed];
-  if (gamekeydown[key_down])
+  if (gamekeydown[key_down] || gamekeydown[key_menu_down])
     forward -= forwardmove[speed];
   if (joyymove < 0)
     forward += forwardmove[speed];
@@ -1154,7 +1155,6 @@ static void G_DoPlayDemo(void)
       monster_infighting = 1;           // killough 7/19/98
 
       classic_bfg = 0;                  // killough 7/19/98
-
       dogs = 0;                         // killough 7/19/98
       dog_jumping = 0;                  // killough 10/98
 

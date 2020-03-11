@@ -61,6 +61,7 @@ WARNINGS="-Wall -Wdeclaration-after-statement -Wredundant-decls"
 
 # TODO: Remove this.
 AC_DEFINE([DOGS], [1], [Support for helper dogs])
+AC_DEFINE([BETA], [1], [Support for beta emulation])
 
 AC_ARG_ENABLE([werror], AS_HELP_STRING([--enable-werror], [Treat warnings as errors]))
 AS_IF([test "x$enable_werror" = "xyes"], [WARNINGS="-Werror $WARNINGS"])

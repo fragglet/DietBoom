@@ -320,6 +320,16 @@ void P_TouchSpecialThing(mobj_t *special, mobj_t *toucher)
       player->message = s_GOTARMBONUS; // Ty 03/22/98 - externalized
       break;
 
+#ifdef BETA
+    case SPR_BON3:      // killough 7/11/98: evil sceptre from beta version
+      player->message = "Picked up an evil sceptre";
+      break;
+
+    case SPR_BON4:      // killough 7/11/98: unholy bible from beta version
+      player->message = "Picked up an unholy bible";
+      break;
+#endif
+
     case SPR_SOUL:
       player->health += soul_health;
       if (player->health > max_soul)
@@ -528,7 +538,12 @@ void P_TouchSpecialThing(mobj_t *special, mobj_t *toucher)
     case SPR_BFUG:
       if (!P_GiveWeapon (player, wp_bfg, false) )
         return;
-      player->message = s_GOTBFG9000; // Ty 03/22/98 - externalized
+      player->message = 
+#ifdef BETA
+	classic_bfg ? 
+	"You got the BFG2704!  Oh, yes." :   // killough 8/9/98: beta BFG
+#endif
+	  s_GOTBFG9000; // Ty 03/22/98 - externalized
       sound = sfx_wpnup;
       break;
 

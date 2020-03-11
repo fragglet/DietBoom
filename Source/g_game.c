@@ -1153,6 +1153,10 @@ static void G_DoPlayDemo(void)
 
       monster_infighting = 1;           // killough 7/19/98
 
+#ifdef BETA
+      classic_bfg = 0;                  // killough 7/19/98
+#endif
+
 #ifdef DOGS
       dogs = 0;                         // killough 7/19/98
       dog_jumping = 0;                  // killough 10/98
@@ -2015,6 +2019,10 @@ void G_ReloadDefaults(void)
   monsters_remember = 0;
   monster_friction = 1;     // killough 10/98
 
+#ifdef BETA
+  classic_bfg = 0;               // killough 7/19/98
+#endif
+
   // jff 1/24/98 reset play mode to command line spec'd version
   // killough 3/1/98: moved to here
   respawnparm = clrespawnparm;
@@ -2231,8 +2239,11 @@ byte *G_WriteOptions(byte *demo_p)
   *demo_p++ = 0;
 #endif
 
-  // beta stuff, not used
+#ifdef BETA
+  *demo_p++ = classic_bfg;          // killough 7/19/98
+#else
   *demo_p++ = 0;
+#endif
   *demo_p++ = 0;
 
   *demo_p++ = (distfriend >> 8) & 0xff;  // killough 8/8/98  
@@ -2314,6 +2325,8 @@ byte *G_ReadOptions(byte *demo_p)
   // Options new to v2.03
   if (demo_version >= 203)
     {
+      int beta_emulation;
+
       monster_infighting = *demo_p++;   // killough 7/19/98
 
 #ifdef DOGS
@@ -2322,8 +2335,15 @@ byte *G_ReadOptions(byte *demo_p)
       demo_p++;
 #endif
 
-      // beta stuff, not used
+#ifdef BETA
+      classic_bfg = *demo_p++;          // killough 7/19/98
+      beta_emulation = *demo_p++;       // killough 7/24/98
+
+      if (beta_emulation)
+	I_Error("Beta emulation is not supported!");
+#else
       demo_p += 2;
+#endif
 
       distfriend = *demo_p++ << 8;      // killough 8/8/98
       distfriend+= *demo_p++;
@@ -2369,6 +2389,10 @@ byte *G_ReadOptions(byte *demo_p)
       monster_friction = 0;             // killough 10/98
 
       help_friends = 0;                 // killough 9/9/98
+
+#ifdef BETA
+      classic_bfg = 0;                  // killough 7/19/98
+#endif
 
 #ifdef DOGS
       dogs = 0;                         // killough 7/19/98

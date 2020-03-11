@@ -66,6 +66,11 @@ int monster_infighting=1;       // killough 7/19/98: monster<=>monster attacks
 
 int monster_friction=1;       // killough 10/98: monsters affected by friction 
 
+#ifdef BETA
+// killough 7/19/98: classic Doom BFG
+int classic_bfg, default_classic_bfg;
+#endif
+
 #ifdef DOGS
 int dogs, default_dogs;         // killough 7/19/98: Marine's best friend :)
 int dog_jumping, default_dog_jumping;   // killough 10/98
